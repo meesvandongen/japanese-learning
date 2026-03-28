@@ -1,15 +1,15 @@
 import { useState, useCallback, useEffect } from 'react'
 import { RecordButton } from './RecordButton'
+import { RatingButtons } from './RatingButtons'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { compareEnglish } from '../utils/normalize'
 
-export function FlashcardMode4({ card, onNext }) {
+export function FlashcardMode4({ card, cardType, onAnswer }) {
   const [result, setResult] = useState(null) // null | 'correct' | 'incorrect'
   const [errorMsg, setErrorMsg] = useState('')
   const { isSpeaking, speak } = useSpeechSynthesis()
 
-  // Auto-play audio when card changes
   useEffect(() => {
     const timer = setTimeout(() => speak(card.japanese, 'ja-JP'), 300)
     return () => clearTimeout(timer)
@@ -23,32 +23,22 @@ export function FlashcardMode4({ card, onNext }) {
     [card]
   )
 
-  const handleError = useCallback((msg) => {
-    setErrorMsg(msg)
-  }, [])
-
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'en-US',
     onResult: handleResult,
-    onError: handleError,
+    onError: setErrorMsg,
   })
-
-  const handleNext = () => {
-    setResult(null)
-    setErrorMsg('')
-    onNext()
-  }
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
 
   return (
     <div className="flashcard">
+      <CardTypeBadge type={cardType} />
       <div className="card-label">What does this mean in English?</div>
 
       <button
         className={`play-btn ${isSpeaking ? 'playing' : ''}`}
         onClick={() => speak(card.japanese, 'ja-JP')}
-        aria-label="Play Japanese audio"
       >
         {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
       </button>
@@ -65,25 +55,33 @@ export function FlashcardMode4({ card, onNext }) {
       )}
 
       {result === 'correct' && (
-        <div className="feedback correct">
-          ✓ Correct! <span className="answer-shown">{primaryEnglish}</span>
-        </div>
+        <>
+          <div className="feedback correct">
+            Correct! <span className="answer-shown">{primaryEnglish}</span>
+          </div>
+          <RatingButtons onRate={onAnswer} />
+        </>
       )}
 
       {result === 'incorrect' && (
-        <div className="feedback incorrect">
-          ✗ Incorrect — the answer is:{' '}
-          <span className="answer-shown">{card.english.join(' / ')}</span>
-        </div>
+        <>
+          <div className="feedback incorrect">
+            Incorrect — the answer is:{' '}
+            <span className="answer-shown">{card.english.join(' / ')}</span>
+          </div>
+          <button className="next-btn" onClick={() => onAnswer(1)}>
+            Next card →
+          </button>
+        </>
       )}
 
       {errorMsg && <div className="error-msg">{errorMsg}</div>}
-
-      {result !== null && (
-        <button className="next-btn" onClick={handleNext}>
-          Next card →
-        </button>
-      )}
     </div>
   )
+}
+
+function CardTypeBadge({ type }) {
+  if (!type) return null
+  const labels = { due: 'Review', new: 'New', extra: 'Extra practice' }
+  return <span className={`card-type-badge badge-${type}`}>{labels[type]}</span>
 }

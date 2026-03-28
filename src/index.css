@@ -280,6 +280,127 @@ body {
   max-width: 400px;
 }
 
+/* Header top row */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.reset-btn {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.reset-btn:hover {
+  border-color: var(--danger-light);
+  color: var(--danger);
+}
+
+/* Session stats */
+.session-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.stats-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pill-val { font-size: 0.95rem; }
+.pill-lbl { font-weight: 400; opacity: 0.75; }
+
+.pill-due    { background: #ffe5e5; color: #7f1d1d; }
+.pill-new    { background: #dbeafe; color: #1e3a5f; }
+.pill-session { background: #f0fdf4; color: #14532d; }
+.pill-zero   { background: var(--border); color: var(--muted); }
+
+.caught-up-badge {
+  font-size: 0.78rem;
+  color: var(--primary);
+  background: #d8f3dc;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Card type badge */
+.card-type-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.badge-due   { background: #ffe5e5; color: #7f1d1d; }
+.badge-new   { background: #dbeafe; color: #1e3a5f; }
+.badge-extra { background: #fef3c7; color: #78350f; }
+
+/* Rating buttons */
+.rating-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.rating-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.rating-row {
+  display: flex;
+  gap: 8px;
+}
+
+.rating-btn {
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: 2px solid;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: white;
+}
+
+.rating-hard {
+  border-color: #f97316;
+  color: #c2410c;
+}
+.rating-hard:hover { background: #f97316; color: white; }
+
+.rating-good {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.rating-good:hover { background: var(--primary); color: white; }
+
+.rating-easy {
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+.rating-easy:hover { background: #7c3aed; color: white; }
+
 /* Footer */
 .app-footer {
   padding: 16px 0;
