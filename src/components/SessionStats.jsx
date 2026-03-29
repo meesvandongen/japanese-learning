@@ -8,9 +8,9 @@ export function SessionStats({ dueCount, newCount, reviewedCount, nextDueDate, c
 
   return (
     <div className="session-stats">
-      <Pill label="Due" value={dueCount} accent={dueCount > 0 ? 'due' : 'zero'} />
-      <Pill label="New" value={newCount} accent={newCount > 0 ? 'new' : 'zero'} />
-      <Pill label="Session" value={reviewedCount} accent="session" />
+      <Pill slot="due" label="Due" value={dueCount} accent={dueCount > 0 ? 'due' : 'zero'} />
+      <Pill slot="new" label="New" value={newCount} accent={newCount > 0 ? 'new' : 'zero'} />
+      <Pill slot="session" label="Session" value={reviewedCount} accent="session" />
 
       {allCaughtUp && cardType === 'extra' && (
         <span className="caught-up-badge">
@@ -21,9 +21,9 @@ export function SessionStats({ dueCount, newCount, reviewedCount, nextDueDate, c
   )
 }
 
-function Pill({ label, value, accent }) {
+function Pill({ slot, label, value, accent }) {
   return (
-    <span className={`stats-pill pill-${accent}`}>
+    <span data-pill={slot} className={`stats-pill pill-${accent}`}>
       <span className="pill-val">{value}</span>
       <span className="pill-lbl">{label}</span>
     </span>

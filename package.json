@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.95.2",
@@ -17,6 +19,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.30.2",
+    "@playwright/test": "^1.50.1",
     "@vitejs/plugin-react": "^6.0.1",
     "vite": "^8.0.3",
     "wrangler": "^4.78.0"
