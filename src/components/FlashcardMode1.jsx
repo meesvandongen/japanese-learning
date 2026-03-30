@@ -1,6 +1,5 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { RecordButton } from './RecordButton'
-import { RatingButtons } from './RatingButtons'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { compareJapanese } from '../utils/normalize'
 
@@ -22,10 +21,18 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
     onError: setErrorMsg,
   })
 
+  // Auto-advance: quick flash then move on
+  useEffect(() => {
+    if (!result) return
+    const delay = result === 'correct' ? 1200 : 2500
+    const timer = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1), delay)
+    return () => clearTimeout(timer)
+  }, [result, onAnswer])
+
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
 
   return (
-    <div className="flashcard">
+    <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
       <CardTypeBadge type={cardType} />
       <div className="card-label">Say this in Japanese:</div>
       <div className="card-prompt english-prompt">{primaryEnglish}</div>
@@ -35,28 +42,24 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
       )}
 
       {result === null && (
-        <RecordButton isListening={isListening} onStart={start} onStop={stop} />
+        <div className="answer-actions">
+          <RecordButton isListening={isListening} onStart={start} onStop={stop} />
+          <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">
+            ?
+          </button>
+        </div>
       )}
 
       {result === 'correct' && (
-        <>
-          <div className="feedback correct">
-            Correct! <span className="answer-shown">{card.japanese}</span>
-          </div>
-          <RatingButtons onRate={onAnswer} />
-        </>
+        <div className="feedback correct">
+          ✓ <span className="answer-shown">{card.japanese}</span>
+        </div>
       )}
 
       {result === 'incorrect' && (
-        <>
-          <div className="feedback incorrect">
-            Incorrect — the answer is:{' '}
-            <span className="answer-shown">{card.japanese}</span>
-          </div>
-          <button className="next-btn" onClick={() => onAnswer(1)}>
-            Next card →
-          </button>
-        </>
+        <div className="feedback incorrect">
+          <span className="answer-shown">{card.japanese}</span>
+        </div>
       )}
 
       {errorMsg && <div className="error-msg">{errorMsg}</div>}

@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
 import { RecordButton } from './RecordButton'
-import { RatingButtons } from './RatingButtons'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { compareEnglish } from '../utils/normalize'
@@ -29,10 +28,18 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
     onError: setErrorMsg,
   })
 
+  // Auto-advance: quick flash then move on
+  useEffect(() => {
+    if (!result) return
+    const delay = result === 'correct' ? 1200 : 2500
+    const timer = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1), delay)
+    return () => clearTimeout(timer)
+  }, [result, onAnswer])
+
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
 
   return (
-    <div className="flashcard">
+    <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
       <CardTypeBadge type={cardType} />
       <div className="card-label">What does this mean in English?</div>
 
@@ -46,33 +53,29 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
       <div className="card-hint">Speak the English translation</div>
 
       {result === null && (
-        <RecordButton
-          isListening={isListening}
-          onStart={start}
-          onStop={stop}
-          disabled={isSpeaking}
-        />
+        <div className="answer-actions">
+          <RecordButton
+            isListening={isListening}
+            onStart={start}
+            onStop={stop}
+            disabled={isSpeaking}
+          />
+          <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">
+            ?
+          </button>
+        </div>
       )}
 
       {result === 'correct' && (
-        <>
-          <div className="feedback correct">
-            Correct! <span className="answer-shown">{primaryEnglish}</span>
-          </div>
-          <RatingButtons onRate={onAnswer} />
-        </>
+        <div className="feedback correct">
+          ✓ <span className="answer-shown">{primaryEnglish}</span>
+        </div>
       )}
 
       {result === 'incorrect' && (
-        <>
-          <div className="feedback incorrect">
-            Incorrect — the answer is:{' '}
-            <span className="answer-shown">{card.english.join(' / ')}</span>
-          </div>
-          <button className="next-btn" onClick={() => onAnswer(1)}>
-            Next card →
-          </button>
-        </>
+        <div className="feedback incorrect">
+          <span className="answer-shown">{card.english.join(' / ')}</span>
+        </div>
       )}
 
       {errorMsg && <div className="error-msg">{errorMsg}</div>}

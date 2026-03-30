@@ -169,20 +169,16 @@ test.describe('Mode 1 — say in Japanese', () => {
     await expect(page.locator('.answer-shown')).toBeVisible()
   })
 
-  test('correct answer shows rating buttons', async ({ page }) => {
+  test('dont-know button is visible before answering', async ({ page }) => {
     await setup(page)
-    await speak(page, ['たべる'])
-    await expect(page.locator('.rating-buttons')).toBeVisible()
-    await expect(page.locator('.rating-hard')).toBeVisible()
-    await expect(page.locator('.rating-good')).toBeVisible()
-    await expect(page.locator('.rating-easy')).toBeVisible()
+    await expect(page.locator('.dont-know-btn')).toBeVisible()
   })
 
-  test('incorrect answer shows next-card button, no rating buttons', async ({ page }) => {
+  test('dont-know button reveals the answer as incorrect', async ({ page }) => {
     await setup(page)
-    await speak(page, ['まったくちがう'])
-    await expect(page.locator('.next-btn')).toBeVisible()
-    await expect(page.locator('.rating-buttons')).not.toBeVisible()
+    await page.locator('.dont-know-btn').click()
+    await expect(page.locator('.feedback.incorrect')).toBeVisible()
+    await expect(page.locator('.answer-shown')).toBeVisible()
   })
 
   test('record button disappears after answer is submitted', async ({ page }) => {
@@ -197,39 +193,39 @@ test.describe('Mode 1 — say in Japanese', () => {
 // ---------------------------------------------------------------------------
 
 test.describe('Card progression', () => {
-  test('clicking Good after correct answer advances to next card', async ({ page }) => {
+  test('correct answer auto-advances to next card', async ({ page }) => {
     await setup(page)
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
-    // New card is shown — record button re-appears
-    await expect(page.locator('.record-btn')).toBeVisible()
-    // Feedback from previous card is gone
+    await expect(page.locator('.feedback.correct')).toBeVisible()
+    // Auto-advances after ~1.2s — wait for the new card's record button
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
     await expect(page.locator('.feedback')).not.toBeVisible()
   })
 
-  test('clicking next after incorrect advances to next card', async ({ page }) => {
+  test('incorrect answer auto-advances to next card', async ({ page }) => {
     await setup(page)
     await speak(page, ['まったくちがう'])
-    await page.locator('.next-btn').click()
-    await expect(page.locator('.record-btn')).toBeVisible()
+    await expect(page.locator('.feedback.incorrect')).toBeVisible()
+    // Auto-advances after ~2.5s
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 6000 })
     await expect(page.locator('.feedback')).not.toBeVisible()
   })
 
-  test('session reviewed count increments after each card', async ({ page }) => {
+  test('session reviewed count increments after auto-advance', async ({ page }) => {
     await setup(page)
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('1')
 
     await speak(page, ['まったくちがう'])
-    await page.locator('.next-btn').click()
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 6000 })
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('2')
   })
 
-  test('new count decrements as new cards are reviewed', async ({ page }) => {
+  test('new count decrements after auto-advance', async ({ page }) => {
     await setup(page)
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
     await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
   })
 })
@@ -278,7 +274,8 @@ test.describe('SRS persistence', () => {
   test('reviewed card state is saved to localStorage', async ({ page }) => {
     await setup(page)
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
+    // wait for auto-advance
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
 
     const stored = await page.evaluate(() => {
       const raw = localStorage.getItem('jp-flashcards-srs-v1')
@@ -296,9 +293,9 @@ test.describe('SRS persistence', () => {
 
   test('progress persists across page reload', async ({ page }) => {
     await setup(page)
-    // Review one card
+    // Review one card and wait for auto-advance
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
 
     // Reload page (init script re-runs, localStorage preserved)
     await page.reload()
@@ -311,9 +308,9 @@ test.describe('SRS persistence', () => {
 
   test('reset button clears all SRS progress', async ({ page }) => {
     await setup(page)
-    // Review a card first
+    // Review a card first and wait for auto-advance
     await speak(page, ['たべる'])
-    await page.locator('.rating-good').click()
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
 
     // Reset
     page.once('dialog', (dialog) => dialog.accept())
