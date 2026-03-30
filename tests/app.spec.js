@@ -83,6 +83,8 @@ async function setup(page) {
     localStorage.removeItem('jp-flashcards-srs-v1')
   })
   await page.reload()
+  // Wait for kuromoji dictionary to finish loading (served from /dict)
+  await page.waitForSelector('.flashcard', { timeout: 35_000 })
 }
 
 /** Simulate the user pressing the record button and speaking. */
@@ -300,7 +302,7 @@ test.describe('SRS persistence', () => {
 
     // Reload page (init script re-runs, localStorage preserved)
     await page.reload()
-    await page.waitForSelector('.session-stats')
+    await page.waitForSelector('.flashcard', { timeout: 35_000 })
 
     // Due count should still be 0 (card is not due yet), new count = 39
     await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
@@ -350,7 +352,7 @@ test.describe('Extra practice', () => {
     }, futureDate)
 
     await page.reload()
-    await page.waitForSelector('.session-stats')
+    await page.waitForSelector('.flashcard', { timeout: 35_000 })
 
     // All cards are upcoming — scheduler returns 'extra' type
     await expect(page.locator('.badge-extra')).toBeVisible()

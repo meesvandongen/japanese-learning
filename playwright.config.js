@@ -2,8 +2,8 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 15_000,
-  expect: { timeout: 5_000 },
+  timeout: 40_000,
+  expect: { timeout: 30_000 },
   fullyParallel: false,
   reporter: 'list',
 
@@ -23,6 +23,5 @@ export default defineConfig({
     command: 'npm run dev',
     port: 5173,
     reuseExistingServer: true,
-    env: { VITE_MOCK_KUROMOJI: 'true' },
   },
 })

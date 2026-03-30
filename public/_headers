@@ -1,0 +1,6 @@
+# Serve kuromoji dict files as raw binary — do NOT let Cloudflare decompress
+# them. kuromoji's BrowserDictionaryLoader decompresses the gzip bytes itself.
+/dict/*.dat.gz
+  Content-Type: application/octet-stream
+  Content-Encoding: identity
+  Cache-Control: public, max-age=31536000, immutable

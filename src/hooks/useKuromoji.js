@@ -1,25 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
 
-// Lightweight mock tokenizer used during e2e tests (VITE_MOCK_KUROMOJI=true).
-// Returns each character as its own token with reading === surface_form so
-// hiragana strings pass through wanakana.toHiragana unchanged.
-function mockTokenizer() {
-  return {
-    tokenize: (text) =>
-      [...text].map((char) => ({ surface_form: char, reading: char })),
-  }
-}
+// kuromoji is loaded as a classic <script> tag (public/kuromoji.js) which sets
+// window.kuromoji. This keeps it completely outside Vite/Cloudflare's module
+// bundler and avoids CJS-in-ESM issues with its zlibjs dependency.
+// Dictionary files are served from /dict (copied from node_modules at postinstall).
 
 async function buildTokenizer() {
-  if (import.meta.env.VITE_MOCK_KUROMOJI === 'true') {
-    return mockTokenizer()
-  }
-  // Dynamic import keeps kuromoji (and its zlibjs dep) out of the initial bundle
-  // and prevents its module-level side-effects from running during tests.
-  const kuromoji = await import('kuromoji')
+  const kuromoji = window.kuromoji
+  if (!kuromoji) throw new Error('kuromoji script not loaded')
   return new Promise((resolve, reject) => {
-    kuromoji.default
-      .builder({ dicPath: 'https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict' })
+    kuromoji
+      .builder({ dicPath: '/dict' })
       .build((err, tokenizer) => {
         if (err) reject(err)
         else resolve(tokenizer)
