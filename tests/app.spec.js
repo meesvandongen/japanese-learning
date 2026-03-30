@@ -356,3 +356,68 @@ test.describe('Extra practice', () => {
     await expect(page.locator('.caught-up-badge')).toBeVisible()
   })
 })
+
+// ---------------------------------------------------------------------------
+// Tests — Profile page
+// ---------------------------------------------------------------------------
+
+test.describe('Profile page', () => {
+  test('Profile tab opens the profile page', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    await expect(page.locator('.profile-page')).toBeVisible()
+    await expect(page.locator('.summary-grid')).toBeVisible()
+    await expect(page.locator('.word-table')).toBeVisible()
+  })
+
+  test('shows correct total word count', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    // 40 total words, first summary card
+    await expect(page.locator('.summary-card').first()).toContainText('40')
+  })
+
+  test('all 40 words listed in All tab', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    await expect(page.locator('.word-row')).toHaveCount(40)
+  })
+
+  test('new words show New badge when nothing reviewed', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    await expect(page.locator('.badge-new').first()).toBeVisible()
+    // No learning or mastered rows
+    await expect(page.locator('.badge-learning')).toHaveCount(0)
+    await expect(page.locator('.badge-mastered')).toHaveCount(0)
+  })
+
+  test('reviewed card appears as Learning in profile', async ({ page }) => {
+    await setup(page)
+    // Review first card correctly and wait for auto-advance
+    await speak(page, ['たべる'])
+    await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
+
+    await page.getByRole('button', { name: 'Profile' }).click()
+    // たべる should now be Learning
+    await expect(page.locator('.badge-learning')).toHaveCount(1)
+    await expect(page.locator('.badge-new')).toHaveCount(39)
+  })
+
+  test('New filter shows only new cards', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.locator('.profile-tab', { hasText: 'New' }).click()
+    const rows = page.locator('.word-row')
+    await expect(rows).toHaveCount(40)
+    await expect(page.locator('.badge-new')).toHaveCount(40)
+  })
+
+  test('Study tab returns to flashcard view', async ({ page }) => {
+    await setup(page)
+    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.getByRole('button', { name: 'Study' }).click()
+    await expect(page.locator('.flashcard')).toBeVisible()
+    await expect(page.locator('.profile-page')).not.toBeVisible()
+  })
+})

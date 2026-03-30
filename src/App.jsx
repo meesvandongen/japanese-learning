@@ -3,6 +3,7 @@ import { useKuromoji } from './hooks/useKuromoji'
 import { FlashcardMode1 } from './components/FlashcardMode1'
 import { FlashcardMode4 } from './components/FlashcardMode4'
 import { SessionStats } from './components/SessionStats'
+import { ProfilePage } from './components/ProfilePage'
 import { appStore } from './store/appStore'
 import { useStore } from './store/index'
 import { applyReview } from './srs/sm2'
@@ -10,30 +11,24 @@ import { getNextCard, getSessionStats } from './srs/scheduler'
 import vocabulary from './data/vocabulary'
 
 export default function App() {
+  const [page, setPage] = useState('study') // 'study' | 'profile'
   const [mode, setMode] = useState(1) // 1 | 4
   const [reviewedCount, setReviewedCount] = useState(0)
   const [lastShownId, setLastShownId] = useState(null)
-  const [cardKey, setCardKey] = useState(0) // forces remount on advance
+  const [cardKey, setCardKey] = useState(0)
 
   const cardStates = useStore(appStore, (s) => s.cards)
   const { tokenizer, isLoading, isError } = useKuromoji()
 
-  // Derive current card from SRS scheduler
   const { card, cardType } = getNextCard(vocabulary, cardStates, lastShownId)
   const { dueCount, newCount } = getSessionStats(vocabulary, cardStates)
 
-  // Next due date for "all caught up" display
   const nextDueDate = cardType === 'extra'
-    ? Math.min(
-        ...vocabulary
-          .map((v) => cardStates[v.kana]?.dueDate)
-          .filter(Boolean)
-      )
+    ? Math.min(...vocabulary.map((v) => cardStates[v.kana]?.dueDate).filter(Boolean))
     : null
 
   const handleAnswer = useCallback(
     (quality) => {
-      // Apply SM-2 to the current card
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
       appStore.setState((s) => ({
@@ -41,7 +36,7 @@ export default function App() {
       }))
       setLastShownId(card.kana)
       setReviewedCount((n) => n + 1)
-      setCardKey((k) => k + 1) // remount flashcard component
+      setCardKey((k) => k + 1)
     },
     [card, cardStates]
   )
@@ -66,67 +61,90 @@ export default function App() {
       <header className="app-header">
         <div className="header-top">
           <h1>Japanese Flashcards</h1>
-          <button className="reset-btn" onClick={handleReset} title="Reset progress">
-            Reset
-          </button>
+          <div className="header-actions">
+            <button
+              className={`nav-tab ${page === 'study' ? 'active' : ''}`}
+              onClick={() => setPage('study')}
+            >
+              Study
+            </button>
+            <button
+              className={`nav-tab ${page === 'profile' ? 'active' : ''}`}
+              onClick={() => setPage('profile')}
+            >
+              Profile
+            </button>
+            <button className="reset-btn" onClick={handleReset} title="Reset progress">
+              Reset
+            </button>
+          </div>
         </div>
-        <nav className="mode-nav">
-          <button
-            className={mode === 1 ? 'active' : ''}
-            onClick={() => handleModeChange(1)}
-          >
-            Say in Japanese
-          </button>
-          <button
-            className={mode === 4 ? 'active' : ''}
-            onClick={() => handleModeChange(4)}
-          >
-            Translate to English
-          </button>
-        </nav>
+
+        {page === 'study' && (
+          <nav className="mode-nav">
+            <button
+              className={mode === 1 ? 'active' : ''}
+              onClick={() => handleModeChange(1)}
+            >
+              Say in Japanese
+            </button>
+            <button
+              className={mode === 4 ? 'active' : ''}
+              onClick={() => handleModeChange(4)}
+            >
+              Translate to English
+            </button>
+          </nav>
+        )}
       </header>
 
       <main className="app-main">
-        {isLoading && (
-          <div className="loading">
-            <div className="spinner" />
-            <p>Loading Japanese dictionary…</p>
-            <p className="loading-sub">First load ~20MB — subsequent loads are instant</p>
-          </div>
-        )}
+        {page === 'profile' && <ProfilePage />}
 
-        {isError && (
-          <div className="error-msg">
-            Failed to load Japanese dictionary. Check your internet connection and refresh.
-          </div>
-        )}
-
-        {!isLoading && !isError && (
+        {page === 'study' && (
           <>
-            <SessionStats
-              dueCount={dueCount}
-              newCount={newCount}
-              reviewedCount={reviewedCount}
-              nextDueDate={nextDueDate}
-              cardType={cardType}
-            />
-
-            {mode === 1 && (
-              <FlashcardMode1
-                key={`m1-${cardKey}`}
-                card={card}
-                tokenizer={tokenizer}
-                cardType={cardType}
-                onAnswer={handleAnswer}
-              />
+            {isLoading && (
+              <div className="loading">
+                <div className="spinner" />
+                <p>Loading Japanese dictionary…</p>
+                <p className="loading-sub">First load ~20MB — subsequent loads are instant</p>
+              </div>
             )}
-            {mode === 4 && (
-              <FlashcardMode4
-                key={`m4-${cardKey}`}
-                card={card}
-                cardType={cardType}
-                onAnswer={handleAnswer}
-              />
+
+            {isError && (
+              <div className="error-msg">
+                Failed to load Japanese dictionary. Check your internet connection and refresh.
+              </div>
+            )}
+
+            {!isLoading && !isError && (
+              <>
+                <SessionStats
+                  dueCount={dueCount}
+                  newCount={newCount}
+                  reviewedCount={reviewedCount}
+                  nextDueDate={nextDueDate}
+                  cardType={cardType}
+                />
+
+                {mode === 1 && (
+                  <FlashcardMode1
+                    key={`m1-${cardKey}`}
+                    card={card}
+                    tokenizer={tokenizer}
+                    cardType={cardType}
+                    onAnswer={handleAnswer}
+                  />
+                )}
+                {mode === 4 && (
+                  <FlashcardMode4
+                    key={`m4-${cardKey}`}
+                    card={card}
+                    cardType={cardType}
+                    onAnswer={handleAnswer}
+                  />
+                )}
+              </>
             )}
           </>
         )}
