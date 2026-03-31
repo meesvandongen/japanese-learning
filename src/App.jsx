@@ -12,9 +12,8 @@ import { getNextCard, getSessionStats } from './srs/scheduler'
 import vocabulary from './data/vocabulary'
 
 export default function App() {
-  const [page, setPage] = useState('study') // 'study' | 'profile'
+  const [page, setPage] = useState('study') // 'study' | 'profile' | 'settings'
   const [mode, setMode] = useState(1) // 1 | 4
-  const [showSettings, setShowSettings] = useState(false)
   const [reviewedCount, setReviewedCount] = useState(0)
   const [lastShownId, setLastShownId] = useState(null)
   const [cardKey, setCardKey] = useState(0)
@@ -60,7 +59,6 @@ export default function App() {
 
   return (
     <div className="app">
-      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
       <header className="app-header">
         <div className="header-top">
           <h1>Japanese Flashcards</h1>
@@ -77,8 +75,11 @@ export default function App() {
             >
               Profile
             </button>
-            <button className="settings-btn" onClick={() => setShowSettings(true)} title="Settings" aria-label="Settings">
-              ⚙
+            <button
+              className={`nav-tab ${page === 'settings' ? 'active' : ''}`}
+              onClick={() => setPage('settings')}
+            >
+              Settings
             </button>
             <button className="reset-btn" onClick={handleReset} title="Reset progress">
               Reset
@@ -106,6 +107,7 @@ export default function App() {
 
       <main className="app-main">
         {page === 'profile' && <ProfilePage />}
+        {page === 'settings' && <SettingsPanel />}
 
         {page === 'study' && (
           <>

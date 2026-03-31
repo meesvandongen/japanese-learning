@@ -656,53 +656,16 @@ body {
   color: var(--primary);
 }
 
-/* Settings overlay and panel */
-.settings-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 100;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0 0 env(safe-area-inset-bottom, 0);
-}
-
-.settings-panel {
-  background: var(--surface);
-  border-radius: var(--radius) var(--radius) 0 0;
+/* Settings page */
+.settings-page {
   width: 100%;
-  max-width: 640px;
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 24px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 8px 0 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
 }
-
-.settings-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.settings-header h2 {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.settings-close {
-  background: none;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
-  color: var(--muted);
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-.settings-close:hover { color: var(--text); background: var(--border); }
 
 .settings-section h3 {
   font-size: 0.78rem;
@@ -782,3 +745,13 @@ body {
   color: var(--muted);
   border-top: 1px solid var(--border);
 }
+
+/* Transcript (what the microphone heard) */
+.transcript-heard {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+

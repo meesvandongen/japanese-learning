@@ -1,4 +1,5 @@
 import * as wanakana from 'wanakana'
+import { phoneticMatch } from './phonetic'
 
 /**
  * Convert any Japanese text to hiragana using kuromoji readings.
@@ -22,24 +23,6 @@ export function toHiragana(text, tokenizer) {
 
   // Fallback: convert katakana directly, leave hiragana as-is
   return wanakana.toHiragana(cleaned)
-}
-
-/**
- * Soundex phonetic encoding for English words.
- * Two words with the same code sound similar (e.g. "hot" / "hut" → H300).
- */
-function soundex(word) {
-  const map = { b:1,f:1,p:1,v:1, c:2,g:2,j:2,k:2,q:2,s:2,x:2,z:2, d:3,t:3, l:4, m:5,n:5, r:6 }
-  const w = word.replace(/[^a-z]/g, '')
-  if (!w) return ''
-  let code = w[0].toUpperCase()
-  let prev = map[w[0]] ?? 0
-  for (let i = 1; i < w.length && code.length < 4; i++) {
-    const curr = map[w[i]] ?? 0
-    if (curr && curr !== prev) code += curr
-    prev = curr
-  }
-  return code.padEnd(4, '0')
 }
 
 /**
@@ -91,11 +74,15 @@ export function compareJapanese(expected, candidates, tokenizer) {
 /**
  * Compare English: case-insensitive match against accepted synonyms.
  * Combines full-phrase fuzzy matching, word-level token matching, and
- * Soundex phonetic matching to handle extra words ("it's hot" → "hot")
- * and near-homophones ("two" / "too").
+ * configurable phonetic matching.
+ *
+ * @param {string[]} acceptedList
+ * @param {string[]} candidates  — STT transcripts, most confident first
+ * @param {{ phoneticAlgorithm?: 'off'|'soundex'|'metaphone'|'both' }} [config]
  */
-export function compareEnglish(acceptedList, candidates) {
+export function compareEnglish(acceptedList, candidates, { phoneticAlgorithm = 'soundex' } = {}) {
   const norm = (s) => s.toLowerCase().trim().replace(/['']/g, '').replace(/[^a-z0-9\s]/g, '')
+
   for (const candidate of candidates) {
     const normCand = norm(candidate)
     const candWords = normCand.split(/\s+/).filter(Boolean)
@@ -115,8 +102,7 @@ export function compareEnglish(acceptedList, candidates) {
           (candWord) =>
             candWord === accWord ||
             levenshtein(candWord, accWord) <= 1 ||
-            // Soundex phonetic match for words > 2 chars (avoids false positives)
-            (accWord.length > 2 && candWord.length > 2 && soundex(candWord) === soundex(accWord))
+            phoneticMatch(candWord, accWord, phoneticAlgorithm)
         )
       )
       if (allWordsMatch) return true
