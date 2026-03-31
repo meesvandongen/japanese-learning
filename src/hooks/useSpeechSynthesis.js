@@ -4,7 +4,7 @@ export function useSpeechSynthesis() {
   const [isSpeaking, setIsSpeaking] = useState(false)
   const utteranceRef = useRef(null)
 
-  const speak = useCallback((text, lang = 'ja-JP', rate = 0.9) => {
+  const speak = useCallback((text, lang = 'ja-JP', rate = 0.9, onEnd) => {
     window.speechSynthesis.cancel()
     const utterance = new SpeechSynthesisUtterance(text)
     utterance.lang = lang
@@ -20,8 +20,8 @@ export function useSpeechSynthesis() {
     }
 
     utterance.onstart = () => setIsSpeaking(true)
-    utterance.onend = () => setIsSpeaking(false)
-    utterance.onerror = () => setIsSpeaking(false)
+    utterance.onend = () => { setIsSpeaking(false); onEnd?.() }
+    utterance.onerror = () => { setIsSpeaking(false); onEnd?.() }
 
     utteranceRef.current = utterance
     window.speechSynthesis.speak(utterance)

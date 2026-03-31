@@ -4,6 +4,7 @@ import { FlashcardMode1 } from './components/FlashcardMode1'
 import { FlashcardMode4 } from './components/FlashcardMode4'
 import { SessionStats } from './components/SessionStats'
 import { ProfilePage } from './components/ProfilePage'
+import { SettingsPanel } from './components/SettingsPanel'
 import { appStore } from './store/appStore'
 import { useStore } from './store/index'
 import { applyReview } from './srs/sm2'
@@ -13,6 +14,7 @@ import vocabulary from './data/vocabulary'
 export default function App() {
   const [page, setPage] = useState('study') // 'study' | 'profile'
   const [mode, setMode] = useState(1) // 1 | 4
+  const [showSettings, setShowSettings] = useState(false)
   const [reviewedCount, setReviewedCount] = useState(0)
   const [lastShownId, setLastShownId] = useState(null)
   const [cardKey, setCardKey] = useState(0)
@@ -58,6 +60,7 @@ export default function App() {
 
   return (
     <div className="app">
+      {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
       <header className="app-header">
         <div className="header-top">
           <h1>Japanese Flashcards</h1>
@@ -73,6 +76,9 @@ export default function App() {
               onClick={() => setPage('profile')}
             >
               Profile
+            </button>
+            <button className="settings-btn" onClick={() => setShowSettings(true)} title="Settings" aria-label="Settings">
+              ⚙
             </button>
             <button className="reset-btn" onClick={handleReset} title="Reset progress">
               Reset
