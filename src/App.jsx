@@ -13,32 +13,20 @@ import { useStore } from './store/index'
 import { applyReview } from './srs/sm2'
 import { getNextCard, getSessionStats } from './srs/scheduler'
 
+/**
+ * App — onboarding gate and manifest loader.
+ *
+ * Renders loading/error states and the language/level selectors until the user
+ * has made their selections, then hands off to StudyApp which owns all
+ * study-specific state. Keeping the onboarding gates here (before StudyApp
+ * mounts) means StudyApp's hooks are always called unconditionally.
+ */
 export default function App() {
-  const [page, setPage] = useState('study') // 'study' | 'profile' | 'settings'
-  const [mode, setMode] = useState(1) // 1 | 4
-  const [reviewedCount, setReviewedCount] = useState(0)
-  const [lastShownId, setLastShownId] = useState(null)
-  const [cardKey, setCardKey] = useState(0)
-
-  const cardStates = useStore(appStore, (s) => s.cards)
   const selectedLanguageId = useStore(appStore, (s) => s.selectedLanguageId)
   const selectedLevelId = useStore(appStore, (s) => s.selectedLevelId)
 
-  const {
-    words,
-    isManifestLoading,
-    isManifestError,
-    isVocabLoading,
-    isVocabError,
-    manifest,
-    activeLang,
-    activeLevel,
-  } = useVocabulary(selectedLanguageId, selectedLevelId)
-
-  const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
-
-  // ── Onboarding gates ──────────────────────────────────────────────────────
-  // These render before the full app shell so there's no header/footer chrome.
+  const { words, isManifestLoading, isManifestError, isVocabLoading, isVocabError, manifest, activeLang, activeLevel } =
+    useVocabulary(selectedLanguageId, selectedLevelId)
 
   if (isManifestLoading) {
     return (
@@ -70,9 +58,7 @@ export default function App() {
         <main className="app-main">
           <LanguageSelector
             manifest={manifest}
-            onSelect={(id) =>
-              appStore.setState({ selectedLanguageId: id, selectedLevelId: null })
-            }
+            onSelect={(id) => appStore.setState({ selectedLanguageId: id, selectedLevelId: null })}
           />
         </main>
       </div>
@@ -93,7 +79,33 @@ export default function App() {
     )
   }
 
-  // ── Scheduler (safe to call — words may be [] during vocab fetch) ─────────
+  return (
+    <StudyApp
+      words={words}
+      isVocabLoading={isVocabLoading}
+      isVocabError={isVocabError}
+      manifest={manifest}
+      activeLang={activeLang}
+      activeLevel={activeLevel}
+    />
+  )
+}
+
+/**
+ * StudyApp — the full app shell, rendered only after onboarding is complete.
+ *
+ * All hooks here are unconditional — the component is either mounted or not.
+ */
+function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, activeLevel }) {
+  const [page, setPage] = useState('study') // 'study' | 'profile' | 'settings'
+  const [mode, setMode] = useState(1) // 1 | 4
+  const [reviewedCount, setReviewedCount] = useState(0)
+  const [lastShownId, setLastShownId] = useState(null)
+  const [cardKey, setCardKey] = useState(0)
+
+  const cardStates = useStore(appStore, (s) => s.cards)
+  const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
+
   const { card, cardType } = getNextCard(words, cardStates, lastShownId)
   const { dueCount, newCount } = getSessionStats(words, cardStates)
 
@@ -102,14 +114,11 @@ export default function App() {
       ? Math.min(...words.map((v) => cardStates[v.kana]?.dueDate).filter(Boolean))
       : null
 
-  // ── Event handlers ────────────────────────────────────────────────────────
   const handleAnswer = useCallback(
     (quality) => {
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
-      appStore.setState((s) => ({
-        cards: { ...s.cards, [card.kana]: updated },
-      }))
+      appStore.setState((s) => ({ cards: { ...s.cards, [card.kana]: updated } }))
       setLastShownId(card.kana)
       setReviewedCount((n) => n + 1)
       setCardKey((k) => k + 1)
@@ -142,16 +151,13 @@ export default function App() {
     }
   }
 
-  // ── Full app shell ────────────────────────────────────────────────────────
   return (
     <div className="app">
       <header className="app-header">
         <div className="header-top">
           <h1>
             {activeLang?.name ?? 'Flashcards'}
-            {activeLevel && (
-              <span className="header-level-badge">{activeLevel.label}</span>
-            )}
+            {activeLevel && <span className="header-level-badge">{activeLevel.label}</span>}
           </h1>
           <div className="header-actions">
             <button
@@ -180,16 +186,10 @@ export default function App() {
 
         {page === 'study' && (
           <nav className="mode-nav">
-            <button
-              className={mode === 1 ? 'active' : ''}
-              onClick={() => handleModeChange(1)}
-            >
+            <button className={mode === 1 ? 'active' : ''} onClick={() => handleModeChange(1)}>
               Say in Japanese
             </button>
-            <button
-              className={mode === 4 ? 'active' : ''}
-              onClick={() => handleModeChange(4)}
-            >
+            <button className={mode === 4 ? 'active' : ''} onClick={() => handleModeChange(4)}>
               Translate to English
             </button>
           </nav>

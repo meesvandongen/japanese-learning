@@ -3,7 +3,6 @@ import { useStore } from '../store/index'
 import { appStore } from '../store/appStore'
 import { formatDue } from '../srs/sm2'
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000
 const MASTERED_INTERVAL = 21 // days — considered mastered
 
 function classifyCard(state) {
