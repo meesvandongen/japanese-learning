@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "languages": [
+    {
+      "id": "ja",
+      "name": "Japanese",
+      "levels": [
+        {
+          "id": "n5",
+          "label": "JLPT N5",
+          "description": "Beginner — everyday basics",
+          "wordCount": 40,
+          "file": "ja/n5.json"
+        }
+      ]
+    }
+  ]
+}

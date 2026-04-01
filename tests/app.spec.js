@@ -77,10 +77,14 @@ function speechMockScript() {
 
 async function setup(page) {
   await page.addInitScript(speechMockScript)
-  // Clear SRS progress for a clean slate
+  // Seed localStorage with a clean SRS slate and pre-selected language/level
+  // so the onboarding screen is skipped and we land directly in the study view.
   await page.goto('/')
   await page.evaluate(() => {
-    localStorage.removeItem('jp-flashcards-srs-v1')
+    localStorage.setItem(
+      'jp-flashcards-srs-v1',
+      JSON.stringify({ cards: {}, selectedLanguageId: 'ja', selectedLevelId: 'n5' })
+    )
   })
   await page.reload()
   // Wait for kuromoji dictionary to finish loading (served from /dict)
@@ -103,7 +107,7 @@ async function speak(page, transcripts) {
 test.describe('App loads', () => {
   test('renders header and default mode 1 card', async ({ page }) => {
     await setup(page)
-    await expect(page.locator('h1')).toHaveText('Japanese Flashcards')
+    await expect(page.locator('h1')).toContainText('Japanese')
     await expect(page.locator('.card-label')).toHaveText('Say this in Japanese:')
     await expect(page.locator('.record-btn')).toBeVisible()
   })

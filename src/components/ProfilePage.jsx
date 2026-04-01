@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useStore } from '../store/index'
 import { appStore } from '../store/appStore'
 import { formatDue } from '../srs/sm2'
-import vocabulary from '../data/vocabulary'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000
 const MASTERED_INTERVAL = 21 // days — considered mastered
@@ -17,23 +16,25 @@ function classifyCard(state) {
 const STATUS_ORDER = { overdue: 0, learning: 1, new: 2, mastered: 3 }
 const STATUS_LABEL = { overdue: 'Overdue', learning: 'Learning', new: 'New', mastered: 'Mastered' }
 
-export function ProfilePage() {
+/**
+ * Props:
+ *   words       — fetched vocabulary array for the active level (passed from App)
+ *   activeLang  — language entry from manifest (for display)
+ *   activeLevel — level entry from manifest (for display)
+ */
+export function ProfilePage({ words, activeLang, activeLevel }) {
   const cardStates = useStore(appStore, (s) => s.cards)
   const [filter, setFilter] = useState('all')
 
-  const words = vocabulary.map((v) => {
+  const enriched = words.map((v) => {
     const state = cardStates[v.kana] ?? null
-    return {
-      ...v,
-      state,
-      status: classifyCard(state),
-    }
+    return { ...v, state, status: classifyCard(state) }
   })
 
   const counts = { overdue: 0, learning: 0, new: 0, mastered: 0 }
-  for (const w of words) counts[w.status]++
+  for (const w of enriched) counts[w.status]++
 
-  const filtered = (filter === 'all' ? words : words.filter((w) => w.status === filter))
+  const filtered = (filter === 'all' ? enriched : enriched.filter((w) => w.status === filter))
     .slice()
     .sort((a, b) => {
       const sd = STATUS_ORDER[a.status] - STATUS_ORDER[b.status]
@@ -44,17 +45,16 @@ export function ProfilePage() {
     })
 
   const tabs = [
-    { key: 'all', label: 'All', count: vocabulary.length },
-    { key: 'overdue', label: 'Overdue', count: counts.overdue },
+    { key: 'all',      label: 'All',      count: words.length },
+    { key: 'overdue',  label: 'Overdue',  count: counts.overdue },
     { key: 'learning', label: 'Learning', count: counts.learning },
-    { key: 'new', label: 'New', count: counts.new },
+    { key: 'new',      label: 'New',      count: counts.new },
     { key: 'mastered', label: 'Mastered', count: counts.mastered },
   ]
 
-  // Summary stats
-  const reviewedTotal = words.filter((w) => w.state?.lastReview).length
+  const reviewedTotal = enriched.filter((w) => w.state?.lastReview).length
   const avgEase = (() => {
-    const seen = words.filter((w) => w.state)
+    const seen = enriched.filter((w) => w.state)
     if (!seen.length) return null
     return (seen.reduce((s, w) => s + w.state.easeFactor, 0) / seen.length).toFixed(2)
   })()
@@ -63,7 +63,7 @@ export function ProfilePage() {
     <div className="profile-page">
       {/* Summary cards */}
       <div className="summary-grid">
-        <SummaryCard value={vocabulary.length} label="Total words" />
+        <SummaryCard value={words.length} label={activeLevel?.label ?? 'Total words'} />
         <SummaryCard value={reviewedTotal} label="Ever reviewed" accent="learning" />
         <SummaryCard value={counts.mastered} label="Mastered" accent="mastered" />
         <SummaryCard value={counts.overdue} label="Due now" accent="overdue" />

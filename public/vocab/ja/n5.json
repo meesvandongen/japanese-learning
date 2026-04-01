@@ -1,0 +1,370 @@
+{
+  "language": "ja",
+  "level": "n5",
+  "words": [
+    {
+      "id": "たべる",
+      "kana": "たべる",
+      "japanese": "たべる",
+      "english": [
+        "eat",
+        "to eat"
+      ]
+    },
+    {
+      "id": "のむ",
+      "kana": "のむ",
+      "japanese": "のむ",
+      "english": [
+        "drink",
+        "to drink"
+      ]
+    },
+    {
+      "id": "いく",
+      "kana": "いく",
+      "japanese": "いく",
+      "english": [
+        "go",
+        "to go"
+      ]
+    },
+    {
+      "id": "くる",
+      "kana": "くる",
+      "japanese": "くる",
+      "english": [
+        "come",
+        "to come"
+      ]
+    },
+    {
+      "id": "みる",
+      "kana": "みる",
+      "japanese": "みる",
+      "english": [
+        "see",
+        "to see",
+        "look",
+        "to look",
+        "watch",
+        "to watch"
+      ]
+    },
+    {
+      "id": "する",
+      "kana": "する",
+      "japanese": "する",
+      "english": [
+        "do",
+        "to do"
+      ]
+    },
+    {
+      "id": "はなす",
+      "kana": "はなす",
+      "japanese": "はなす",
+      "english": [
+        "speak",
+        "to speak",
+        "talk",
+        "to talk"
+      ]
+    },
+    {
+      "id": "きく",
+      "kana": "きく",
+      "japanese": "きく",
+      "english": [
+        "listen",
+        "to listen",
+        "hear",
+        "to hear"
+      ]
+    },
+    {
+      "id": "よむ",
+      "kana": "よむ",
+      "japanese": "よむ",
+      "english": [
+        "read",
+        "to read"
+      ]
+    },
+    {
+      "id": "かく",
+      "kana": "かく",
+      "japanese": "かく",
+      "english": [
+        "write",
+        "to write"
+      ]
+    },
+    {
+      "id": "かう",
+      "kana": "かう",
+      "japanese": "かう",
+      "english": [
+        "buy",
+        "to buy"
+      ]
+    },
+    {
+      "id": "うる",
+      "kana": "うる",
+      "japanese": "うる",
+      "english": [
+        "sell",
+        "to sell"
+      ]
+    },
+    {
+      "id": "ねる",
+      "kana": "ねる",
+      "japanese": "ねる",
+      "english": [
+        "sleep",
+        "to sleep"
+      ]
+    },
+    {
+      "id": "おきる",
+      "kana": "おきる",
+      "japanese": "おきる",
+      "english": [
+        "wake up",
+        "to wake up"
+      ]
+    },
+    {
+      "id": "たつ",
+      "kana": "たつ",
+      "japanese": "たつ",
+      "english": [
+        "stand",
+        "to stand",
+        "stand up"
+      ]
+    },
+    {
+      "id": "すわる",
+      "kana": "すわる",
+      "japanese": "すわる",
+      "english": [
+        "sit",
+        "to sit",
+        "sit down"
+      ]
+    },
+    {
+      "id": "かえる",
+      "kana": "かえる",
+      "japanese": "かえる",
+      "english": [
+        "return",
+        "to return",
+        "go home",
+        "to go home"
+      ]
+    },
+    {
+      "id": "はいる",
+      "kana": "はいる",
+      "japanese": "はいる",
+      "english": [
+        "enter",
+        "to enter"
+      ]
+    },
+    {
+      "id": "でる",
+      "kana": "でる",
+      "japanese": "でる",
+      "english": [
+        "exit",
+        "to exit",
+        "go out",
+        "to go out",
+        "leave",
+        "to leave"
+      ]
+    },
+    {
+      "id": "わかる",
+      "kana": "わかる",
+      "japanese": "わかる",
+      "english": [
+        "understand",
+        "to understand"
+      ]
+    },
+    {
+      "id": "みず",
+      "kana": "みず",
+      "japanese": "みず",
+      "english": [
+        "water"
+      ]
+    },
+    {
+      "id": "たべもの",
+      "kana": "たべもの",
+      "japanese": "たべもの",
+      "english": [
+        "food"
+      ]
+    },
+    {
+      "id": "ひと",
+      "kana": "ひと",
+      "japanese": "ひと",
+      "english": [
+        "person",
+        "people"
+      ]
+    },
+    {
+      "id": "じかん",
+      "kana": "じかん",
+      "japanese": "じかん",
+      "english": [
+        "time"
+      ]
+    },
+    {
+      "id": "ひ",
+      "kana": "ひ",
+      "japanese": "ひ",
+      "english": [
+        "day",
+        "daytime"
+      ]
+    },
+    {
+      "id": "ほん",
+      "kana": "ほん",
+      "japanese": "ほん",
+      "english": [
+        "book"
+      ]
+    },
+    {
+      "id": "おかね",
+      "kana": "おかね",
+      "japanese": "おかね",
+      "english": [
+        "money"
+      ]
+    },
+    {
+      "id": "がっこう",
+      "kana": "がっこう",
+      "japanese": "がっこう",
+      "english": [
+        "school"
+      ]
+    },
+    {
+      "id": "くるま",
+      "kana": "くるま",
+      "japanese": "くるま",
+      "english": [
+        "car"
+      ]
+    },
+    {
+      "id": "いえ",
+      "kana": "いえ",
+      "japanese": "いえ",
+      "english": [
+        "house",
+        "home"
+      ]
+    },
+    {
+      "id": "おおきい",
+      "kana": "おおきい",
+      "japanese": "おおきい",
+      "english": [
+        "big",
+        "large"
+      ]
+    },
+    {
+      "id": "ちいさい",
+      "kana": "ちいさい",
+      "japanese": "ちいさい",
+      "english": [
+        "small",
+        "little"
+      ]
+    },
+    {
+      "id": "あたらしい",
+      "kana": "あたらしい",
+      "japanese": "あたらしい",
+      "english": [
+        "new"
+      ]
+    },
+    {
+      "id": "ふるい",
+      "kana": "ふるい",
+      "japanese": "ふるい",
+      "english": [
+        "old"
+      ]
+    },
+    {
+      "id": "いい",
+      "kana": "いい",
+      "japanese": "いい",
+      "english": [
+        "good"
+      ]
+    },
+    {
+      "id": "わるい",
+      "kana": "わるい",
+      "japanese": "わるい",
+      "english": [
+        "bad"
+      ]
+    },
+    {
+      "id": "はやい",
+      "kana": "はやい",
+      "japanese": "はやい",
+      "english": [
+        "fast",
+        "quick",
+        "early"
+      ]
+    },
+    {
+      "id": "おそい",
+      "kana": "おそい",
+      "japanese": "おそい",
+      "english": [
+        "slow",
+        "late"
+      ]
+    },
+    {
+      "id": "あつい",
+      "kana": "あつい",
+      "japanese": "あつい",
+      "english": [
+        "hot"
+      ]
+    },
+    {
+      "id": "さむい",
+      "kana": "さむい",
+      "japanese": "さむい",
+      "english": [
+        "cold"
+      ]
+    }
+  ]
+}
