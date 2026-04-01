@@ -8,31 +8,20 @@ export function SettingsPanel() {
     settingsStore.setState({ [key]: value })
   }
 
+  function toggle(key) {
+    settingsStore.setState({ [key]: !settings[key] })
+  }
+
   return (
     <div className="settings-page">
       <section className="settings-section">
         <h3>Listening mode</h3>
         <div className="settings-options">
-          <label className={`settings-option ${settings.listeningMode === 'hold' ? 'active' : ''}`}>
+          <label className={`settings-option ${settings.autoListen ? 'active' : ''}`}>
             <input
-              type="radio"
-              name="listeningMode"
-              value="hold"
-              checked={settings.listeningMode === 'hold'}
-              onChange={() => set('listeningMode', 'hold')}
-            />
-            <div>
-              <strong>Hold to speak</strong>
-              <span>Hold the button while speaking</span>
-            </div>
-          </label>
-          <label className={`settings-option ${settings.listeningMode === 'auto' ? 'active' : ''}`}>
-            <input
-              type="radio"
-              name="listeningMode"
-              value="auto"
-              checked={settings.listeningMode === 'auto'}
-              onChange={() => set('listeningMode', 'auto')}
+              type="checkbox"
+              checked={settings.autoListen}
+              onChange={() => toggle('autoListen')}
             />
             <div>
               <strong>Auto-start</strong>
@@ -42,7 +31,7 @@ export function SettingsPanel() {
         </div>
       </section>
 
-      {settings.listeningMode === 'auto' && (
+      {settings.autoListen && (
         <section className="settings-section">
           <h3>Auto-start delay</h3>
           <div className="settings-slider-row">
@@ -60,7 +49,7 @@ export function SettingsPanel() {
         </section>
       )}
 
-      {settings.listeningMode === 'auto' && (
+      {settings.autoListen && (
         <section className="settings-section">
           <h3>Max listen duration</h3>
           <div className="settings-slider-row">
@@ -83,43 +72,26 @@ export function SettingsPanel() {
       <section className="settings-section">
         <h3>Feedback mode</h3>
         <div className="settings-options">
-          <label className={`settings-option ${settings.feedbackMode === 'text' ? 'active' : ''}`}>
+          <label className={`settings-option ${settings.feedbackText ? 'active' : ''}`}>
             <input
-              type="radio"
-              name="feedbackMode"
-              value="text"
-              checked={settings.feedbackMode === 'text'}
-              onChange={() => set('feedbackMode', 'text')}
+              type="checkbox"
+              checked={settings.feedbackText}
+              onChange={() => toggle('feedbackText')}
             />
             <div>
-              <strong>Text only</strong>
+              <strong>Show text</strong>
               <span>Show the answer on screen</span>
             </div>
           </label>
-          <label className={`settings-option ${settings.feedbackMode === 'voice' ? 'active' : ''}`}>
+          <label className={`settings-option ${settings.feedbackVoice ? 'active' : ''}`}>
             <input
-              type="radio"
-              name="feedbackMode"
-              value="voice"
-              checked={settings.feedbackMode === 'voice'}
-              onChange={() => set('feedbackMode', 'voice')}
+              type="checkbox"
+              checked={settings.feedbackVoice}
+              onChange={() => toggle('feedbackVoice')}
             />
             <div>
-              <strong>Voice only</strong>
+              <strong>Speak answer</strong>
               <span>Speak the answer aloud (good for background use)</span>
-            </div>
-          </label>
-          <label className={`settings-option ${settings.feedbackMode === 'both' ? 'active' : ''}`}>
-            <input
-              type="radio"
-              name="feedbackMode"
-              value="both"
-              checked={settings.feedbackMode === 'both'}
-              onChange={() => set('feedbackMode', 'both')}
-            />
-            <div>
-              <strong>Text and voice</strong>
-              <span>Show and speak the answer</span>
             </div>
           </label>
         </div>
@@ -128,50 +100,45 @@ export function SettingsPanel() {
       <section className="settings-section">
         <h3>Phonetic matching</h3>
         <div className="settings-options">
-          {[
-            { value: 'off',       label: 'Off',       desc: 'Spelling and fuzzy-spelling match only.' },
-            { value: 'soundex',   label: 'Soundex',   desc: 'Catches vowel variations (hot / hut) and same-consonant homophones (two / too).' },
-            { value: 'metaphone', label: 'Metaphone', desc: 'Better for silent-letter homophones (write / right, know / no). May miss some vowel homophones.' },
-            { value: 'both',      label: 'Both',      desc: 'Union of Soundex and Metaphone. Highest coverage, slightly higher false-positive rate.' },
-          ].map(({ value, label, desc }) => (
-            <label key={value} className={`settings-option ${settings.phoneticAlgorithm === value ? 'active' : ''}`}>
-              <input
-                type="radio"
-                name="phoneticAlgorithm"
-                value={value}
-                checked={settings.phoneticAlgorithm === value}
-                onChange={() => set('phoneticAlgorithm', value)}
-              />
-              <div>
-                <strong>{label}</strong>
-                <span>{desc}</span>
-              </div>
-            </label>
-          ))}
+          <label className={`settings-option ${settings.phoneticSoundex ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.phoneticSoundex}
+              onChange={() => toggle('phoneticSoundex')}
+            />
+            <div>
+              <strong>Soundex</strong>
+              <span>Catches vowel variations (hot / hut) and same-consonant homophones (two / too).</span>
+            </div>
+          </label>
+          <label className={`settings-option ${settings.phoneticMetaphone ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.phoneticMetaphone}
+              onChange={() => toggle('phoneticMetaphone')}
+            />
+            <div>
+              <strong>Metaphone</strong>
+              <span>Better for silent-letter homophones (write / right, know / no). May miss some vowel homophones.</span>
+            </div>
+          </label>
         </div>
       </section>
 
       <section className="settings-section">
         <h3>Show microphone transcript</h3>
         <div className="settings-options">
-          {[
-            { value: 'off',       label: 'Off',              desc: 'Never shown. Clean and distraction-free.' },
-            { value: 'on-result', label: 'Show after answer', desc: 'Displays what the microphone heard once the result is shown. Useful for understanding why an answer was accepted or rejected.' },
-          ].map(({ value, label, desc }) => (
-            <label key={value} className={`settings-option ${settings.showTranscript === value ? 'active' : ''}`}>
-              <input
-                type="radio"
-                name="showTranscript"
-                value={value}
-                checked={settings.showTranscript === value}
-                onChange={() => set('showTranscript', value)}
-              />
-              <div>
-                <strong>{label}</strong>
-                <span>{desc}</span>
-              </div>
-            </label>
-          ))}
+          <label className={`settings-option ${settings.showTranscript ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.showTranscript}
+              onChange={() => toggle('showTranscript')}
+            />
+            <div>
+              <strong>Show after answer</strong>
+              <span>Displays what the microphone heard once the result is shown. Useful for understanding why an answer was accepted or rejected.</span>
+            </div>
+          </label>
         </div>
       </section>
     </div>

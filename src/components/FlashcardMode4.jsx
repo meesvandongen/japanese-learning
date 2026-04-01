@@ -19,7 +19,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
     const timer = setTimeout(() => {
       speak(card.japanese, 'ja-JP', 0.9, () => {
         // onEnd: auto-start listening after the word finishes
-        if (settings.listeningMode === 'auto' && !autoStarted.current) {
+        if (settings.autoListen && !autoStarted.current) {
           autoStarted.current = true
           const startTimer = setTimeout(() => start(), settings.autoStartDelay)
           // can't return cleanup here, but delay is short enough
@@ -33,16 +33,21 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
 
   const handleResult = useCallback(
     (transcripts) => {
-      const correct = compareEnglish(card.english, transcripts, { phoneticAlgorithm: settings.phoneticAlgorithm })
+      const phoneticAlgorithm =
+        settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
+        : settings.phoneticSoundex ? 'soundex'
+        : settings.phoneticMetaphone ? 'metaphone'
+        : 'off'
+      const correct = compareEnglish(card.english, transcripts, { phoneticAlgorithm })
       const r = correct ? 'correct' : 'incorrect'
       setResult(r)
       setHeard(transcripts[0] ?? '')
-      if (settings.feedbackMode === 'voice' || settings.feedbackMode === 'both') {
+      if (settings.feedbackVoice) {
         const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
         speak(primaryEnglish, 'en-US')
       }
     },
-    [card, settings.phoneticAlgorithm, settings.feedbackMode, speak]
+    [card, settings.phoneticSoundex, settings.phoneticMetaphone, settings.feedbackVoice, speak]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
@@ -67,7 +72,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
   }, [result, onAnswer])
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
-  const showText = settings.feedbackMode === 'text' || settings.feedbackMode === 'both'
+  const showText = settings.feedbackText
 
   return (
     <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
@@ -100,7 +105,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
         </div>
       )}
 
-      {result !== null && settings.showTranscript === 'on-result' && heard && (
+      {result !== null && settings.showTranscript && heard && (
         <div className="transcript-heard">Heard: "{heard}"</div>
       )}
 
@@ -111,7 +116,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
             onStart={start}
             onStop={stop}
             disabled={isSpeaking}
-            listenMode={settings.listeningMode}
+            listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
           <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">
             ?

@@ -20,11 +20,11 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
       const r = correct ? 'correct' : 'incorrect'
       setResult(r)
       setHeard(transcripts[0] ?? '')
-      if (settings.feedbackMode === 'voice' || settings.feedbackMode === 'both') {
+      if (settings.feedbackVoice) {
         speak(card.japanese, 'ja-JP')
       }
     },
-    [card, tokenizer, settings.feedbackMode, speak]
+    [card, tokenizer, settings.feedbackVoice, speak]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
@@ -35,11 +35,11 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
 
   // Auto-start listening on card mount
   useEffect(() => {
-    if (settings.listeningMode !== 'auto' || autoStarted.current) return
+    if (!settings.autoListen || autoStarted.current) return
     autoStarted.current = true
     const timer = setTimeout(() => start(), settings.autoStartDelay)
     return () => clearTimeout(timer)
-  }, [settings.listeningMode, settings.autoStartDelay, start])
+  }, [settings.autoListen, settings.autoStartDelay, start])
 
   // Enforce max listen duration in auto mode
   useEffect(() => {
@@ -57,7 +57,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
   }, [result, onAnswer])
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
-  const showText = settings.feedbackMode === 'text' || settings.feedbackMode === 'both'
+  const showText = settings.feedbackText
 
   return (
     <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
@@ -86,7 +86,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
         </div>
       )}
 
-      {result !== null && settings.showTranscript === 'on-result' && heard && (
+      {result !== null && settings.showTranscript && heard && (
         <div className="transcript-heard">Heard: "{heard}"</div>
       )}
 
@@ -96,7 +96,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
             isListening={isListening}
             onStart={start}
             onStop={stop}
-            listenMode={settings.listeningMode}
+            listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
           <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">
             ?
