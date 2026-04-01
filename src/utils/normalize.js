@@ -1,4 +1,5 @@
 import * as wanakana from 'wanakana'
+import { phoneticMatch } from './phonetic'
 
 /**
  * Convert any Japanese text to hiragana using kuromoji readings.
@@ -46,30 +47,65 @@ function levenshtein(a, b) {
 
 /**
  * Compare Japanese: normalize both strings to hiragana and check fuzzy match.
- * Accepts if exact match or Levenshtein distance ≤ 1.
+ * Also handles transcripts with extra surrounding words (e.g. "あついです" for "あつい").
  */
 export function compareJapanese(expected, candidates, tokenizer) {
   const normalizedExpected = toHiragana(expected, tokenizer)
   for (const candidate of candidates) {
     const normalizedCandidate = toHiragana(candidate, tokenizer)
+
+    // Full-phrase exact or near match
     if (normalizedExpected === normalizedCandidate) return true
     if (levenshtein(normalizedExpected, normalizedCandidate) <= 1) return true
+
+    // Word-level: STT may output multiple space-separated segments
+    for (const word of normalizedCandidate.split(/\s+/).filter(Boolean)) {
+      if (word === normalizedExpected) return true
+      if (levenshtein(word, normalizedExpected) <= 1) return true
+    }
+
+    // Substring: expected hiragana contained within a longer transcript
+    // (e.g. politeness forms: "あついです" contains "あつい")
+    if (normalizedCandidate.includes(normalizedExpected)) return true
   }
   return false
 }
 
 /**
  * Compare English: case-insensitive match against accepted synonyms.
- * Accepts if any candidate matches any accepted answer within Levenshtein ≤ 2.
+ * Combines full-phrase fuzzy matching, word-level token matching, and
+ * configurable phonetic matching.
+ *
+ * @param {string[]} acceptedList
+ * @param {string[]} candidates  — STT transcripts, most confident first
+ * @param {{ phoneticAlgorithm?: 'off'|'soundex'|'metaphone'|'both' }} [config]
  */
-export function compareEnglish(acceptedList, candidates) {
-  const normalize = (s) => s.toLowerCase().trim()
+export function compareEnglish(acceptedList, candidates, { phoneticAlgorithm = 'soundex' } = {}) {
+  const norm = (s) => s.toLowerCase().trim().replace(/['']/g, '').replace(/[^a-z0-9\s]/g, '')
+
   for (const candidate of candidates) {
-    const normCand = normalize(candidate)
+    const normCand = norm(candidate)
+    const candWords = normCand.split(/\s+/).filter(Boolean)
+
     for (const accepted of acceptedList) {
-      const normAccepted = normalize(accepted)
+      const normAccepted = norm(accepted)
+      const accWords = normAccepted.split(/\s+/).filter(Boolean)
+
+      // 1. Full-phrase exact or fuzzy match
       if (normCand === normAccepted) return true
       if (levenshtein(normCand, normAccepted) <= 2) return true
+
+      // 2. Word-level: every word of the accepted answer must appear somewhere
+      //    in the transcript (handles extra surrounding words in the transcript)
+      const allWordsMatch = accWords.every((accWord) =>
+        candWords.some(
+          (candWord) =>
+            candWord === accWord ||
+            levenshtein(candWord, accWord) <= 1 ||
+            phoneticMatch(candWord, accWord, phoneticAlgorithm)
+        )
+      )
+      if (allWordsMatch) return true
     }
   }
   return false

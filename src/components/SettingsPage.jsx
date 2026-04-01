@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { appStore } from '../store/appStore'
 import { LanguageSelector } from './LanguageSelector'
 import { LevelSelector } from './LevelSelector'
+import { SettingsPanel } from './SettingsPanel'
 
 /**
- * SettingsPage — lets users change their language and level after onboarding.
+ * SettingsPage — lets users change their language/level and configure study
+ * preferences after onboarding.
  *
  * Manages its own view state ('overview' | 'language' | 'level') so that
  * language/level changes are committed atomically — the store is only updated
@@ -84,7 +86,7 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }) {
         <div className="settings-row">
           <div className="settings-info">
             <span className="settings-label">Language</span>
-            <span className="settings-value">{activeLang?.name ?? '—'}</span>
+            <span className="settings-display-value">{activeLang?.name ?? '—'}</span>
           </div>
           <button className="settings-change-btn" onClick={() => setView('language')}>
             Change
@@ -94,7 +96,7 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }) {
         <div className="settings-row">
           <div className="settings-info">
             <span className="settings-label">Level</span>
-            <span className="settings-value">{activeLevel?.label ?? '—'}</span>
+            <span className="settings-display-value">{activeLevel?.label ?? '—'}</span>
           </div>
           <button
             className="settings-change-btn"
@@ -105,6 +107,8 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }) {
           </button>
         </div>
       </div>
+
+      <SettingsPanel />
     </div>
   )
 }

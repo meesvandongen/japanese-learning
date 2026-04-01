@@ -732,10 +732,12 @@ body {
 
 .settings-page {
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 8px 0;
+  padding: 8px 0 32px;
 }
 
 .settings-header {
@@ -749,6 +751,7 @@ body {
   font-weight: 700;
 }
 
+/* Language/level row section */
 .settings-section {
   display: flex;
   flex-direction: column;
@@ -766,6 +769,16 @@ body {
   letter-spacing: 0.06em;
   color: var(--muted);
   padding: 12px 16px 6px;
+}
+
+/* STT panel section headings */
+.settings-section h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 10px;
 }
 
 .settings-row {
@@ -793,7 +806,8 @@ body {
   letter-spacing: 0.04em;
 }
 
-.settings-value {
+/* Text value in language/level rows */
+.settings-display-value {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text);
@@ -821,6 +835,71 @@ body {
   cursor: not-allowed;
 }
 
+/* STT / preference toggles */
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.settings-option:hover { border-color: var(--primary-light); }
+.settings-option.active {
+  border-color: var(--primary);
+  background: #f0fdf4;
+}
+.settings-option input[type="checkbox"],
+.settings-option input[type="radio"] { accent-color: var(--primary); }
+.settings-option div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.settings-option strong { font-size: 0.9rem; }
+.settings-option span { font-size: 0.78rem; color: var(--muted); }
+
+.settings-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.settings-slider-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--primary);
+}
+
+/* Numeric readout in slider rows */
+.settings-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 56px;
+  text-align: right;
+  color: var(--primary);
+}
+
+.settings-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* Voice-only feedback icon (no text panel) */
+.feedback-icon {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.feedback-icon.correct { color: var(--primary); }
+.feedback-icon.incorrect { color: var(--danger); }
 /* Footer */
 .app-footer {
   padding: 16px 0;
@@ -829,3 +908,13 @@ body {
   color: var(--muted);
   border-top: 1px solid var(--border);
 }
+
+/* Transcript (what the microphone heard) */
+.transcript-heard {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+
