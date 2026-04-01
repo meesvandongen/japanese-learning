@@ -8,6 +8,7 @@ import { settingsStore } from '../store/settingsStore'
 
 export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
   const [result, setResult] = useState(null) // null | 'correct' | 'incorrect'
+  const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const settings = useStore(settingsStore)
   const { speak } = useSpeechSynthesis()
@@ -18,6 +19,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
       const correct = compareJapanese(card.kana, transcripts, tokenizer)
       const r = correct ? 'correct' : 'incorrect'
       setResult(r)
+      setHeard(transcripts[0] ?? '')
       if (settings.feedbackMode === 'voice' || settings.feedbackMode === 'both') {
         speak(card.japanese, 'ja-JP')
       }
@@ -82,6 +84,10 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
         <div className={`feedback-icon ${result}`}>
           {result === 'correct' ? '✓' : '✗'}
         </div>
+      )}
+
+      {result !== null && settings.showTranscript === 'on-result' && heard && (
+        <div className="transcript-heard">Heard: "{heard}"</div>
       )}
 
       {result === null && (

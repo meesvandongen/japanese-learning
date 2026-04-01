@@ -8,6 +8,7 @@ import { settingsStore } from '../store/settingsStore'
 
 export function FlashcardMode4({ card, cardType, onAnswer }) {
   const [result, setResult] = useState(null) // null | 'correct' | 'incorrect'
+  const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const settings = useStore(settingsStore)
   const { isSpeaking, speak } = useSpeechSynthesis()
@@ -32,15 +33,16 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
 
   const handleResult = useCallback(
     (transcripts) => {
-      const correct = compareEnglish(card.english, transcripts)
+      const correct = compareEnglish(card.english, transcripts, { phoneticAlgorithm: settings.phoneticAlgorithm })
       const r = correct ? 'correct' : 'incorrect'
       setResult(r)
+      setHeard(transcripts[0] ?? '')
       if (settings.feedbackMode === 'voice' || settings.feedbackMode === 'both') {
         const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
         speak(primaryEnglish, 'en-US')
       }
     },
-    [card, settings.feedbackMode, speak]
+    [card, settings.phoneticAlgorithm, settings.feedbackMode, speak]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
@@ -96,6 +98,10 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
         <div className={`feedback-icon ${result}`}>
           {result === 'correct' ? '✓' : '✗'}
         </div>
+      )}
+
+      {result !== null && settings.showTranscript === 'on-result' && heard && (
+        <div className="transcript-heard">Heard: "{heard}"</div>
       )}
 
       {result === null && (
