@@ -1,0 +1,5704 @@
+{
+  "language": "ja",
+  "level": "n4",
+  "words": [
+    {
+      "id": "ふむ",
+      "kana": "ふむ",
+      "japanese": "踏む",
+      "english": [
+        "to step on",
+        "to tread on"
+      ]
+    },
+    {
+      "id": "～く",
+      "kana": "～く",
+      "japanese": "～区",
+      "english": [
+        "~ district",
+        "~ ward",
+        "~ borough"
+      ]
+    },
+    {
+      "id": "すっと",
+      "kana": "すっと",
+      "japanese": "すっと",
+      "english": [
+        "straight",
+        "quickly"
+      ]
+    },
+    {
+      "id": "ぬすむ",
+      "kana": "ぬすむ",
+      "japanese": "盗む",
+      "english": [
+        "to steal",
+        "to rob"
+      ]
+    },
+    {
+      "id": "たいてい",
+      "kana": "たいてい",
+      "japanese": "大抵",
+      "english": [
+        "generally",
+        "usually"
+      ]
+    },
+    {
+      "id": "とうとう",
+      "kana": "とうとう",
+      "japanese": "とうとう",
+      "english": [
+        "finally",
+        "at last"
+      ]
+    },
+    {
+      "id": "ガソリン",
+      "kana": "ガソリン",
+      "japanese": "ガソリン",
+      "english": [
+        "gasoline",
+        "petrol"
+      ]
+    },
+    {
+      "id": "なる",
+      "kana": "なる",
+      "japanese": "鳴る",
+      "english": [
+        "to sound",
+        "to ring (v.i.)"
+      ]
+    },
+    {
+      "id": "しっかり",
+      "kana": "しっかり",
+      "japanese": "しっかり",
+      "english": [
+        "firmly",
+        "steady"
+      ]
+    },
+    {
+      "id": "いきる",
+      "kana": "いきる",
+      "japanese": "生きる",
+      "english": [
+        "to live"
+      ]
+    },
+    {
+      "id": "にがい",
+      "kana": "にがい",
+      "japanese": "苦い",
+      "english": [
+        "bitter"
+      ]
+    },
+    {
+      "id": "わく",
+      "kana": "わく",
+      "japanese": "沸く",
+      "english": [
+        "to boil",
+        "to grow hot"
+      ]
+    },
+    {
+      "id": "いけん",
+      "kana": "いけん",
+      "japanese": "意見",
+      "english": [
+        "opinion",
+        "view",
+        "idea"
+      ]
+    },
+    {
+      "id": "やはり; やっぱり",
+      "kana": "やはり; やっぱり",
+      "japanese": "やはり; やっぱり",
+      "english": [
+        "as I thought",
+        "absolutely"
+      ]
+    },
+    {
+      "id": "まんが",
+      "kana": "まんが",
+      "japanese": "漫画",
+      "english": [
+        "comic (book)",
+        "cartoon"
+      ]
+    },
+    {
+      "id": "ステレオ",
+      "kana": "ステレオ",
+      "japanese": "ステレオ",
+      "english": [
+        "stereo"
+      ]
+    },
+    {
+      "id": "いがく",
+      "kana": "いがく",
+      "japanese": "医学",
+      "english": [
+        "medical science"
+      ]
+    },
+    {
+      "id": "テキスト",
+      "kana": "テキスト",
+      "japanese": "テキスト",
+      "english": [
+        "text",
+        "text book"
+      ]
+    },
+    {
+      "id": "～つき",
+      "kana": "～つき",
+      "japanese": "～月",
+      "english": [
+        "month"
+      ]
+    },
+    {
+      "id": "おる",
+      "kana": "おる",
+      "japanese": "折る",
+      "english": [
+        "to snap",
+        "to break",
+        "to bend"
+      ]
+    },
+    {
+      "id": "～かい",
+      "kana": "～かい",
+      "japanese": "～会",
+      "english": [
+        "~ meeting"
+      ]
+    },
+    {
+      "id": "うかがう",
+      "kana": "うかがう",
+      "japanese": "うかがう",
+      "english": [
+        "to ask"
+      ]
+    },
+    {
+      "id": "きこえる",
+      "kana": "きこえる",
+      "japanese": "聞こえる",
+      "english": [
+        "to be heard",
+        "to be audible"
+      ]
+    },
+    {
+      "id": "ぼく",
+      "kana": "ぼく",
+      "japanese": "僕",
+      "english": [
+        "I (used by men towards those of equal or lower status)"
+      ]
+    },
+    {
+      "id": "かならず",
+      "kana": "かならず",
+      "japanese": "必ず",
+      "english": [
+        "surely",
+        "certainly"
+      ]
+    },
+    {
+      "id": "こわす",
+      "kana": "こわす",
+      "japanese": "壊す",
+      "english": [
+        "to break",
+        "to break down"
+      ]
+    },
+    {
+      "id": "おこる",
+      "kana": "おこる",
+      "japanese": "怒る",
+      "english": [
+        "to get angry",
+        "to scold angrily"
+      ]
+    },
+    {
+      "id": "とこや",
+      "kana": "とこや",
+      "japanese": "床屋",
+      "english": [
+        "barber's (shop)"
+      ]
+    },
+    {
+      "id": "オートバイ",
+      "kana": "オートバイ",
+      "japanese": "オートバイ",
+      "english": [
+        "motorcycle (lit: auto-bi(ke))"
+      ]
+    },
+    {
+      "id": "うんどうする",
+      "kana": "うんどうする",
+      "japanese": "運動",
+      "english": [
+        "exercise"
+      ]
+    },
+    {
+      "id": "やむ",
+      "kana": "やむ",
+      "japanese": "止む",
+      "english": [
+        "to cease",
+        "to stop"
+      ]
+    },
+    {
+      "id": "もし",
+      "kana": "もし",
+      "japanese": "もし",
+      "english": [
+        "if"
+      ]
+    },
+    {
+      "id": "おもて",
+      "kana": "おもて",
+      "japanese": "表",
+      "english": [
+        "surface",
+        "front",
+        "outside"
+      ]
+    },
+    {
+      "id": "だいがくせい",
+      "kana": "だいがくせい",
+      "japanese": "大学生",
+      "english": [
+        "college student",
+        "university student"
+      ]
+    },
+    {
+      "id": "うんてんしゅ",
+      "kana": "うんてんしゅ",
+      "japanese": "運転手",
+      "english": [
+        "driver (by occupation)"
+      ]
+    },
+    {
+      "id": "よしゅう",
+      "kana": "よしゅう",
+      "japanese": "予習",
+      "english": [
+        "preparation of lessons (for class)"
+      ]
+    },
+    {
+      "id": "しんぱいする",
+      "kana": "しんぱいする",
+      "japanese": "心配",
+      "english": [
+        "worry",
+        "concern"
+      ]
+    },
+    {
+      "id": "べつ",
+      "kana": "べつ",
+      "japanese": "別",
+      "english": [
+        "distinction",
+        "different"
+      ]
+    },
+    {
+      "id": "ひじょうに",
+      "kana": "ひじょうに",
+      "japanese": "非常に",
+      "english": [
+        "extremely",
+        "very"
+      ]
+    },
+    {
+      "id": "おたく",
+      "kana": "おたく",
+      "japanese": "お宅",
+      "english": [
+        "(someone else's) house",
+        "home -- polite word for 家 (いえ) --"
+      ]
+    },
+    {
+      "id": "やわらかい",
+      "kana": "やわらかい",
+      "japanese": "柔らかい",
+      "english": [
+        "soft (in reference to texture)",
+        "tender"
+      ]
+    },
+    {
+      "id": "ひろう",
+      "kana": "ひろう",
+      "japanese": "拾う",
+      "english": [
+        "to pick up (something)",
+        "to find"
+      ]
+    },
+    {
+      "id": "～ございます",
+      "kana": "～ございます",
+      "japanese": "～ございます",
+      "english": [
+        "to be (polite)",
+        "to exist"
+      ]
+    },
+    {
+      "id": "き",
+      "kana": "き",
+      "japanese": "気",
+      "english": [
+        "spirit",
+        "mood"
+      ]
+    },
+    {
+      "id": "くらべる",
+      "kana": "くらべる",
+      "japanese": "比べる",
+      "english": [
+        "to compare"
+      ]
+    },
+    {
+      "id": "ほとんど",
+      "kana": "ほとんど",
+      "japanese": "ほとんど",
+      "english": [
+        "mostly",
+        "almost"
+      ]
+    },
+    {
+      "id": "つもり",
+      "kana": "つもり",
+      "japanese": "つもり",
+      "english": [
+        "intention",
+        "plan"
+      ]
+    },
+    {
+      "id": "こうがい",
+      "kana": "こうがい",
+      "japanese": "郊外",
+      "english": [
+        "suburb",
+        "outskirts"
+      ]
+    },
+    {
+      "id": "だめ",
+      "kana": "だめ",
+      "japanese": "だめ",
+      "english": [
+        "useless",
+        "no good",
+        "hopeless"
+      ]
+    },
+    {
+      "id": "うりば",
+      "kana": "うりば",
+      "japanese": "売り場",
+      "english": [
+        "place where things are sold"
+      ]
+    },
+    {
+      "id": "しょうがつ",
+      "kana": "しょうがつ",
+      "japanese": "正月",
+      "english": [
+        "New Year",
+        "New Year's Day"
+      ]
+    },
+    {
+      "id": "きそく",
+      "kana": "きそく",
+      "japanese": "規則",
+      "english": [
+        "rule",
+        "regulation"
+      ]
+    },
+    {
+      "id": "うん",
+      "kana": "うん",
+      "japanese": "うん",
+      "english": [
+        "yes (informal)",
+        "all right (ok)"
+      ]
+    },
+    {
+      "id": "はつおん",
+      "kana": "はつおん",
+      "japanese": "発音",
+      "english": [
+        "pronunciation"
+      ]
+    },
+    {
+      "id": "やく",
+      "kana": "やく",
+      "japanese": "焼く",
+      "english": [
+        "to bake",
+        "to grill"
+      ]
+    },
+    {
+      "id": "おくじょう",
+      "kana": "おくじょう",
+      "japanese": "屋上",
+      "english": [
+        "rooftop"
+      ]
+    },
+    {
+      "id": "しつれい",
+      "kana": "しつれい",
+      "japanese": "失礼",
+      "english": [
+        "discourtesy",
+        "impoliteness",
+        "Excuse me"
+      ]
+    },
+    {
+      "id": "ごみ",
+      "kana": "ごみ",
+      "japanese": "ごみ",
+      "english": [
+        "trash",
+        "garbage"
+      ]
+    },
+    {
+      "id": "アフリカ",
+      "kana": "アフリカ",
+      "japanese": "アフリカ",
+      "english": [
+        "Africa"
+      ]
+    },
+    {
+      "id": "てん",
+      "kana": "てん",
+      "japanese": "点",
+      "english": [
+        "mark",
+        "score",
+        "grade",
+        "point",
+        "dot"
+      ]
+    },
+    {
+      "id": "いっしょうけんめい",
+      "kana": "いっしょうけんめい",
+      "japanese": "一生懸命",
+      "english": [
+        "very hard (as in to work hard)",
+        "with utmost effort"
+      ]
+    },
+    {
+      "id": "こんど",
+      "kana": "こんど",
+      "japanese": "今度",
+      "english": [
+        "now",
+        "this time",
+        "near future",
+        "one of these days",
+        "next time"
+      ]
+    },
+    {
+      "id": "きかい",
+      "kana": "きかい",
+      "japanese": "機会",
+      "english": [
+        "chance",
+        "opportunity"
+      ]
+    },
+    {
+      "id": "たてる",
+      "kana": "たてる",
+      "japanese": "建てる",
+      "english": [
+        "to build"
+      ]
+    },
+    {
+      "id": "ふくざつ",
+      "kana": "ふくざつ",
+      "japanese": "複雑",
+      "english": [
+        "complexity",
+        "complication"
+      ]
+    },
+    {
+      "id": "かれ",
+      "kana": "かれ",
+      "japanese": "彼",
+      "english": [
+        "he",
+        "boyfriend"
+      ]
+    },
+    {
+      "id": "いらっしゃる",
+      "kana": "いらっしゃる",
+      "japanese": "いらっしゃる",
+      "english": [
+        "-- honorific expression for いく",
+        "くる",
+        "and いる --"
+      ]
+    },
+    {
+      "id": "ふとん",
+      "kana": "ふとん",
+      "japanese": "布団",
+      "english": [
+        "futon"
+      ]
+    },
+    {
+      "id": "だいじ",
+      "kana": "だいじ",
+      "japanese": "大事",
+      "english": [
+        "important",
+        "valuable",
+        "serious matter"
+      ]
+    },
+    {
+      "id": "おくりもの",
+      "kana": "おくりもの",
+      "japanese": "贈り物",
+      "english": [
+        "a gift",
+        "a present"
+      ]
+    },
+    {
+      "id": "どろぼう",
+      "kana": "どろぼう",
+      "japanese": "泥棒",
+      "english": [
+        "thief",
+        "burglar"
+      ]
+    },
+    {
+      "id": "～せい",
+      "kana": "～せい",
+      "japanese": "～製",
+      "english": [
+        "made in ~"
+      ]
+    },
+    {
+      "id": "ちゅうい",
+      "kana": "ちゅうい",
+      "japanese": "注意",
+      "english": [
+        "caution",
+        "attention"
+      ]
+    },
+    {
+      "id": "たいふう",
+      "kana": "たいふう",
+      "japanese": "台風",
+      "english": [
+        "typhoon"
+      ]
+    },
+    {
+      "id": "ひ",
+      "kana": "ひ",
+      "japanese": "日",
+      "english": [
+        "sun",
+        "sunshine",
+        "day"
+      ]
+    },
+    {
+      "id": "～けん",
+      "kana": "～けん",
+      "japanese": "～軒",
+      "english": [
+        "counter for houses"
+      ]
+    },
+    {
+      "id": "そう",
+      "kana": "そう",
+      "japanese": "そう",
+      "english": [
+        "really",
+        "(is that) so",
+        "yes",
+        "right"
+      ]
+    },
+    {
+      "id": "とおる",
+      "kana": "とおる",
+      "japanese": "通る",
+      "english": [
+        "to pass (by)",
+        "to go through"
+      ]
+    },
+    {
+      "id": "すぎる",
+      "kana": "すぎる",
+      "japanese": "過ぎる",
+      "english": [
+        "to exceed",
+        "to go beyond"
+      ]
+    },
+    {
+      "id": "レポート; リポート",
+      "kana": "レポート; リポート",
+      "japanese": "レポート; リポート",
+      "english": [
+        "report"
+      ]
+    },
+    {
+      "id": "は",
+      "kana": "は",
+      "japanese": "葉",
+      "english": [
+        "leaf"
+      ]
+    },
+    {
+      "id": "ひつよう",
+      "kana": "ひつよう",
+      "japanese": "必要",
+      "english": [
+        "necessary"
+      ]
+    },
+    {
+      "id": "かちょう",
+      "kana": "かちょう",
+      "japanese": "課長",
+      "english": [
+        "section manager"
+      ]
+    },
+    {
+      "id": "じしん",
+      "kana": "じしん",
+      "japanese": "地震",
+      "english": [
+        "earthquake"
+      ]
+    },
+    {
+      "id": "すると",
+      "kana": "すると",
+      "japanese": "すると",
+      "english": [
+        "and",
+        "then"
+      ]
+    },
+    {
+      "id": "やめる",
+      "kana": "やめる",
+      "japanese": "止める",
+      "english": [
+        "to end",
+        "to stop"
+      ]
+    },
+    {
+      "id": "ガラス",
+      "kana": "ガラス",
+      "japanese": "ガラス",
+      "english": [
+        "glass",
+        "pane"
+      ]
+    },
+    {
+      "id": "～がくぶ",
+      "kana": "～がくぶ",
+      "japanese": "～学部",
+      "english": [
+        "department of a university"
+      ]
+    },
+    {
+      "id": "きびしい",
+      "kana": "きびしい",
+      "japanese": "厳しい",
+      "english": [
+        "hard",
+        "rigorous",
+        "strict"
+      ]
+    },
+    {
+      "id": "エスカレーター",
+      "kana": "エスカレーター",
+      "japanese": "エスカレーター",
+      "english": [
+        "escalator"
+      ]
+    },
+    {
+      "id": "じんこう",
+      "kana": "じんこう",
+      "japanese": "人口",
+      "english": [
+        "population"
+      ]
+    },
+    {
+      "id": "つき",
+      "kana": "つき",
+      "japanese": "月",
+      "english": [
+        "moon"
+      ]
+    },
+    {
+      "id": "きぬ",
+      "kana": "きぬ",
+      "japanese": "絹",
+      "english": [
+        "silk"
+      ]
+    },
+    {
+      "id": "ちっとも",
+      "kana": "ちっとも",
+      "japanese": "ちっとも",
+      "english": [
+        "not at all (neg. verb)"
+      ]
+    },
+    {
+      "id": "ふかい",
+      "kana": "ふかい",
+      "japanese": "深い",
+      "english": [
+        "deep",
+        "profound"
+      ]
+    },
+    {
+      "id": "こわれる",
+      "kana": "こわれる",
+      "japanese": "壊れる",
+      "english": [
+        "to be broken",
+        "to break"
+      ]
+    },
+    {
+      "id": "ゆれる",
+      "kana": "ゆれる",
+      "japanese": "揺れる",
+      "english": [
+        "to shake",
+        "to sway"
+      ]
+    },
+    {
+      "id": "おちる",
+      "kana": "おちる",
+      "japanese": "落る",
+      "english": [
+        "to fall",
+        "to drop"
+      ]
+    },
+    {
+      "id": "できるだけ",
+      "kana": "できるだけ",
+      "japanese": "できるだけ",
+      "english": [
+        "if at all possible",
+        "as much as possible"
+      ]
+    },
+    {
+      "id": "かなしい",
+      "kana": "かなしい",
+      "japanese": "悲しい",
+      "english": [
+        "sad",
+        "sorrowful"
+      ]
+    },
+    {
+      "id": "ちゅうがっこう",
+      "kana": "ちゅうがっこう",
+      "japanese": "中学校",
+      "english": [
+        "junior high school pupil"
+      ]
+    },
+    {
+      "id": "ガス",
+      "kana": "ガス",
+      "japanese": "ガス",
+      "english": [
+        "gas"
+      ]
+    },
+    {
+      "id": "いのる",
+      "kana": "いのる",
+      "japanese": "祈る",
+      "english": [
+        "to pray",
+        "to wish"
+      ]
+    },
+    {
+      "id": "さかん",
+      "kana": "さかん",
+      "japanese": "盛ん",
+      "english": [
+        "prosperous",
+        "active",
+        "thriving"
+      ]
+    },
+    {
+      "id": "アルバイト",
+      "kana": "アルバイト",
+      "japanese": "アルバイト",
+      "english": [
+        "part-time job"
+      ]
+    },
+    {
+      "id": "おこす",
+      "kana": "おこす",
+      "japanese": "起こす",
+      "english": [
+        "to wake (someone) up"
+      ]
+    },
+    {
+      "id": "いたす",
+      "kana": "いたす",
+      "japanese": "致す",
+      "english": [
+        "-- extra-modest expression for する --"
+      ]
+    },
+    {
+      "id": "かむ",
+      "kana": "かむ",
+      "japanese": "噛む",
+      "english": [
+        "to bite",
+        "to chew"
+      ]
+    },
+    {
+      "id": "あかちゃん",
+      "kana": "あかちゃん",
+      "japanese": "赤ちゃん",
+      "english": [
+        "baby",
+        "infant"
+      ]
+    },
+    {
+      "id": "あさい",
+      "kana": "あさい",
+      "japanese": "浅い",
+      "english": [
+        "shallow",
+        "superficial"
+      ]
+    },
+    {
+      "id": "うそ",
+      "kana": "うそ",
+      "japanese": "嘘",
+      "english": [
+        "lie"
+      ]
+    },
+    {
+      "id": "しょうせつ",
+      "kana": "しょうせつ",
+      "japanese": "小説",
+      "english": [
+        "novel"
+      ]
+    },
+    {
+      "id": "おや",
+      "kana": "おや",
+      "japanese": "親",
+      "english": [
+        "a parent"
+      ]
+    },
+    {
+      "id": "それに",
+      "kana": "それに",
+      "japanese": "それに",
+      "english": [
+        "moreover",
+        "besides"
+      ]
+    },
+    {
+      "id": "せいよう",
+      "kana": "せいよう",
+      "japanese": "西洋",
+      "english": [
+        "the West",
+        "Western countries"
+      ]
+    },
+    {
+      "id": "おもう",
+      "kana": "おもう",
+      "japanese": "思う",
+      "english": [
+        "to think",
+        "to feel"
+      ]
+    },
+    {
+      "id": "パート (タイム)",
+      "kana": "パート (タイム)",
+      "japanese": "パート (タイム)",
+      "english": [
+        "part time (esp. female part time employees)"
+      ]
+    },
+    {
+      "id": "じだい",
+      "kana": "じだい",
+      "japanese": "時代",
+      "english": [
+        "age",
+        "period",
+        "epoch",
+        "era"
+      ]
+    },
+    {
+      "id": "もうしあげる",
+      "kana": "もうしあげる",
+      "japanese": "申し上げる",
+      "english": [
+        "(humble)to say",
+        "to tell"
+      ]
+    },
+    {
+      "id": "～しき",
+      "kana": "～しき",
+      "japanese": "～式",
+      "english": [
+        "~ ceremony",
+        "~ style"
+      ]
+    },
+    {
+      "id": "しゅっせきする",
+      "kana": "しゅっせきする",
+      "japanese": "出席",
+      "english": [
+        "attendance"
+      ]
+    },
+    {
+      "id": "～か",
+      "kana": "～か",
+      "japanese": "～家",
+      "english": [
+        "person who is specialized in ~"
+      ]
+    },
+    {
+      "id": "むかえる",
+      "kana": "むかえる",
+      "japanese": "迎える",
+      "english": [
+        "to welcome",
+        "to meet",
+        "to greet"
+      ]
+    },
+    {
+      "id": "さわる",
+      "kana": "さわる",
+      "japanese": "触る",
+      "english": [
+        "to touch",
+        "to feel"
+      ]
+    },
+    {
+      "id": "～だて",
+      "kana": "～だて",
+      "japanese": "建て",
+      "english": [
+        "~ storied",
+        "separate housing"
+      ]
+    },
+    {
+      "id": "しゃちょう",
+      "kana": "しゃちょう",
+      "japanese": "社長",
+      "english": [
+        "president of a company"
+      ]
+    },
+    {
+      "id": "どうぶつえん",
+      "kana": "どうぶつえん",
+      "japanese": "動物園",
+      "english": [
+        "zoo"
+      ]
+    },
+    {
+      "id": "つかまえる",
+      "kana": "つかまえる",
+      "japanese": "捕まえる",
+      "english": [
+        "to catch",
+        "to arrest"
+      ]
+    },
+    {
+      "id": "きせつ",
+      "kana": "きせつ",
+      "japanese": "季節",
+      "english": [
+        "season (in reference to weather)"
+      ]
+    },
+    {
+      "id": "よる",
+      "kana": "よる",
+      "japanese": "寄る",
+      "english": [
+        "to stop by"
+      ]
+    },
+    {
+      "id": "きまる",
+      "kana": "きまる",
+      "japanese": "決まる",
+      "english": [
+        "to be set",
+        "fixed (v.i.)"
+      ]
+    },
+    {
+      "id": "ひらく",
+      "kana": "ひらく",
+      "japanese": "開く",
+      "english": [
+        "to open",
+        "to hold (an event)"
+      ]
+    },
+    {
+      "id": "にげる",
+      "kana": "にげる",
+      "japanese": "逃げる",
+      "english": [
+        "to escape",
+        "to run away"
+      ]
+    },
+    {
+      "id": "だから",
+      "kana": "だから",
+      "japanese": "だから",
+      "english": [
+        "so",
+        "therefore"
+      ]
+    },
+    {
+      "id": "ざんねん",
+      "kana": "ざんねん",
+      "japanese": "残念",
+      "english": [
+        "regret",
+        "regrettable"
+      ]
+    },
+    {
+      "id": "たたみ",
+      "kana": "たたみ",
+      "japanese": "畳",
+      "english": [
+        "tatami mat (Japanese straw mat)"
+      ]
+    },
+    {
+      "id": "ていねい",
+      "kana": "ていねい",
+      "japanese": "丁寧",
+      "english": [
+        "polite",
+        "courteous",
+        "careful"
+      ]
+    },
+    {
+      "id": "ちり",
+      "kana": "ちり",
+      "japanese": "地理",
+      "english": [
+        "geography"
+      ]
+    },
+    {
+      "id": "さっき",
+      "kana": "さっき",
+      "japanese": "さっき",
+      "english": [
+        "a little while ago"
+      ]
+    },
+    {
+      "id": "こわい",
+      "kana": "こわい",
+      "japanese": "怖い",
+      "english": [
+        "scary",
+        "frightening"
+      ]
+    },
+    {
+      "id": "つつむ",
+      "kana": "つつむ",
+      "japanese": "包む",
+      "english": [
+        "to wrap",
+        "to cover"
+      ]
+    },
+    {
+      "id": "なるべく",
+      "kana": "なるべく",
+      "japanese": "なるべく",
+      "english": [
+        "if possible",
+        "as much as possible"
+      ]
+    },
+    {
+      "id": "むり",
+      "kana": "むり",
+      "japanese": "無理",
+      "english": [
+        "unreasonable",
+        "impossible"
+      ]
+    },
+    {
+      "id": "サンドイッチ",
+      "kana": "サンドイッチ",
+      "japanese": "サンドイッチ",
+      "english": [
+        "sandwich"
+      ]
+    },
+    {
+      "id": "かいぎしつ",
+      "kana": "かいぎしつ",
+      "japanese": "会議室",
+      "english": [
+        "conference room"
+      ]
+    },
+    {
+      "id": "しなもの",
+      "kana": "しなもの",
+      "japanese": "品物",
+      "english": [
+        "goods"
+      ]
+    },
+    {
+      "id": "にんぎょう",
+      "kana": "にんぎょう",
+      "japanese": "人形",
+      "english": [
+        "doll",
+        "figure"
+      ]
+    },
+    {
+      "id": "りよう",
+      "kana": "りよう",
+      "japanese": "利用",
+      "english": [
+        "use",
+        "utilization"
+      ]
+    },
+    {
+      "id": "かざる",
+      "kana": "かざる",
+      "japanese": "飾る",
+      "english": [
+        "to decorate",
+        "to adorn"
+      ]
+    },
+    {
+      "id": "とめる",
+      "kana": "とめる",
+      "japanese": "止める",
+      "english": [
+        "to stop (something)"
+      ]
+    },
+    {
+      "id": "はずかしい",
+      "kana": "はずかしい",
+      "japanese": "恥ずかしい",
+      "english": [
+        "ashamed",
+        "embarrassed"
+      ]
+    },
+    {
+      "id": "いくら～ても",
+      "kana": "いくら～ても",
+      "japanese": "いくら～ても",
+      "english": [
+        "however much one may ~"
+      ]
+    },
+    {
+      "id": "ようじ",
+      "kana": "ようじ",
+      "japanese": "用事",
+      "english": [
+        "business to take care of",
+        "tasks",
+        "errands"
+      ]
+    },
+    {
+      "id": "ビル",
+      "kana": "ビル",
+      "japanese": "ビル",
+      "english": [
+        "(abbr.) building"
+      ]
+    },
+    {
+      "id": "けんかする",
+      "kana": "けんかする",
+      "japanese": "けんかする",
+      "english": [
+        "quarrel"
+      ]
+    },
+    {
+      "id": "がんばる",
+      "kana": "がんばる",
+      "japanese": "頑張る",
+      "english": [
+        "to try one's best",
+        "to try hard",
+        "to persist"
+      ]
+    },
+    {
+      "id": "なげる",
+      "kana": "なげる",
+      "japanese": "投げる",
+      "english": [
+        "to pitch",
+        "to cast away"
+      ]
+    },
+    {
+      "id": "こしょうする",
+      "kana": "こしょうする",
+      "japanese": "故障",
+      "english": [
+        "breakdown"
+      ]
+    },
+    {
+      "id": "ちから",
+      "kana": "ちから",
+      "japanese": "力",
+      "english": [
+        "strength",
+        "power"
+      ]
+    },
+    {
+      "id": "うける",
+      "kana": "うける",
+      "japanese": "受ける",
+      "english": [
+        "to take (an examination, interview, etc.)",
+        "to receive"
+      ]
+    },
+    {
+      "id": "きぶん",
+      "kana": "きぶん",
+      "japanese": "気分",
+      "english": [
+        "feeling",
+        "mood"
+      ]
+    },
+    {
+      "id": "まちがえる",
+      "kana": "まちがえる",
+      "japanese": "間違える",
+      "english": [
+        "to make a mistake"
+      ]
+    },
+    {
+      "id": "そんな",
+      "kana": "そんな",
+      "japanese": "そんな",
+      "english": [
+        "such",
+        "like that",
+        "that sort of"
+      ]
+    },
+    {
+      "id": "ほし",
+      "kana": "ほし",
+      "japanese": "星",
+      "english": [
+        "star"
+      ]
+    },
+    {
+      "id": "ばあい",
+      "kana": "ばあい",
+      "japanese": "場合",
+      "english": [
+        "case",
+        "situation"
+      ]
+    },
+    {
+      "id": "やっと",
+      "kana": "やっと",
+      "japanese": "やっと",
+      "english": [
+        "at last",
+        "finally"
+      ]
+    },
+    {
+      "id": "たりる",
+      "kana": "たりる",
+      "japanese": "足りる",
+      "english": [
+        "to be sufficient",
+        "to be enough"
+      ]
+    },
+    {
+      "id": "おこなう",
+      "kana": "おこなう",
+      "japanese": "行う",
+      "english": [
+        "to carry out",
+        "to conduct (typically used in written language)"
+      ]
+    },
+    {
+      "id": "ぶどう",
+      "kana": "ぶどう",
+      "japanese": "ぶどう",
+      "english": [
+        "grapes"
+      ]
+    },
+    {
+      "id": "なくなる",
+      "kana": "なくなる",
+      "japanese": "無くなる",
+      "english": [
+        "to disappear",
+        "to get lost"
+      ]
+    },
+    {
+      "id": "じゅんびする",
+      "kana": "じゅんびする",
+      "japanese": "準備",
+      "english": [
+        "prepare"
+      ]
+    },
+    {
+      "id": "せかい",
+      "kana": "せかい",
+      "japanese": "世界",
+      "english": [
+        "world"
+      ]
+    },
+    {
+      "id": "じゅうしょ",
+      "kana": "じゅうしょ",
+      "japanese": "住所",
+      "english": [
+        "address",
+        "place of residence"
+      ]
+    },
+    {
+      "id": "さらいげつ",
+      "kana": "さらいげつ",
+      "japanese": "再来月",
+      "english": [
+        "the month after next"
+      ]
+    },
+    {
+      "id": "はやし",
+      "kana": "はやし",
+      "japanese": "林",
+      "english": [
+        "woods",
+        "forest"
+      ]
+    },
+    {
+      "id": "ばい",
+      "kana": "ばい",
+      "japanese": "倍",
+      "english": [
+        "double"
+      ]
+    },
+    {
+      "id": "やせる",
+      "kana": "やせる",
+      "japanese": "痩せる",
+      "english": [
+        "to lose weight"
+      ]
+    },
+    {
+      "id": "せん",
+      "kana": "せん",
+      "japanese": "線",
+      "english": [
+        "line",
+        "wire"
+      ]
+    },
+    {
+      "id": "せんそう",
+      "kana": "せんそう",
+      "japanese": "戦争",
+      "english": [
+        "war"
+      ]
+    },
+    {
+      "id": "きめる",
+      "kana": "きめる",
+      "japanese": "決める",
+      "english": [
+        "to decide (v.t.)"
+      ]
+    },
+    {
+      "id": "しらべる",
+      "kana": "しらべる",
+      "japanese": "調べる",
+      "english": [
+        "to check",
+        "to look up",
+        "to inquire",
+        "to search"
+      ]
+    },
+    {
+      "id": "ねぼう",
+      "kana": "ねぼう",
+      "japanese": "寝坊",
+      "english": [
+        "sleeping in late"
+      ]
+    },
+    {
+      "id": "パパ",
+      "kana": "パパ",
+      "japanese": "パパ",
+      "english": [
+        "papa",
+        "daddy"
+      ]
+    },
+    {
+      "id": "ひかる",
+      "kana": "ひかる",
+      "japanese": "光る",
+      "english": [
+        "to shine",
+        "to glitter"
+      ]
+    },
+    {
+      "id": "おっと",
+      "kana": "おっと",
+      "japanese": "夫",
+      "english": [
+        "husband"
+      ]
+    },
+    {
+      "id": "くも",
+      "kana": "くも",
+      "japanese": "雲",
+      "english": [
+        "cloud"
+      ]
+    },
+    {
+      "id": "さか",
+      "kana": "さか",
+      "japanese": "坂",
+      "english": [
+        "slope",
+        "hill"
+      ]
+    },
+    {
+      "id": "～(て) しまう",
+      "kana": "～(て) しまう",
+      "japanese": "～(て) しまう",
+      "english": [
+        "to end up ~"
+      ]
+    },
+    {
+      "id": "ひこうじょう",
+      "kana": "ひこうじょう",
+      "japanese": "飛行場",
+      "english": [
+        "airport"
+      ]
+    },
+    {
+      "id": "じゅうどう",
+      "kana": "じゅうどう",
+      "japanese": "柔道",
+      "english": [
+        "judo"
+      ]
+    },
+    {
+      "id": "けっして",
+      "kana": "けっして",
+      "japanese": "決して",
+      "english": [
+        "never"
+      ]
+    },
+    {
+      "id": "じむしょ",
+      "kana": "じむしょ",
+      "japanese": "事務所",
+      "english": [
+        "office"
+      ]
+    },
+    {
+      "id": "れんらく",
+      "kana": "れんらく",
+      "japanese": "連絡",
+      "english": [
+        "communication",
+        "contact",
+        "connection"
+      ]
+    },
+    {
+      "id": "しょうがっこう",
+      "kana": "しょうがっこう",
+      "japanese": "小学校",
+      "english": [
+        "elementary school"
+      ]
+    },
+    {
+      "id": "きゃく",
+      "kana": "きゃく",
+      "japanese": "客",
+      "english": [
+        "guest",
+        "customer"
+      ]
+    },
+    {
+      "id": "むかし",
+      "kana": "むかし",
+      "japanese": "昔",
+      "english": [
+        "old days",
+        "past"
+      ]
+    },
+    {
+      "id": "うつくしい",
+      "kana": "うつくしい",
+      "japanese": "美しい",
+      "english": [
+        "beautiful",
+        "lovely"
+      ]
+    },
+    {
+      "id": "すてる",
+      "kana": "すてる",
+      "japanese": "捨てる",
+      "english": [
+        "throw away (trash)",
+        "dump",
+        "discard"
+      ]
+    },
+    {
+      "id": "なさる",
+      "kana": "なさる",
+      "japanese": "なさる",
+      "english": [
+        "-- honorific expression for する --"
+      ]
+    },
+    {
+      "id": "こと",
+      "kana": "こと",
+      "japanese": "事",
+      "english": [
+        "thing(s)",
+        "matter(s)",
+        "fact"
+      ]
+    },
+    {
+      "id": "どんどん",
+      "kana": "どんどん",
+      "japanese": "どんどん",
+      "english": [
+        "quickly and steadily",
+        "at a rapid pace"
+      ]
+    },
+    {
+      "id": "しあい",
+      "kana": "しあい",
+      "japanese": "試合",
+      "english": [
+        "match",
+        "game",
+        "competition"
+      ]
+    },
+    {
+      "id": "てきとう",
+      "kana": "てきとう",
+      "japanese": "適当",
+      "english": [
+        "fitness",
+        "suitability"
+      ]
+    },
+    {
+      "id": "すばらしい",
+      "kana": "すばらしい",
+      "japanese": "素晴らしい",
+      "english": [
+        "wonderful",
+        "terrific"
+      ]
+    },
+    {
+      "id": "びじゅつかん",
+      "kana": "びじゅつかん",
+      "japanese": "美術館",
+      "english": [
+        "art gallery",
+        "art museum"
+      ]
+    },
+    {
+      "id": "ぶんぽう",
+      "kana": "ぶんぽう",
+      "japanese": "文法",
+      "english": [
+        "grammar"
+      ]
+    },
+    {
+      "id": "おわり",
+      "kana": "おわり",
+      "japanese": "終わり",
+      "english": [
+        "end"
+      ]
+    },
+    {
+      "id": "かべ",
+      "kana": "かべ",
+      "japanese": "壁",
+      "english": [
+        "wall"
+      ]
+    },
+    {
+      "id": "いちど",
+      "kana": "いちど",
+      "japanese": "一度",
+      "english": [
+        "once",
+        "one time"
+      ]
+    },
+    {
+      "id": "おれい",
+      "kana": "おれい",
+      "japanese": "お礼",
+      "english": [
+        "expression of gratitude",
+        "thanking",
+        "gift of appreciation",
+        "bow"
+      ]
+    },
+    {
+      "id": "しんせつ",
+      "kana": "しんせつ",
+      "japanese": "親切",
+      "english": [
+        "kindness"
+      ]
+    },
+    {
+      "id": "しらせる",
+      "kana": "しらせる",
+      "japanese": "知らせる",
+      "english": [
+        "to notify"
+      ]
+    },
+    {
+      "id": "はいしゃ",
+      "kana": "はいしゃ",
+      "japanese": "歯医者",
+      "english": [
+        "dentist"
+      ]
+    },
+    {
+      "id": "ねっしん",
+      "kana": "ねっしん",
+      "japanese": "熱心",
+      "english": [
+        "enthusiasm"
+      ]
+    },
+    {
+      "id": "はじめる",
+      "kana": "はじめる",
+      "japanese": "始める",
+      "english": [
+        "to start",
+        "to begin"
+      ]
+    },
+    {
+      "id": "もらう",
+      "kana": "もらう",
+      "japanese": "もらう",
+      "english": [
+        "to receive"
+      ]
+    },
+    {
+      "id": "なく",
+      "kana": "なく",
+      "japanese": "泣く",
+      "english": [
+        "to cry"
+      ]
+    },
+    {
+      "id": "なおる",
+      "kana": "なおる",
+      "japanese": "治る",
+      "english": [
+        "to get better",
+        "to recover from illness (v.i.)"
+      ]
+    },
+    {
+      "id": "ねつ",
+      "kana": "ねつ",
+      "japanese": "熱",
+      "english": [
+        "fever",
+        "temperature"
+      ]
+    },
+    {
+      "id": "おまつり",
+      "kana": "おまつり",
+      "japanese": "お祭り",
+      "english": [
+        "festival"
+      ]
+    },
+    {
+      "id": "すいどう",
+      "kana": "すいどう",
+      "japanese": "水道",
+      "english": [
+        "water service",
+        "water line"
+      ]
+    },
+    {
+      "id": "におい",
+      "kana": "におい",
+      "japanese": "匂い",
+      "english": [
+        "odor",
+        "smell"
+      ]
+    },
+    {
+      "id": "ベル",
+      "kana": "ベル",
+      "japanese": "ベル",
+      "english": [
+        "bell"
+      ]
+    },
+    {
+      "id": "あかんぼう",
+      "kana": "あかんぼう",
+      "japanese": "赤ん坊",
+      "english": [
+        "baby"
+      ]
+    },
+    {
+      "id": "おかしい",
+      "kana": "おかしい",
+      "japanese": "おかしい",
+      "english": [
+        "strange",
+        "odd",
+        "funny"
+      ]
+    },
+    {
+      "id": "じこ",
+      "kana": "じこ",
+      "japanese": "事故",
+      "english": [
+        "accident"
+      ]
+    },
+    {
+      "id": "へん",
+      "kana": "へん",
+      "japanese": "変",
+      "english": [
+        "strange",
+        "odd"
+      ]
+    },
+    {
+      "id": "じてん",
+      "kana": "じてん",
+      "japanese": "辞典",
+      "english": [
+        "encyclopedia",
+        "reference book"
+      ]
+    },
+    {
+      "id": "のこる",
+      "kana": "のこる",
+      "japanese": "残る",
+      "english": [
+        "to remain (v.i.)",
+        "to be left"
+      ]
+    },
+    {
+      "id": "くれる",
+      "kana": "くれる",
+      "japanese": "くれる",
+      "english": [
+        "to give",
+        "to do for"
+      ]
+    },
+    {
+      "id": "～いん",
+      "kana": "～いん",
+      "japanese": "～員",
+      "english": [
+        "member of ~"
+      ]
+    },
+    {
+      "id": "げんいん",
+      "kana": "げんいん",
+      "japanese": "原因",
+      "english": [
+        "cause",
+        "origin",
+        "source"
+      ]
+    },
+    {
+      "id": "おどろく",
+      "kana": "おどろく",
+      "japanese": "驚く",
+      "english": [
+        "to be surprised",
+        "to be astonished"
+      ]
+    },
+    {
+      "id": "頂く",
+      "kana": "頂く",
+      "japanese": "いただく",
+      "english": [
+        "-- extra-modest expression for たべる and のむ",
+        "humble expression for もらう --"
+      ]
+    },
+    {
+      "id": "そぼ",
+      "kana": "そぼ",
+      "japanese": "祖母",
+      "english": [
+        "grandmother"
+      ]
+    },
+    {
+      "id": "ばしょ",
+      "kana": "ばしょ",
+      "japanese": "場所",
+      "english": [
+        "place",
+        "location"
+      ]
+    },
+    {
+      "id": "こたえ",
+      "kana": "こたえ",
+      "japanese": "答",
+      "english": [
+        "answer",
+        "response"
+      ]
+    },
+    {
+      "id": "もちろん",
+      "kana": "もちろん",
+      "japanese": "もちろん",
+      "english": [
+        "certainly",
+        "of course"
+      ]
+    },
+    {
+      "id": "つける",
+      "kana": "つける",
+      "japanese": "漬ける",
+      "english": [
+        "to soak",
+        "to moisten",
+        "to pickle"
+      ]
+    },
+    {
+      "id": "うけつけ",
+      "kana": "うけつけ",
+      "japanese": "受付",
+      "english": [
+        "reception(ist) desk"
+      ]
+    },
+    {
+      "id": "うち",
+      "kana": "うち",
+      "japanese": "内",
+      "english": [
+        "within",
+        "inside"
+      ]
+    },
+    {
+      "id": "スクリーン",
+      "kana": "スクリーン",
+      "japanese": "スクリーン",
+      "english": [
+        "screen"
+      ]
+    },
+    {
+      "id": "ふえる",
+      "kana": "ふえる",
+      "japanese": "増える",
+      "english": [
+        "to increase",
+        "to multiply"
+      ]
+    },
+    {
+      "id": "または",
+      "kana": "または",
+      "japanese": "または",
+      "english": [
+        "or",
+        "otherwise"
+      ]
+    },
+    {
+      "id": "けがする",
+      "kana": "けがする",
+      "japanese": "けがする",
+      "english": [
+        "injury (to animate object)",
+        "hurt"
+      ]
+    },
+    {
+      "id": "いか",
+      "kana": "いか",
+      "japanese": "以下",
+      "english": [
+        "less than",
+        "below"
+      ]
+    },
+    {
+      "id": "えらぶ",
+      "kana": "えらぶ",
+      "japanese": "選ぶ",
+      "english": [
+        "to choose",
+        "to select"
+      ]
+    },
+    {
+      "id": "～ばかり",
+      "kana": "～ばかり",
+      "japanese": "～ばかり",
+      "english": [
+        "just did ~",
+        "only"
+      ]
+    },
+    {
+      "id": "こころ",
+      "kana": "こころ",
+      "japanese": "心",
+      "english": [
+        "heart",
+        "mind"
+      ]
+    },
+    {
+      "id": "～だす",
+      "kana": "～だす",
+      "japanese": "～だす",
+      "english": [
+        "to start doing ~"
+      ]
+    },
+    {
+      "id": "サラダ",
+      "kana": "サラダ",
+      "japanese": "サラダ",
+      "english": [
+        "salad"
+      ]
+    },
+    {
+      "id": "とどける",
+      "kana": "とどける",
+      "japanese": "届ける",
+      "english": [
+        "to deliver (v.t.)"
+      ]
+    },
+    {
+      "id": "あいさつする",
+      "kana": "あいさつする",
+      "japanese": "挨拶",
+      "english": [
+        "greet(ing)"
+      ]
+    },
+    {
+      "id": "けしき",
+      "kana": "けしき",
+      "japanese": "景色",
+      "english": [
+        "scenery",
+        "landscape"
+      ]
+    },
+    {
+      "id": "たしか",
+      "kana": "たしか",
+      "japanese": "確か",
+      "english": [
+        "if I remember correctly",
+        "certain",
+        "definite"
+      ]
+    },
+    {
+      "id": "ステーキ",
+      "kana": "ステーキ",
+      "japanese": "ステーキ",
+      "english": [
+        "steak"
+      ]
+    },
+    {
+      "id": "しょくりょうひん",
+      "kana": "しょくりょうひん",
+      "japanese": "食料品",
+      "english": [
+        "foodstuff",
+        "groceries"
+      ]
+    },
+    {
+      "id": "もり",
+      "kana": "もり",
+      "japanese": "森",
+      "english": [
+        "forest"
+      ]
+    },
+    {
+      "id": "いない",
+      "kana": "いない",
+      "japanese": "以内",
+      "english": [
+        "within",
+        "less (no more) than"
+      ]
+    },
+    {
+      "id": "よてい",
+      "kana": "よてい",
+      "japanese": "予定",
+      "english": [
+        "plans",
+        "arrangement",
+        "schedule"
+      ]
+    },
+    {
+      "id": "オーバー",
+      "kana": "オーバー",
+      "japanese": "オーバー",
+      "english": [
+        "overcoat",
+        "over",
+        "exceeding",
+        "exaggeration"
+      ]
+    },
+    {
+      "id": "かわく",
+      "kana": "かわく",
+      "japanese": "乾く",
+      "english": [
+        "to get dry"
+      ]
+    },
+    {
+      "id": "いし",
+      "kana": "いし",
+      "japanese": "石",
+      "english": [
+        "stone"
+      ]
+    },
+    {
+      "id": "おもいだす",
+      "kana": "おもいだす",
+      "japanese": "思い出す",
+      "english": [
+        "to recall",
+        "to remember"
+      ]
+    },
+    {
+      "id": "おどる",
+      "kana": "おどる",
+      "japanese": "踊る",
+      "english": [
+        "to dance"
+      ]
+    },
+    {
+      "id": "こまかい",
+      "kana": "こまかい",
+      "japanese": "細かい",
+      "english": [
+        "small",
+        "fine",
+        "minute"
+      ]
+    },
+    {
+      "id": "ぬる",
+      "kana": "ぬる",
+      "japanese": "塗る",
+      "english": [
+        "to paint",
+        "to plaster"
+      ]
+    },
+    {
+      "id": "ごしゅじん",
+      "kana": "ごしゅじん",
+      "japanese": "ご主人",
+      "english": [
+        "(your, her) husband"
+      ]
+    },
+    {
+      "id": "めずらしい",
+      "kana": "めずらしい",
+      "japanese": "珍しい",
+      "english": [
+        "unusual",
+        "rare"
+      ]
+    },
+    {
+      "id": "よう",
+      "kana": "よう",
+      "japanese": "用",
+      "english": [
+        "errand",
+        "task",
+        "business (to take care of)"
+      ]
+    },
+    {
+      "id": "こうむいん",
+      "kana": "こうむいん",
+      "japanese": "公務員",
+      "english": [
+        "government worker",
+        "public servant"
+      ]
+    },
+    {
+      "id": "おじょうさん",
+      "kana": "おじょうさん",
+      "japanese": "お嬢さん",
+      "english": [
+        "(someone's) daughter (polite)"
+      ]
+    },
+    {
+      "id": "ようい",
+      "kana": "ようい",
+      "japanese": "用意",
+      "english": [
+        "preparation"
+      ]
+    },
+    {
+      "id": "さがす",
+      "kana": "さがす",
+      "japanese": "探す",
+      "english": [
+        "to search",
+        "to seek",
+        "to look for"
+      ]
+    },
+    {
+      "id": "かたち",
+      "kana": "かたち",
+      "japanese": "形",
+      "english": [
+        "shape"
+      ]
+    },
+    {
+      "id": "うんてんする",
+      "kana": "うんてんする",
+      "japanese": "運転",
+      "english": [
+        "driving"
+      ]
+    },
+    {
+      "id": "すっかり",
+      "kana": "すっかり",
+      "japanese": "すっかり",
+      "english": [
+        "all",
+        "completely"
+      ]
+    },
+    {
+      "id": "アナウンサー",
+      "kana": "アナウンサー",
+      "japanese": "アナウンサー",
+      "english": [
+        "announcer"
+      ]
+    },
+    {
+      "id": "おみやげ",
+      "kana": "おみやげ",
+      "japanese": "お土産",
+      "english": [
+        "souvenir"
+      ]
+    },
+    {
+      "id": "けしゴム",
+      "kana": "けしゴム",
+      "japanese": "消しゴム",
+      "english": [
+        "eraser"
+      ]
+    },
+    {
+      "id": "りょかん",
+      "kana": "りょかん",
+      "japanese": "旅館",
+      "english": [
+        "a Japanese inn"
+      ]
+    },
+    {
+      "id": "かいがん",
+      "kana": "かいがん",
+      "japanese": "海岸",
+      "english": [
+        "coast",
+        "seashore"
+      ]
+    },
+    {
+      "id": "さびしい",
+      "kana": "さびしい",
+      "japanese": "寂しい",
+      "english": [
+        "lonely",
+        "lonesome"
+      ]
+    },
+    {
+      "id": "そだてる",
+      "kana": "そだてる",
+      "japanese": "育てる",
+      "english": [
+        "to raise (v.t.)",
+        "to bring up"
+      ]
+    },
+    {
+      "id": "みそ",
+      "kana": "みそ",
+      "japanese": "味噌",
+      "english": [
+        "miso",
+        "bean paste"
+      ]
+    },
+    {
+      "id": "おいわい",
+      "kana": "おいわい",
+      "japanese": "お祝い",
+      "english": [
+        "congratulation",
+        "celebration"
+      ]
+    },
+    {
+      "id": "のりもの",
+      "kana": "のりもの",
+      "japanese": "乗り物",
+      "english": [
+        "vehicle"
+      ]
+    },
+    {
+      "id": "あんないする",
+      "kana": "あんないする",
+      "japanese": "案内",
+      "english": [
+        "information",
+        "guidance"
+      ]
+    },
+    {
+      "id": "かよう",
+      "kana": "かよう",
+      "japanese": "通う",
+      "english": [
+        "to go back and forth",
+        "to commute"
+      ]
+    },
+    {
+      "id": "つれる",
+      "kana": "つれる",
+      "japanese": "連れる",
+      "english": [
+        "to lead",
+        "to take (a person)"
+      ]
+    },
+    {
+      "id": "ぎじゅつ",
+      "kana": "ぎじゅつ",
+      "japanese": "技術",
+      "english": [
+        "technique",
+        "technology",
+        "skill"
+      ]
+    },
+    {
+      "id": "ことり",
+      "kana": "ことり",
+      "japanese": "小鳥",
+      "english": [
+        "small bird"
+      ]
+    },
+    {
+      "id": "げしゅく",
+      "kana": "げしゅく",
+      "japanese": "下宿",
+      "english": [
+        "lodging",
+        "boarding house"
+      ]
+    },
+    {
+      "id": "ジャム",
+      "kana": "ジャム",
+      "japanese": "ジャム",
+      "english": [
+        "jam"
+      ]
+    },
+    {
+      "id": "しょうたいする",
+      "kana": "しょうたいする",
+      "japanese": "招待",
+      "english": [
+        "invitation"
+      ]
+    },
+    {
+      "id": "かがみ",
+      "kana": "かがみ",
+      "japanese": "鏡",
+      "english": [
+        "mirror"
+      ]
+    },
+    {
+      "id": "はず",
+      "kana": "はず",
+      "japanese": "はず",
+      "english": [
+        "it should be so"
+      ]
+    },
+    {
+      "id": "ほうりつ",
+      "kana": "ほうりつ",
+      "japanese": "法律",
+      "english": [
+        "law"
+      ]
+    },
+    {
+      "id": "すすむ",
+      "kana": "すすむ",
+      "japanese": "進む",
+      "english": [
+        "to advance",
+        "to proceed"
+      ]
+    },
+    {
+      "id": "たのしむ",
+      "kana": "たのしむ",
+      "japanese": "楽む",
+      "english": [
+        "to enjoy"
+      ]
+    },
+    {
+      "id": "ぼうえき",
+      "kana": "ぼうえき",
+      "japanese": "貿易",
+      "english": [
+        "trade"
+      ]
+    },
+    {
+      "id": "はんたい",
+      "kana": "はんたい",
+      "japanese": "反対",
+      "english": [
+        "oppose",
+        "opposition",
+        "resistance"
+      ]
+    },
+    {
+      "id": "もうす",
+      "kana": "もうす",
+      "japanese": "申す",
+      "english": [
+        "-- extra-modest (humble) expression for 言う (いう) --"
+      ]
+    },
+    {
+      "id": "しけん",
+      "kana": "しけん",
+      "japanese": "試験",
+      "english": [
+        "an exam"
+      ]
+    },
+    {
+      "id": "まじめ",
+      "kana": "まじめ",
+      "japanese": "真面目",
+      "english": [
+        "diligent",
+        "serious"
+      ]
+    },
+    {
+      "id": "てんいん",
+      "kana": "てんいん",
+      "japanese": "店員",
+      "english": [
+        "clerk",
+        "shop-employee"
+      ]
+    },
+    {
+      "id": "とまる",
+      "kana": "とまる",
+      "japanese": "泊まる",
+      "english": [
+        "to stay (over night) (v.i.)"
+      ]
+    },
+    {
+      "id": "よろしい",
+      "kana": "よろしい",
+      "japanese": "よろしい",
+      "english": [
+        "(hon.) good",
+        "OK",
+        "all right"
+      ]
+    },
+    {
+      "id": "こんや",
+      "kana": "こんや",
+      "japanese": "今夜",
+      "english": [
+        "this evening",
+        "tonight"
+      ]
+    },
+    {
+      "id": "おつり",
+      "kana": "おつり",
+      "japanese": "おつり",
+      "english": [
+        "change",
+        "balance of money returned to the purchaser"
+      ]
+    },
+    {
+      "id": "チェックする",
+      "kana": "チェックする",
+      "japanese": "チェックする",
+      "english": [
+        "check"
+      ]
+    },
+    {
+      "id": "かいわ",
+      "kana": "かいわ",
+      "japanese": "会話",
+      "english": [
+        "conversation"
+      ]
+    },
+    {
+      "id": "くうき",
+      "kana": "くうき",
+      "japanese": "空気",
+      "english": [
+        "air",
+        "atmosphere"
+      ]
+    },
+    {
+      "id": "こうつう",
+      "kana": "こうつう",
+      "japanese": "交通",
+      "english": [
+        "traffic",
+        "transportation"
+      ]
+    },
+    {
+      "id": "ワープロ",
+      "kana": "ワープロ",
+      "japanese": "ワープロ",
+      "english": [
+        "word processor"
+      ]
+    },
+    {
+      "id": "よろこぶ",
+      "kana": "よろこぶ",
+      "japanese": "喜ぶ",
+      "english": [
+        "to rejoice",
+        "to be delighted",
+        "to be glad"
+      ]
+    },
+    {
+      "id": "きゅうこう",
+      "kana": "きゅうこう",
+      "japanese": "急行",
+      "english": [
+        "express train or bus"
+      ]
+    },
+    {
+      "id": "みな",
+      "kana": "みな",
+      "japanese": "皆",
+      "english": [
+        "everyone"
+      ]
+    },
+    {
+      "id": "あじ",
+      "kana": "あじ",
+      "japanese": "味",
+      "english": [
+        "flavor",
+        "taste"
+      ]
+    },
+    {
+      "id": "くうこう",
+      "kana": "くうこう",
+      "japanese": "空港",
+      "english": [
+        "airport"
+      ]
+    },
+    {
+      "id": "てぶくろ",
+      "kana": "てぶくろ",
+      "japanese": "手袋",
+      "english": [
+        "glove(s)"
+      ]
+    },
+    {
+      "id": "こうちょう",
+      "kana": "こうちょう",
+      "japanese": "校長",
+      "english": [
+        "principal",
+        "headmaster"
+      ]
+    },
+    {
+      "id": "ごちそう",
+      "kana": "ごちそう",
+      "japanese": "ごちそう",
+      "english": [
+        "feast",
+        "treating (someone)"
+      ]
+    },
+    {
+      "id": "おどり",
+      "kana": "おどり",
+      "japanese": "踊り",
+      "english": [
+        "dance"
+      ]
+    },
+    {
+      "id": "きょうみ",
+      "kana": "きょうみ",
+      "japanese": "興味",
+      "english": [
+        "interest (in something)"
+      ]
+    },
+    {
+      "id": "ひっこす",
+      "kana": "ひっこす",
+      "japanese": "引っ越す",
+      "english": [
+        "to move to a new place of residence"
+      ]
+    },
+    {
+      "id": "れいぼう",
+      "kana": "れいぼう",
+      "japanese": "冷房",
+      "english": [
+        "cooling",
+        "air conditioning"
+      ]
+    },
+    {
+      "id": "つごう",
+      "kana": "つごう",
+      "japanese": "都合",
+      "english": [
+        "circumstances",
+        "convenience"
+      ]
+    },
+    {
+      "id": "えんりょする",
+      "kana": "えんりょする",
+      "japanese": "遠慮",
+      "english": [
+        "restraint",
+        "reserve",
+        "hesitate"
+      ]
+    },
+    {
+      "id": "かがく",
+      "kana": "かがく",
+      "japanese": "科学",
+      "english": [
+        "science"
+      ]
+    },
+    {
+      "id": "はっきり",
+      "kana": "はっきり",
+      "japanese": "はっきり",
+      "english": [
+        "clearly",
+        "distinctly"
+      ]
+    },
+    {
+      "id": "さしあげる",
+      "kana": "さしあげる",
+      "japanese": "差し上げる",
+      "english": [
+        "-- humble expression for あげる --"
+      ]
+    },
+    {
+      "id": "きもち",
+      "kana": "きもち",
+      "japanese": "気持ち",
+      "english": [
+        "feeling",
+        "sensation",
+        "mood"
+      ]
+    },
+    {
+      "id": "そふ",
+      "kana": "そふ",
+      "japanese": "祖父",
+      "english": [
+        "grandfather"
+      ]
+    },
+    {
+      "id": "みなと",
+      "kana": "みなと",
+      "japanese": "港",
+      "english": [
+        "harbor",
+        "port"
+      ]
+    },
+    {
+      "id": "よやく",
+      "kana": "よやく",
+      "japanese": "予約",
+      "english": [
+        "reservation"
+      ]
+    },
+    {
+      "id": "すごい",
+      "kana": "すごい",
+      "japanese": "凄い",
+      "english": [
+        "terrific",
+        "great"
+      ]
+    },
+    {
+      "id": "にゅうがくする",
+      "kana": "にゅうがくする",
+      "japanese": "入学",
+      "english": [
+        "entry to school or university"
+      ]
+    },
+    {
+      "id": "かたづける",
+      "kana": "かたづける",
+      "japanese": "片付ける",
+      "english": [
+        "to (clean) tidy up (v.t.)",
+        "to put away"
+      ]
+    },
+    {
+      "id": "うつす",
+      "kana": "うつす",
+      "japanese": "写す",
+      "english": [
+        "to copy (v.t.)",
+        "to photograph"
+      ]
+    },
+    {
+      "id": "パソコン",
+      "kana": "パソコン",
+      "japanese": "パソコン",
+      "english": [
+        "(personal) computer"
+      ]
+    },
+    {
+      "id": "ぶちょう",
+      "kana": "ぶちょう",
+      "japanese": "部長",
+      "english": [
+        "department (division) manager"
+      ]
+    },
+    {
+      "id": "かじ",
+      "kana": "かじ",
+      "japanese": "火事",
+      "english": [
+        "fire"
+      ]
+    },
+    {
+      "id": "たす",
+      "kana": "たす",
+      "japanese": "足す",
+      "english": [
+        "to add (numbers)"
+      ]
+    },
+    {
+      "id": "きょうかい",
+      "kana": "きょうかい",
+      "japanese": "教会",
+      "english": [
+        "church"
+      ]
+    },
+    {
+      "id": "かれら",
+      "kana": "かれら",
+      "japanese": "彼ら",
+      "english": [
+        "they (usually male)"
+      ]
+    },
+    {
+      "id": "いっぱい",
+      "kana": "いっぱい",
+      "japanese": "一杯",
+      "english": [
+        "full",
+        "to the utmost"
+      ]
+    },
+    {
+      "id": "アメリカ",
+      "kana": "アメリカ",
+      "japanese": "アメリカ",
+      "english": [
+        "America",
+        "U.S.A."
+      ]
+    },
+    {
+      "id": "だんせい",
+      "kana": "だんせい",
+      "japanese": "男性",
+      "english": [
+        "man",
+        "male"
+      ]
+    },
+    {
+      "id": "りゆう",
+      "kana": "りゆう",
+      "japanese": "理由",
+      "english": [
+        "reason"
+      ]
+    },
+    {
+      "id": "せいさんする",
+      "kana": "せいさんする",
+      "japanese": "生産",
+      "english": [
+        "production",
+        "to produce"
+      ]
+    },
+    {
+      "id": "きもの",
+      "kana": "きもの",
+      "japanese": "着物",
+      "english": [
+        "kimono",
+        "Japanese traditional dress"
+      ]
+    },
+    {
+      "id": "おもちゃ",
+      "kana": "おもちゃ",
+      "japanese": "おもちゃ",
+      "english": [
+        "a toy"
+      ]
+    },
+    {
+      "id": "つる",
+      "kana": "つる",
+      "japanese": "釣る",
+      "english": [
+        "to fish"
+      ]
+    },
+    {
+      "id": "～ちゃん",
+      "kana": "～ちゃん",
+      "japanese": "～ちゃん",
+      "english": [
+        "suffix for familiar (female) person"
+      ]
+    },
+    {
+      "id": "うつ",
+      "kana": "うつ",
+      "japanese": "打つ",
+      "english": [
+        "to hit",
+        "to strike"
+      ]
+    },
+    {
+      "id": "あんな",
+      "kana": "あんな",
+      "japanese": "あんな",
+      "english": [
+        "such",
+        "like that"
+      ]
+    },
+    {
+      "id": "あやまる",
+      "kana": "あやまる",
+      "japanese": "謝る",
+      "english": [
+        "to apologize"
+      ]
+    },
+    {
+      "id": "ひるま",
+      "kana": "ひるま",
+      "japanese": "昼間",
+      "english": [
+        "daytime",
+        "during the day"
+      ]
+    },
+    {
+      "id": "きょういく",
+      "kana": "きょういく",
+      "japanese": "教育",
+      "english": [
+        "education"
+      ]
+    },
+    {
+      "id": "じょせい",
+      "kana": "じょせい",
+      "japanese": "女性",
+      "english": [
+        "woman"
+      ]
+    },
+    {
+      "id": "こめ",
+      "kana": "こめ",
+      "japanese": "米",
+      "english": [
+        "uncooked rice"
+      ]
+    },
+    {
+      "id": "じゃま",
+      "kana": "じゃま",
+      "japanese": "邪魔",
+      "english": [
+        "hindrance",
+        "intrusion"
+      ]
+    },
+    {
+      "id": "こくさい",
+      "kana": "こくさい",
+      "japanese": "国際",
+      "english": [
+        "international"
+      ]
+    },
+    {
+      "id": "すみ",
+      "kana": "すみ",
+      "japanese": "隅",
+      "english": [
+        "corner"
+      ]
+    },
+    {
+      "id": "さらいしゅう",
+      "kana": "さらいしゅう",
+      "japanese": "再来週",
+      "english": [
+        "the week after next"
+      ]
+    },
+    {
+      "id": "ゆめ",
+      "kana": "ゆめ",
+      "japanese": "夢",
+      "english": [
+        "a dream"
+      ]
+    },
+    {
+      "id": "のど",
+      "kana": "のど",
+      "japanese": "喉",
+      "english": [
+        "throat"
+      ]
+    },
+    {
+      "id": "さいきん",
+      "kana": "さいきん",
+      "japanese": "最近",
+      "english": [
+        "recently",
+        "nowadays",
+        "in recent years",
+        "most recent",
+        "latest"
+      ]
+    },
+    {
+      "id": "まわり",
+      "kana": "まわり",
+      "japanese": "周り",
+      "english": [
+        "surroundings"
+      ]
+    },
+    {
+      "id": "れきし",
+      "kana": "れきし",
+      "japanese": "歴史",
+      "english": [
+        "history"
+      ]
+    },
+    {
+      "id": "ふべん",
+      "kana": "ふべん",
+      "japanese": "不便",
+      "english": [
+        "inconvenience"
+      ]
+    },
+    {
+      "id": "ち",
+      "kana": "ち",
+      "japanese": "血",
+      "english": [
+        "blood"
+      ]
+    },
+    {
+      "id": "～つづける",
+      "kana": "～つづける",
+      "japanese": "～続ける",
+      "english": [
+        "to continue doing ~"
+      ]
+    },
+    {
+      "id": "け",
+      "kana": "け",
+      "japanese": "毛",
+      "english": [
+        "hair",
+        "fur"
+      ]
+    },
+    {
+      "id": "ひどい",
+      "kana": "ひどい",
+      "japanese": "ひどい",
+      "english": [
+        "terrible",
+        "awful",
+        "unfair",
+        "cruel"
+      ]
+    },
+    {
+      "id": "たとえば",
+      "kana": "たとえば",
+      "japanese": "例えば",
+      "english": [
+        "for example",
+        "e.g."
+      ]
+    },
+    {
+      "id": "なかなか",
+      "kana": "なかなか",
+      "japanese": "中々",
+      "english": [
+        "very",
+        "considerably",
+        "quite"
+      ]
+    },
+    {
+      "id": "ずいぶん",
+      "kana": "ずいぶん",
+      "japanese": "随分",
+      "english": [
+        "extremely"
+      ]
+    },
+    {
+      "id": "～やすい",
+      "kana": "～やすい",
+      "japanese": "～やすい",
+      "english": [
+        "easy to do ~"
+      ]
+    },
+    {
+      "id": "おしいれ",
+      "kana": "おしいれ",
+      "japanese": "押し入れ",
+      "english": [
+        "closet"
+      ]
+    },
+    {
+      "id": "でんとう",
+      "kana": "でんとう",
+      "japanese": "電灯",
+      "english": [
+        "electric light"
+      ]
+    },
+    {
+      "id": "しかる",
+      "kana": "しかる",
+      "japanese": "叱る",
+      "english": [
+        "to scold"
+      ]
+    },
+    {
+      "id": "サンダル",
+      "kana": "サンダル",
+      "japanese": "サンダル",
+      "english": [
+        "sandal"
+      ]
+    },
+    {
+      "id": "びっくりする",
+      "kana": "びっくりする",
+      "japanese": "びっくりする",
+      "english": [
+        "to be surprised"
+      ]
+    },
+    {
+      "id": "うまい",
+      "kana": "うまい",
+      "japanese": "うまい",
+      "english": [
+        "delicious",
+        "skillful",
+        "fortunate"
+      ]
+    },
+    {
+      "id": "かえる",
+      "kana": "かえる",
+      "japanese": "変える",
+      "english": [
+        "to change",
+        "to alter",
+        "to vary"
+      ]
+    },
+    {
+      "id": "こうどう",
+      "kana": "こうどう",
+      "japanese": "講堂",
+      "english": [
+        "auditorium"
+      ]
+    },
+    {
+      "id": "こ",
+      "kana": "こ",
+      "japanese": "子",
+      "english": [
+        "child"
+      ]
+    },
+    {
+      "id": "わかす",
+      "kana": "わかす",
+      "japanese": "沸かす",
+      "english": [
+        "to boil"
+      ]
+    },
+    {
+      "id": "レジ",
+      "kana": "レジ",
+      "japanese": "レジ",
+      "english": [
+        "register"
+      ]
+    },
+    {
+      "id": "しばらく",
+      "kana": "しばらく",
+      "japanese": "しばらく",
+      "english": [
+        "little while"
+      ]
+    },
+    {
+      "id": "とくに",
+      "kana": "とくに",
+      "japanese": "特に",
+      "english": [
+        "particularly"
+      ]
+    },
+    {
+      "id": "あく",
+      "kana": "あく",
+      "japanese": "空く",
+      "english": [
+        "to open",
+        "to become empty (vacant)"
+      ]
+    },
+    {
+      "id": "けいかくする",
+      "kana": "けいかくする",
+      "japanese": "計画",
+      "english": [
+        "plan",
+        "project",
+        "schedule"
+      ]
+    },
+    {
+      "id": "とおり",
+      "kana": "とおり",
+      "japanese": "通り",
+      "english": [
+        "~ Street",
+        "~ Avenue"
+      ]
+    },
+    {
+      "id": "したぎ",
+      "kana": "したぎ",
+      "japanese": "下着",
+      "english": [
+        "underwear"
+      ]
+    },
+    {
+      "id": "けいざい",
+      "kana": "けいざい",
+      "japanese": "経済",
+      "english": [
+        "economics",
+        "finance",
+        "economy"
+      ]
+    },
+    {
+      "id": "こう",
+      "kana": "こう",
+      "japanese": "こう",
+      "english": [
+        "like this",
+        "this way"
+      ]
+    },
+    {
+      "id": "ぜひ",
+      "kana": "ぜひ",
+      "japanese": "是非",
+      "english": [
+        "certainly",
+        "by all means",
+        "without fail"
+      ]
+    },
+    {
+      "id": "うら",
+      "kana": "うら",
+      "japanese": "裏",
+      "english": [
+        "reverse side",
+        "back"
+      ]
+    },
+    {
+      "id": "ため",
+      "kana": "ため",
+      "japanese": "為",
+      "english": [
+        "good",
+        "advantage",
+        "in order to"
+      ]
+    },
+    {
+      "id": "おいでになる",
+      "kana": "おいでになる",
+      "japanese": "おいでになる",
+      "english": [
+        "(hon.) to be"
+      ]
+    },
+    {
+      "id": "かわる",
+      "kana": "かわる",
+      "japanese": "変わる",
+      "english": [
+        "to change (v.i.)",
+        "to be transformed",
+        "to vary"
+      ]
+    },
+    {
+      "id": "いがい",
+      "kana": "いがい",
+      "japanese": "以外",
+      "english": [
+        "other than",
+        "with the exception of",
+        "excepting"
+      ]
+    },
+    {
+      "id": "すむ",
+      "kana": "すむ",
+      "japanese": "済む",
+      "english": [
+        "to finish",
+        "to end"
+      ]
+    },
+    {
+      "id": "ハンバーグ",
+      "kana": "ハンバーグ",
+      "japanese": "ハンバーグ",
+      "english": [
+        "hamburger steak"
+      ]
+    },
+    {
+      "id": "し",
+      "kana": "し",
+      "japanese": "市",
+      "english": [
+        "city"
+      ]
+    },
+    {
+      "id": "ひきだし",
+      "kana": "ひきだし",
+      "japanese": "引き出し",
+      "english": [
+        "drawer"
+      ]
+    },
+    {
+      "id": "あそび",
+      "kana": "あそび",
+      "japanese": "遊び",
+      "english": [
+        "play"
+      ]
+    },
+    {
+      "id": "したくする",
+      "kana": "したくする",
+      "japanese": "支度",
+      "english": [
+        "preparation"
+      ]
+    },
+    {
+      "id": "～はじめる",
+      "kana": "～はじめる",
+      "japanese": "～始める",
+      "english": [
+        "to start doing ~"
+      ]
+    },
+    {
+      "id": "みえる",
+      "kana": "みえる",
+      "japanese": "見える",
+      "english": [
+        "to be visible",
+        "-- polite verb meaning 来る (くる) --"
+      ]
+    },
+    {
+      "id": "じゅうぶん",
+      "kana": "じゅうぶん",
+      "japanese": "十分",
+      "english": [
+        "enough"
+      ]
+    },
+    {
+      "id": "おと",
+      "kana": "おと",
+      "japanese": "音",
+      "english": [
+        "sound",
+        "note"
+      ]
+    },
+    {
+      "id": "きっと",
+      "kana": "きっと",
+      "japanese": "きっと",
+      "english": [
+        "surely",
+        "definitely",
+        "undoubtedly",
+        "certainly"
+      ]
+    },
+    {
+      "id": "まず",
+      "kana": "まず",
+      "japanese": "まず",
+      "english": [
+        "first (of all)",
+        "to start with"
+      ]
+    },
+    {
+      "id": "とおく",
+      "kana": "とおく",
+      "japanese": "遠く",
+      "english": [
+        "far away",
+        "distant"
+      ]
+    },
+    {
+      "id": "だいたい",
+      "kana": "だいたい",
+      "japanese": "大体",
+      "english": [
+        "approximately",
+        "in most cases",
+        "in general",
+        "to begin with (same as もともと)"
+      ]
+    },
+    {
+      "id": "おれる",
+      "kana": "おれる",
+      "japanese": "折れる",
+      "english": [
+        "to break",
+        "to be folded",
+        "to give in",
+        "to turn (a corner)"
+      ]
+    },
+    {
+      "id": "ただしい",
+      "kana": "ただしい",
+      "japanese": "正しい",
+      "english": [
+        "correct"
+      ]
+    },
+    {
+      "id": "ゆにゅう",
+      "kana": "ゆにゅう",
+      "japanese": "輸入",
+      "english": [
+        "import"
+      ]
+    },
+    {
+      "id": "へんじ",
+      "kana": "へんじ",
+      "japanese": "返事",
+      "english": [
+        "reply",
+        "answer"
+      ]
+    },
+    {
+      "id": "と",
+      "kana": "と",
+      "japanese": "都",
+      "english": [
+        "metropolitan"
+      ]
+    },
+    {
+      "id": "さんぎょう",
+      "kana": "さんぎょう",
+      "japanese": "産業",
+      "english": [
+        "industry"
+      ]
+    },
+    {
+      "id": "つたえる",
+      "kana": "つたえる",
+      "japanese": "伝える",
+      "english": [
+        "to convey (a message)",
+        "to tell",
+        "to report"
+      ]
+    },
+    {
+      "id": "かねもち; おかねもち",
+      "kana": "かねもち; おかねもち",
+      "japanese": "お金持ち",
+      "english": [
+        "rich person"
+      ]
+    },
+    {
+      "id": "せつめい",
+      "kana": "せつめい",
+      "japanese": "説明",
+      "english": [
+        "explanation"
+      ]
+    },
+    {
+      "id": "しま",
+      "kana": "しま",
+      "japanese": "島",
+      "english": [
+        "island"
+      ]
+    },
+    {
+      "id": "どうぐ",
+      "kana": "どうぐ",
+      "japanese": "道具",
+      "english": [
+        "tool"
+      ]
+    },
+    {
+      "id": "すべる",
+      "kana": "すべる",
+      "japanese": "滑る",
+      "english": [
+        "to slide",
+        "to slip"
+      ]
+    },
+    {
+      "id": "それほど",
+      "kana": "それほど",
+      "japanese": "それほど",
+      "english": [
+        "to that degree",
+        "extent"
+      ]
+    },
+    {
+      "id": "いじょう",
+      "kana": "いじょう",
+      "japanese": "以上",
+      "english": [
+        "more than",
+        "this is all"
+      ]
+    },
+    {
+      "id": "～まま",
+      "kana": "～まま",
+      "japanese": "～まま",
+      "english": [
+        "as it is"
+      ]
+    },
+    {
+      "id": "とっきゅう",
+      "kana": "とっきゅう",
+      "japanese": "特急",
+      "english": [
+        "limited express (train faster than an express)"
+      ]
+    },
+    {
+      "id": "プレゼント",
+      "kana": "プレゼント",
+      "japanese": "プレゼント",
+      "english": [
+        "present",
+        "gift"
+      ]
+    },
+    {
+      "id": "～(に) よると",
+      "kana": "～(に) よると",
+      "japanese": "～(に) よると",
+      "english": [
+        "according to ~"
+      ]
+    },
+    {
+      "id": "つま",
+      "kana": "つま",
+      "japanese": "妻",
+      "english": [
+        "wife (humble)"
+      ]
+    },
+    {
+      "id": "かえり",
+      "kana": "かえり",
+      "japanese": "帰り",
+      "english": [
+        "return",
+        "coming back"
+      ]
+    },
+    {
+      "id": "ぐあい",
+      "kana": "ぐあい",
+      "japanese": "具合",
+      "english": [
+        "condition",
+        "state",
+        "health"
+      ]
+    },
+    {
+      "id": "かたい",
+      "kana": "かたい",
+      "japanese": "堅; 硬; 固い",
+      "english": [
+        "solid",
+        "hard",
+        "firm"
+      ]
+    },
+    {
+      "id": "ちゅうしゃじょう",
+      "kana": "ちゅうしゃじょう",
+      "japanese": "駐車場",
+      "english": [
+        "parking lot"
+      ]
+    },
+    {
+      "id": "スーツ",
+      "kana": "スーツ",
+      "japanese": "スーツ",
+      "english": [
+        "suit"
+      ]
+    },
+    {
+      "id": "きけん",
+      "kana": "きけん",
+      "japanese": "危険",
+      "english": [
+        "danger",
+        "risk",
+        "hazard"
+      ]
+    },
+    {
+      "id": "かみ",
+      "kana": "かみ",
+      "japanese": "髪",
+      "english": [
+        "hair"
+      ]
+    },
+    {
+      "id": "てんきよほう",
+      "kana": "てんきよほう",
+      "japanese": "天気予報",
+      "english": [
+        "weather forecast"
+      ]
+    },
+    {
+      "id": "かのじょ",
+      "kana": "かのじょ",
+      "japanese": "彼女",
+      "english": [
+        "girlfriend",
+        "she"
+      ]
+    },
+    {
+      "id": "あいだ",
+      "kana": "あいだ",
+      "japanese": "間",
+      "english": [
+        "space",
+        "interval"
+      ]
+    },
+    {
+      "id": "そつぎょう",
+      "kana": "そつぎょう",
+      "japanese": "卒業",
+      "english": [
+        "graduation"
+      ]
+    },
+    {
+      "id": "それで",
+      "kana": "それで",
+      "japanese": "それで",
+      "english": [
+        "and (conj.)",
+        "thereupon",
+        "because of that"
+      ]
+    },
+    {
+      "id": "えだ",
+      "kana": "えだ",
+      "japanese": "枝",
+      "english": [
+        "branch",
+        "twig"
+      ]
+    },
+    {
+      "id": "せんもん",
+      "kana": "せんもん",
+      "japanese": "専門",
+      "english": [
+        "major",
+        "speciality"
+      ]
+    },
+    {
+      "id": "そろそろ",
+      "kana": "そろそろ",
+      "japanese": "そろそろ",
+      "english": [
+        "gradually",
+        "soon"
+      ]
+    },
+    {
+      "id": "おくる",
+      "kana": "おくる",
+      "japanese": "送る",
+      "english": [
+        "to send",
+        "to dispatch"
+      ]
+    },
+    {
+      "id": "あげる",
+      "kana": "あげる",
+      "japanese": "あげる",
+      "english": [
+        "to give"
+      ]
+    },
+    {
+      "id": "さわぐ",
+      "kana": "さわぐ",
+      "japanese": "騒ぐ",
+      "english": [
+        "to make noise",
+        "to clamor"
+      ]
+    },
+    {
+      "id": "たずねる",
+      "kana": "たずねる",
+      "japanese": "尋ねる",
+      "english": [
+        "to inquire (same as 質問する)"
+      ]
+    },
+    {
+      "id": "ほうそうする",
+      "kana": "ほうそうする",
+      "japanese": "放送",
+      "english": [
+        "broadcasting"
+      ]
+    },
+    {
+      "id": "せいじ",
+      "kana": "せいじ",
+      "japanese": "政治",
+      "english": [
+        "politics"
+      ]
+    },
+    {
+      "id": "しみん",
+      "kana": "しみん",
+      "japanese": "市民",
+      "english": [
+        "citizen"
+      ]
+    },
+    {
+      "id": "ファックス",
+      "kana": "ファックス",
+      "japanese": "ファックス",
+      "english": [
+        "fax"
+      ]
+    },
+    {
+      "id": "まける",
+      "kana": "まける",
+      "japanese": "負ける",
+      "english": [
+        "to lose (a game) (v.i.)",
+        "to be defeated"
+      ]
+    },
+    {
+      "id": "ゆびわ",
+      "kana": "ゆびわ",
+      "japanese": "指輪",
+      "english": [
+        "(finger) ring"
+      ]
+    },
+    {
+      "id": "いなか",
+      "kana": "いなか",
+      "japanese": "田舎",
+      "english": [
+        "rural",
+        "countryside"
+      ]
+    },
+    {
+      "id": "みつける",
+      "kana": "みつける",
+      "japanese": "見つける",
+      "english": [
+        "to discover",
+        "to find (v.t.)"
+      ]
+    },
+    {
+      "id": "こうこうせい",
+      "kana": "こうこうせい",
+      "japanese": "高校生",
+      "english": [
+        "high school student"
+      ]
+    },
+    {
+      "id": "こうぎ",
+      "kana": "こうぎ",
+      "japanese": "講義",
+      "english": [
+        "a lecture"
+      ]
+    },
+    {
+      "id": "そんなに",
+      "kana": "そんなに",
+      "japanese": "そんなに",
+      "english": [
+        "so much",
+        "like that"
+      ]
+    },
+    {
+      "id": "ひるやすみ",
+      "kana": "ひるやすみ",
+      "japanese": "昼休み",
+      "english": [
+        "lunch break",
+        "noon recess"
+      ]
+    },
+    {
+      "id": "わすれもの",
+      "kana": "わすれもの",
+      "japanese": "忘れ物",
+      "english": [
+        "lost article",
+        "something forgotten"
+      ]
+    },
+    {
+      "id": "おりる",
+      "kana": "おりる",
+      "japanese": "下りる",
+      "english": [
+        "to get down",
+        "to go",
+        "come down"
+      ]
+    },
+    {
+      "id": "うで",
+      "kana": "うで",
+      "japanese": "腕",
+      "english": [
+        "arm (in reference to body)"
+      ]
+    },
+    {
+      "id": "わけ",
+      "kana": "わけ",
+      "japanese": "訳",
+      "english": [
+        "reason",
+        "explanation"
+      ]
+    },
+    {
+      "id": "しょうちする",
+      "kana": "しょうちする",
+      "japanese": "承知",
+      "english": [
+        "consent",
+        "acceptance"
+      ]
+    },
+    {
+      "id": "にっき",
+      "kana": "にっき",
+      "japanese": "日記",
+      "english": [
+        "diary",
+        "journal"
+      ]
+    },
+    {
+      "id": "こうこう; こうとうがっこう",
+      "kana": "こうこう; こうとうがっこう",
+      "japanese": "高校; 高等学校",
+      "english": [
+        "high school",
+        "senior high school"
+      ]
+    },
+    {
+      "id": "にる",
+      "kana": "にる",
+      "japanese": "似る",
+      "english": [
+        "to resemble",
+        "to be similar"
+      ]
+    },
+    {
+      "id": "～おわる",
+      "kana": "～おわる",
+      "japanese": "～おわる",
+      "english": [
+        "to finish doing ~"
+      ]
+    },
+    {
+      "id": "だんぼう",
+      "kana": "だんぼう",
+      "japanese": "暖房",
+      "english": [
+        "heating"
+      ]
+    },
+    {
+      "id": "るす",
+      "kana": "るす",
+      "japanese": "留守",
+      "english": [
+        "absence",
+        "not at home"
+      ]
+    },
+    {
+      "id": "わりあい",
+      "kana": "わりあい",
+      "japanese": "割合",
+      "english": [
+        "rate",
+        "ratio",
+        "percentage"
+      ]
+    },
+    {
+      "id": "てら",
+      "kana": "てら",
+      "japanese": "寺",
+      "english": [
+        "Buddhist temple"
+      ]
+    },
+    {
+      "id": "なれる",
+      "kana": "なれる",
+      "japanese": "慣れる",
+      "english": [
+        "to grow accustomed to"
+      ]
+    },
+    {
+      "id": "ふつう",
+      "kana": "ふつう",
+      "japanese": "普通",
+      "english": [
+        "common",
+        "usual"
+      ]
+    },
+    {
+      "id": "てつだう",
+      "kana": "てつだう",
+      "japanese": "手伝う",
+      "english": [
+        "to help"
+      ]
+    },
+    {
+      "id": "なるほど",
+      "kana": "なるほど",
+      "japanese": "なるほど",
+      "english": [
+        "I see",
+        "I now understand"
+      ]
+    },
+    {
+      "id": "くださる",
+      "kana": "くださる",
+      "japanese": "くださる",
+      "english": [
+        "(hon.) to give",
+        "to confer"
+      ]
+    },
+    {
+      "id": "むすこ",
+      "kana": "むすこ",
+      "japanese": "息子",
+      "english": [
+        "(humble) son"
+      ]
+    },
+    {
+      "id": "おこさん",
+      "kana": "おこさん",
+      "japanese": "お子さん",
+      "english": [
+        "(someone else's) child (polite)"
+      ]
+    },
+    {
+      "id": "かいじょう",
+      "kana": "かいじょう",
+      "japanese": "会場",
+      "english": [
+        "venue",
+        "meeting place"
+      ]
+    },
+    {
+      "id": "わらう",
+      "kana": "わらう",
+      "japanese": "笑う",
+      "english": [
+        "to laugh",
+        "to smile"
+      ]
+    },
+    {
+      "id": "はこぶ",
+      "kana": "はこぶ",
+      "japanese": "運ぶ",
+      "english": [
+        "to transport",
+        "to carry"
+      ]
+    },
+    {
+      "id": "ぶんがく",
+      "kana": "ぶんがく",
+      "japanese": "文学",
+      "english": [
+        "literature"
+      ]
+    },
+    {
+      "id": "ひかり",
+      "kana": "ひかり",
+      "japanese": "光",
+      "english": [
+        "light"
+      ]
+    },
+    {
+      "id": "おみまい",
+      "kana": "おみまい",
+      "japanese": "お見舞い",
+      "english": [
+        "calling on someone who is ill",
+        "visit"
+      ]
+    },
+    {
+      "id": "せき",
+      "kana": "せき",
+      "japanese": "席",
+      "english": [
+        "a seat"
+      ]
+    },
+    {
+      "id": "～さま",
+      "kana": "～さま",
+      "japanese": "～様",
+      "english": [
+        "Mr.",
+        "Mrs.",
+        "Ms."
+      ]
+    },
+    {
+      "id": "ごぞんじ",
+      "kana": "ごぞんじ",
+      "japanese": "ご存じ",
+      "english": [
+        "knowing",
+        "acquaintance"
+      ]
+    },
+    {
+      "id": "さがる",
+      "kana": "さがる",
+      "japanese": "下る",
+      "english": [
+        "to descend",
+        "to drop",
+        "to fall"
+      ]
+    },
+    {
+      "id": "じ",
+      "kana": "じ",
+      "japanese": "字",
+      "english": [
+        "letter",
+        "character"
+      ]
+    },
+    {
+      "id": "アジア",
+      "kana": "アジア",
+      "japanese": "アジア",
+      "english": [
+        "Asia"
+      ]
+    },
+    {
+      "id": "ほめる",
+      "kana": "ほめる",
+      "japanese": "褒める",
+      "english": [
+        "to praise",
+        "to say nice things"
+      ]
+    },
+    {
+      "id": "すく",
+      "kana": "すく",
+      "japanese": "空く",
+      "english": [
+        "to be empty (in reference to people)",
+        "to be less crowded"
+      ]
+    },
+    {
+      "id": "あ",
+      "kana": "あ",
+      "japanese": "あ",
+      "english": [
+        "Ah"
+      ]
+    },
+    {
+      "id": "もっとも",
+      "kana": "もっとも",
+      "japanese": "最も",
+      "english": [
+        "most"
+      ]
+    },
+    {
+      "id": "あう",
+      "kana": "あう",
+      "japanese": "合う",
+      "english": [
+        "to fit",
+        "to match"
+      ]
+    },
+    {
+      "id": "～だい",
+      "kana": "～だい",
+      "japanese": "～代",
+      "english": [
+        "~ age",
+        "period"
+      ]
+    },
+    {
+      "id": "さいご",
+      "kana": "さいご",
+      "japanese": "最後",
+      "english": [
+        "last",
+        "end"
+      ]
+    },
+    {
+      "id": "ねだん",
+      "kana": "ねだん",
+      "japanese": "値段",
+      "english": [
+        "price"
+      ]
+    },
+    {
+      "id": "たいいんする",
+      "kana": "たいいんする",
+      "japanese": "退院",
+      "english": [
+        "leaving hospital"
+      ]
+    },
+    {
+      "id": "てんらんかい",
+      "kana": "てんらんかい",
+      "japanese": "展覧会",
+      "english": [
+        "exhibition"
+      ]
+    },
+    {
+      "id": "ひさしぶり",
+      "kana": "ひさしぶり",
+      "japanese": "久しぶり",
+      "english": [
+        "it has been a long time",
+        "for the first time in a long time"
+      ]
+    },
+    {
+      "id": "カーテン",
+      "kana": "カーテン",
+      "japanese": "カーテン",
+      "english": [
+        "curtain"
+      ]
+    },
+    {
+      "id": "きしゃ",
+      "kana": "きしゃ",
+      "japanese": "汽車",
+      "english": [
+        "train (steam)"
+      ]
+    },
+    {
+      "id": "おくれる",
+      "kana": "おくれる",
+      "japanese": "遅れる",
+      "english": [
+        "to (be) become late"
+      ]
+    },
+    {
+      "id": "みつかる",
+      "kana": "みつかる",
+      "japanese": "見つかる",
+      "english": [
+        "to be found (v.i.)",
+        "to be discovered"
+      ]
+    },
+    {
+      "id": "めしあがる",
+      "kana": "めしあがる",
+      "japanese": "召し上がる",
+      "english": [
+        "-- honorific form of 食べる (たべる) and 飲む (のむ) --"
+      ]
+    },
+    {
+      "id": "ふとる",
+      "kana": "ふとる",
+      "japanese": "太る",
+      "english": [
+        "to gain weight"
+      ]
+    },
+    {
+      "id": "ちゅうしゃ",
+      "kana": "ちゅうしゃ",
+      "japanese": "注射",
+      "english": [
+        "injection"
+      ]
+    },
+    {
+      "id": "～おき",
+      "kana": "～おき",
+      "japanese": "～おき",
+      "english": [
+        "after every ~"
+      ]
+    },
+    {
+      "id": "さいしょ",
+      "kana": "さいしょ",
+      "japanese": "最初",
+      "english": [
+        "beginning",
+        "first"
+      ]
+    },
+    {
+      "id": "ご～",
+      "kana": "ご～",
+      "japanese": "御～",
+      "english": [
+        "honorable ~"
+      ]
+    },
+    {
+      "id": "あんしん",
+      "kana": "あんしん",
+      "japanese": "安心",
+      "english": [
+        "peace of mind",
+        "relief"
+      ]
+    },
+    {
+      "id": "あつめる",
+      "kana": "あつめる",
+      "japanese": "集める",
+      "english": [
+        "to collect",
+        "to gather (v.t.)",
+        "to assemble"
+      ]
+    },
+    {
+      "id": "なおす",
+      "kana": "なおす",
+      "japanese": "直す",
+      "english": [
+        "to correct (v.t.)",
+        "to fix"
+      ]
+    },
+    {
+      "id": "つづく",
+      "kana": "つづく",
+      "japanese": "続く",
+      "english": [
+        "to be continued"
+      ]
+    },
+    {
+      "id": "せんぱい",
+      "kana": "せんぱい",
+      "japanese": "先輩",
+      "english": [
+        "senior members of a group"
+      ]
+    },
+    {
+      "id": "やくそく",
+      "kana": "やくそく",
+      "japanese": "約束",
+      "english": [
+        "arrangement",
+        "appointment",
+        "promise"
+      ]
+    },
+    {
+      "id": "せわする",
+      "kana": "せわする",
+      "japanese": "世話",
+      "english": [
+        "looking after",
+        "to look after"
+      ]
+    },
+    {
+      "id": "きんじょ",
+      "kana": "きんじょ",
+      "japanese": "近所",
+      "english": [
+        "neighborhood"
+      ]
+    },
+    {
+      "id": "しょうらい",
+      "kana": "しょうらい",
+      "japanese": "将来",
+      "english": [
+        "(in the) future",
+        "prospects"
+      ]
+    },
+    {
+      "id": "おく",
+      "kana": "おく",
+      "japanese": "億",
+      "english": [
+        "hundred million"
+      ]
+    },
+    {
+      "id": "すうがく",
+      "kana": "すうがく",
+      "japanese": "数学",
+      "english": [
+        "mathematics"
+      ]
+    },
+    {
+      "id": "ぶんか",
+      "kana": "ぶんか",
+      "japanese": "文化",
+      "english": [
+        "culture"
+      ]
+    },
+    {
+      "id": "はらう",
+      "kana": "はらう",
+      "japanese": "払う",
+      "english": [
+        "to pay"
+      ]
+    },
+    {
+      "id": "しゅうかん",
+      "kana": "しゅうかん",
+      "japanese": "習慣",
+      "english": [
+        "custom (in reference to culture)"
+      ]
+    },
+    {
+      "id": "やける",
+      "kana": "やける",
+      "japanese": "焼ける",
+      "english": [
+        "to burn",
+        "to be roasted"
+      ]
+    },
+    {
+      "id": "きみ",
+      "kana": "きみ",
+      "japanese": "君",
+      "english": [
+        "you (informal for men)"
+      ]
+    },
+    {
+      "id": "ひえる",
+      "kana": "ひえる",
+      "japanese": "冷える",
+      "english": [
+        "to grow cold",
+        "to cool down"
+      ]
+    },
+    {
+      "id": "つく",
+      "kana": "つく",
+      "japanese": "点く",
+      "english": [
+        "to be started",
+        "to be switched on"
+      ]
+    },
+    {
+      "id": "このあいだ",
+      "kana": "このあいだ",
+      "japanese": "この間",
+      "english": [
+        "the other day",
+        "recently"
+      ]
+    },
+    {
+      "id": "かっこう",
+      "kana": "かっこう",
+      "japanese": "格好",
+      "english": [
+        "appearance",
+        "manner",
+        "shape",
+        "form",
+        "posture"
+      ]
+    },
+    {
+      "id": "つづける",
+      "kana": "つづける",
+      "japanese": "続ける",
+      "english": [
+        "to continue",
+        "to keep up"
+      ]
+    },
+    {
+      "id": "おとす",
+      "kana": "おとす",
+      "japanese": "落す",
+      "english": [
+        "to drop",
+        "to lose"
+      ]
+    },
+    {
+      "id": "あす",
+      "kana": "あす",
+      "japanese": "明日",
+      "english": [
+        "tomorrow"
+      ]
+    },
+    {
+      "id": "しゅっぱつする",
+      "kana": "しゅっぱつする",
+      "japanese": "出発",
+      "english": [
+        "departure"
+      ]
+    },
+    {
+      "id": "はいけんする",
+      "kana": "はいけんする",
+      "japanese": "拝見",
+      "english": [
+        "(humble) (polite) seeing",
+        "look at"
+      ]
+    },
+    {
+      "id": "われる",
+      "kana": "われる",
+      "japanese": "割れる",
+      "english": [
+        "to break"
+      ]
+    },
+    {
+      "id": "せなか",
+      "kana": "せなか",
+      "japanese": "背中",
+      "english": [
+        "back (of body)"
+      ]
+    },
+    {
+      "id": "しんぶんしゃ",
+      "kana": "しんぶんしゃ",
+      "japanese": "新聞社",
+      "english": [
+        "newspaper company"
+      ]
+    },
+    {
+      "id": "いじめる",
+      "kana": "いじめる",
+      "japanese": "いじめる",
+      "english": [
+        "to bully",
+        "to torment"
+      ]
+    },
+    {
+      "id": "まわる、まわす",
+      "kana": "まわる、まわす",
+      "japanese": "回る、回す",
+      "english": [
+        "to go around",
+        "to revolve"
+      ]
+    },
+    {
+      "id": "～くん",
+      "kana": "～くん",
+      "japanese": "～君",
+      "english": [
+        "Mr. (junior) ~",
+        "master ~"
+      ]
+    },
+    {
+      "id": "おっしゃる",
+      "kana": "おっしゃる",
+      "japanese": "おっしゃる",
+      "english": [
+        "-- honorific expression for いう --"
+      ]
+    },
+    {
+      "id": "ねむい",
+      "kana": "ねむい",
+      "japanese": "眠い",
+      "english": [
+        "sleepy",
+        "drowsy"
+      ]
+    },
+    {
+      "id": "ぬれる",
+      "kana": "ぬれる",
+      "japanese": "濡れる",
+      "english": [
+        "to get wet"
+      ]
+    },
+    {
+      "id": "たおれる",
+      "kana": "たおれる",
+      "japanese": "倒れる",
+      "english": [
+        "to collapse",
+        "to break down"
+      ]
+    },
+    {
+      "id": "スーパー (マーケット)",
+      "kana": "スーパー (マーケット)",
+      "japanese": "スーパー (マーケット)",
+      "english": [
+        "supermarket"
+      ]
+    },
+    {
+      "id": "アクセサリー",
+      "kana": "アクセサリー",
+      "japanese": "アクセサリー",
+      "english": [
+        "accessory"
+      ]
+    },
+    {
+      "id": "かんがえる",
+      "kana": "かんがえる",
+      "japanese": "考える",
+      "english": [
+        "to think (about)",
+        "to consider"
+      ]
+    },
+    {
+      "id": "むかう",
+      "kana": "むかう",
+      "japanese": "向かう",
+      "english": [
+        "to face",
+        "to go towards"
+      ]
+    },
+    {
+      "id": "じゆう",
+      "kana": "じゆう",
+      "japanese": "自由",
+      "english": [
+        "freedom"
+      ]
+    },
+    {
+      "id": "しかた",
+      "kana": "しかた",
+      "japanese": "仕方",
+      "english": [
+        "way (of doing something)"
+      ]
+    },
+    {
+      "id": "くび",
+      "kana": "くび",
+      "japanese": "首",
+      "english": [
+        "neck"
+      ]
+    },
+    {
+      "id": "ほど",
+      "kana": "ほど",
+      "japanese": "程",
+      "english": [
+        "degree",
+        "extent"
+      ]
+    },
+    {
+      "id": "かわり",
+      "kana": "かわり",
+      "japanese": "代わり",
+      "english": [
+        "substitute",
+        "replacement"
+      ]
+    },
+    {
+      "id": "しっぱい",
+      "kana": "しっぱい",
+      "japanese": "失敗",
+      "english": [
+        "failure",
+        "mistake"
+      ]
+    },
+    {
+      "id": "こうぎょう",
+      "kana": "こうぎょう",
+      "japanese": "工業",
+      "english": [
+        "(manufacturing) industry"
+      ]
+    },
+    {
+      "id": "うつる",
+      "kana": "うつる",
+      "japanese": "移る",
+      "english": [
+        "to move (from a house)",
+        "to transfer (from a department)",
+        "to shift"
+      ]
+    },
+    {
+      "id": "スーツケース",
+      "kana": "スーツケース",
+      "japanese": "スーツケース",
+      "english": [
+        "suitcase"
+      ]
+    },
+    {
+      "id": "ひげ",
+      "kana": "ひげ",
+      "japanese": "ひげ",
+      "english": [
+        "beard"
+      ]
+    },
+    {
+      "id": "けんきゅうしつ",
+      "kana": "けんきゅうしつ",
+      "japanese": "研究室",
+      "english": [
+        "the professor's office",
+        "laboratory"
+      ]
+    },
+    {
+      "id": "こうじょう",
+      "kana": "こうじょう",
+      "japanese": "工場",
+      "english": [
+        "factory"
+      ]
+    },
+    {
+      "id": "しょうかい",
+      "kana": "しょうかい",
+      "japanese": "紹介",
+      "english": [
+        "an introduction"
+      ]
+    },
+    {
+      "id": "けれど; けれども",
+      "kana": "けれど; けれども",
+      "japanese": "けれど; けれども",
+      "english": [
+        "but",
+        "although"
+      ]
+    },
+    {
+      "id": "ふね",
+      "kana": "ふね",
+      "japanese": "舟",
+      "english": [
+        "ship",
+        "boat"
+      ]
+    },
+    {
+      "id": "うごく",
+      "kana": "うごく",
+      "japanese": "動く",
+      "english": [
+        "to move"
+      ]
+    },
+    {
+      "id": "～(に) ついて",
+      "kana": "～(に) ついて",
+      "japanese": "～(に) ついて",
+      "english": [
+        "about",
+        "concerning"
+      ]
+    },
+    {
+      "id": "コンサート",
+      "kana": "コンサート",
+      "japanese": "コンサート",
+      "english": [
+        "concert"
+      ]
+    },
+    {
+      "id": "むし",
+      "kana": "むし",
+      "japanese": "虫",
+      "english": [
+        "insect"
+      ]
+    },
+    {
+      "id": "やさしい",
+      "kana": "やさしい",
+      "japanese": "優しい",
+      "english": [
+        "kind (person)",
+        "gentle (person)",
+        "easy (problem)"
+      ]
+    },
+    {
+      "id": "コンピュータ; コンピューター",
+      "kana": "コンピュータ; コンピューター",
+      "japanese": "コンピュータ; コンピューター",
+      "english": [
+        "computer"
+      ]
+    },
+    {
+      "id": "うえる",
+      "kana": "うえる",
+      "japanese": "植える",
+      "english": [
+        "to plant"
+      ]
+    },
+    {
+      "id": "りょうほう",
+      "kana": "りょうほう",
+      "japanese": "両方",
+      "english": [
+        "both sides",
+        "both parties"
+      ]
+    },
+    {
+      "id": "よごれる",
+      "kana": "よごれる",
+      "japanese": "汚れる",
+      "english": [
+        "to become dirty"
+      ]
+    },
+    {
+      "id": "すいえい",
+      "kana": "すいえい",
+      "japanese": "水泳",
+      "english": [
+        "swimming"
+      ]
+    },
+    {
+      "id": "けいけんする",
+      "kana": "けいけんする",
+      "japanese": "経験",
+      "english": [
+        "experience"
+      ]
+    },
+    {
+      "id": "かつ",
+      "kana": "かつ",
+      "japanese": "勝つ",
+      "english": [
+        "to win"
+      ]
+    },
+    {
+      "id": "すな",
+      "kana": "すな",
+      "japanese": "砂",
+      "english": [
+        "sand"
+      ]
+    },
+    {
+      "id": "けいさつ",
+      "kana": "けいさつ",
+      "japanese": "警察",
+      "english": [
+        "police",
+        "police station"
+      ]
+    },
+    {
+      "id": "とりかえる",
+      "kana": "とりかえる",
+      "japanese": "取り替える",
+      "english": [
+        "to exchange",
+        "to replace"
+      ]
+    },
+    {
+      "id": "いそぐ",
+      "kana": "いそぐ",
+      "japanese": "急ぐ",
+      "english": [
+        "to hurry",
+        "to be in a hurry",
+        "to rush"
+      ]
+    },
+    {
+      "id": "かんたん",
+      "kana": "かんたん",
+      "japanese": "簡単",
+      "english": [
+        "simple"
+      ]
+    },
+    {
+      "id": "まいる",
+      "kana": "まいる",
+      "japanese": "参る",
+      "english": [
+        "humble expression for 行く and 来る"
+      ]
+    },
+    {
+      "id": "ぜんぜん",
+      "kana": "ぜんぜん",
+      "japanese": "全然",
+      "english": [
+        "not at all",
+        "wholly",
+        "entirely"
+      ]
+    },
+    {
+      "id": "とくべつ",
+      "kana": "とくべつ",
+      "japanese": "特別",
+      "english": [
+        "special"
+      ]
+    },
+    {
+      "id": "ふくしゅう",
+      "kana": "ふくしゅう",
+      "japanese": "復習",
+      "english": [
+        "review (of lessons)",
+        "revision"
+      ]
+    },
+    {
+      "id": "まにあう",
+      "kana": "まにあう",
+      "japanese": "間に合う",
+      "english": [
+        "to be in time for"
+      ]
+    },
+    {
+      "id": "やくにたつ",
+      "kana": "やくにたつ",
+      "japanese": "役に立つ",
+      "english": [
+        "to be helpful",
+        "to be useful"
+      ]
+    },
+    {
+      "id": "もうすぐ",
+      "kana": "もうすぐ",
+      "japanese": "もうすぐ",
+      "english": [
+        "very soon",
+        "in a few moments",
+        "days"
+      ]
+    },
+    {
+      "id": "まんなか",
+      "kana": "まんなか",
+      "japanese": "真中",
+      "english": [
+        "middle",
+        "center"
+      ]
+    },
+    {
+      "id": "もどる",
+      "kana": "もどる",
+      "japanese": "戻る",
+      "english": [
+        "to return (v.i.)",
+        "to come back"
+      ]
+    },
+    {
+      "id": "けんきゅう",
+      "kana": "けんきゅう",
+      "japanese": "研究",
+      "english": [
+        "study",
+        "research",
+        "investigation"
+      ]
+    },
+    {
+      "id": "ケーキ",
+      "kana": "ケーキ",
+      "japanese": "ケーキ",
+      "english": [
+        "cake"
+      ]
+    },
+    {
+      "id": "くさ",
+      "kana": "くさ",
+      "japanese": "草",
+      "english": [
+        "grass"
+      ]
+    },
+    {
+      "id": "こむ",
+      "kana": "こむ",
+      "japanese": "込む",
+      "english": [
+        "to be crowded"
+      ]
+    },
+    {
+      "id": "このごろ",
+      "kana": "このごろ",
+      "japanese": "この頃",
+      "english": [
+        "these days",
+        "nowadays"
+      ]
+    },
+    {
+      "id": "さげる",
+      "kana": "さげる",
+      "japanese": "下げる",
+      "english": [
+        "to lower (v.t.)",
+        "to hang"
+      ]
+    },
+    {
+      "id": "はなみ",
+      "kana": "はなみ",
+      "japanese": "花見",
+      "english": [
+        "cherry-blossom viewing"
+      ]
+    },
+    {
+      "id": "とちゅう",
+      "kana": "とちゅう",
+      "japanese": "途中",
+      "english": [
+        "on the way",
+        "midway"
+      ]
+    },
+    {
+      "id": "にゅういんする",
+      "kana": "にゅういんする",
+      "japanese": "入院",
+      "english": [
+        "hospitalization"
+      ]
+    },
+    {
+      "id": "のりかえる",
+      "kana": "のりかえる",
+      "japanese": "乗り換える",
+      "english": [
+        "to transfer (trains)",
+        "to change (bus, train, etc.)"
+      ]
+    },
+    {
+      "id": "わかれる",
+      "kana": "わかれる",
+      "japanese": "別れる",
+      "english": [
+        "to part from",
+        "to separate"
+      ]
+    },
+    {
+      "id": "～ちょう",
+      "kana": "～ちょう",
+      "japanese": "～町",
+      "english": [
+        "the town of ~"
+      ]
+    },
+    {
+      "id": "あんぜん",
+      "kana": "あんぜん",
+      "japanese": "安全",
+      "english": [
+        "safety",
+        "security"
+      ]
+    },
+    {
+      "id": "かんごふ",
+      "kana": "かんごふ",
+      "japanese": "看護婦",
+      "english": [
+        "(female) nurse"
+      ]
+    },
+    {
+      "id": "けんぶつ",
+      "kana": "けんぶつ",
+      "japanese": "見物",
+      "english": [
+        "sightseeing"
+      ]
+    },
+    {
+      "id": "そうだんする",
+      "kana": "そうだんする",
+      "japanese": "相談",
+      "english": [
+        "consultation"
+      ]
+    },
+    {
+      "id": "ガソリンスタンド",
+      "kana": "ガソリンスタンド",
+      "japanese": "ガソリンスタンド",
+      "english": [
+        "gas station",
+        "service station"
+      ]
+    },
+    {
+      "id": "テニス",
+      "kana": "テニス",
+      "japanese": "テニス",
+      "english": [
+        "tennis"
+      ]
+    },
+    {
+      "id": "ねむる",
+      "kana": "ねむる",
+      "japanese": "眠る",
+      "english": [
+        "to sleep"
+      ]
+    },
+    {
+      "id": "あがる",
+      "kana": "あがる",
+      "japanese": "上がる",
+      "english": [
+        "to rise",
+        "to go up"
+      ]
+    },
+    {
+      "id": "ほんやく",
+      "kana": "ほんやく",
+      "japanese": "翻訳",
+      "english": [
+        "translation"
+      ]
+    },
+    {
+      "id": "しょくじする",
+      "kana": "しょくじする",
+      "japanese": "食事",
+      "english": [
+        "meal"
+      ]
+    },
+    {
+      "id": "おかげ",
+      "kana": "おかげ",
+      "japanese": "お陰",
+      "english": [
+        "thanks or owing to"
+      ]
+    },
+    {
+      "id": "むすめ",
+      "kana": "むすめ",
+      "japanese": "娘",
+      "english": [
+        "daughter (humble)"
+      ]
+    },
+    {
+      "id": "ゆ",
+      "kana": "ゆ",
+      "japanese": "湯",
+      "english": [
+        "hot water"
+      ]
+    },
+    {
+      "id": "きょうそう",
+      "kana": "きょうそう",
+      "japanese": "競争",
+      "english": [
+        "competition",
+        "contest"
+      ]
+    },
+    {
+      "id": "かいぎ",
+      "kana": "かいぎ",
+      "japanese": "会議",
+      "english": [
+        "business meeting",
+        "conference"
+      ]
+    },
+    {
+      "id": "みずうみ",
+      "kana": "みずうみ",
+      "japanese": "湖",
+      "english": [
+        "lake"
+      ]
+    },
+    {
+      "id": "あつまる",
+      "kana": "あつまる",
+      "japanese": "集まる",
+      "english": [
+        "to gather (v.i.)",
+        "to collect"
+      ]
+    },
+    {
+      "id": "～にくい",
+      "kana": "～にくい",
+      "japanese": "～にくい",
+      "english": [
+        "difficult to do ~"
+      ]
+    },
+    {
+      "id": "せいかつする",
+      "kana": "せいかつする",
+      "japanese": "生活",
+      "english": [
+        "living",
+        "life",
+        "to live"
+      ]
+    },
+    {
+      "id": "いと",
+      "kana": "いと",
+      "japanese": "糸",
+      "english": [
+        "thread"
+      ]
+    },
+    {
+      "id": "かんけい",
+      "kana": "かんけい",
+      "japanese": "関係",
+      "english": [
+        "relation(ship)",
+        "connection"
+      ]
+    },
+    {
+      "id": "ピアノ",
+      "kana": "ピアノ",
+      "japanese": "ピアノ",
+      "english": [
+        "piano"
+      ]
+    },
+    {
+      "id": "～め",
+      "kana": "～め",
+      "japanese": "～目",
+      "english": [
+        "number ~ sequence",
+        "~nd",
+        "~th"
+      ]
+    },
+    {
+      "id": "ばんぐみ",
+      "kana": "ばんぐみ",
+      "japanese": "番組",
+      "english": [
+        "broadcast program"
+      ]
+    },
+    {
+      "id": "きゅう",
+      "kana": "きゅう",
+      "japanese": "急",
+      "english": [
+        "urgent",
+        "sudden",
+        "steep"
+      ]
+    },
+    {
+      "id": "たな",
+      "kana": "たな",
+      "japanese": "棚",
+      "english": [
+        "shelves",
+        "rack"
+      ]
+    },
+    {
+      "id": "もめん",
+      "kana": "もめん",
+      "japanese": "木綿",
+      "english": [
+        "cotton"
+      ]
+    },
+    {
+      "id": "ゆしゅつする",
+      "kana": "ゆしゅつする",
+      "japanese": "輸出",
+      "english": [
+        "export"
+      ]
+    },
+    {
+      "id": "タイプ",
+      "kana": "タイプ",
+      "japanese": "タイプ",
+      "english": [
+        "type",
+        "style"
+      ]
+    },
+    {
+      "id": "すり",
+      "kana": "すり",
+      "japanese": "すり",
+      "english": [
+        "pickpocket"
+      ]
+    },
+    {
+      "id": "うれしい",
+      "kana": "うれしい",
+      "japanese": "嬉しい",
+      "english": [
+        "to be happy",
+        "to be glad"
+      ]
+    },
+    {
+      "id": "アルコール",
+      "kana": "アルコール",
+      "japanese": "アルコール",
+      "english": [
+        "alcohol"
+      ]
+    },
+    {
+      "id": "ソフト",
+      "kana": "ソフト",
+      "japanese": "ソフト",
+      "english": [
+        "soft",
+        "soft hat",
+        "software"
+      ]
+    },
+    {
+      "id": "じんじゃ",
+      "kana": "じんじゃ",
+      "japanese": "神社",
+      "english": [
+        "Shinto shrine"
+      ]
+    },
+    {
+      "id": "だいぶ",
+      "kana": "だいぶ",
+      "japanese": "大分",
+      "english": [
+        "fairly well",
+        "to a large extent",
+        "considerably",
+        "pretty much"
+      ]
+    },
+    {
+      "id": "たのしみ",
+      "kana": "たのしみ",
+      "japanese": "楽しみ",
+      "english": [
+        "pleasure",
+        "joy"
+      ]
+    },
+    {
+      "id": "しゅみ",
+      "kana": "しゅみ",
+      "japanese": "趣味",
+      "english": [
+        "hobby",
+        "pastime"
+      ]
+    },
+    {
+      "id": "でんぽう",
+      "kana": "でんぽう",
+      "japanese": "電報",
+      "english": [
+        "telegram"
+      ]
+    },
+    {
+      "id": "かない",
+      "kana": "かない",
+      "japanese": "家内",
+      "english": [
+        "(one's own) wife"
+      ]
+    },
+    {
+      "id": "ゆび",
+      "kana": "ゆび",
+      "japanese": "指",
+      "english": [
+        "finger"
+      ]
+    },
+    {
+      "id": "これから",
+      "kana": "これから",
+      "japanese": "これから",
+      "english": [
+        "from now on",
+        "after this"
+      ]
+    },
+    {
+      "id": "たまに",
+      "kana": "たまに",
+      "japanese": "たまに",
+      "english": [
+        "occasionally"
+      ]
+    },
+    {
+      "id": "しゃかい",
+      "kana": "しゃかい",
+      "japanese": "社会",
+      "english": [
+        "society"
+      ]
+    }
+  ]
+}

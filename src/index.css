@@ -892,6 +892,22 @@ body {
   margin-top: 6px;
 }
 
+/* SettingsPanel groups (STT / feedback / phonetic sections) */
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-group-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
 /* Voice-only feedback icon (no text panel) */
 .feedback-icon {
   font-size: 2rem;
