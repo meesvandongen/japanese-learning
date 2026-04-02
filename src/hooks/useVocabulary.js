@@ -58,6 +58,8 @@ export function useVocabulary(languageId, levelId) {
       queryFn: () => fetchLevel(nextLevel.file, manifest.version),
       staleTime: Infinity,
     })
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- primitive deps (?.id, ?.version)
+  // intentionally used to avoid re-running on every render when objects change identity
   }, [nextLevel?.id, languageId, manifest?.version, queryClient])
 
   return {

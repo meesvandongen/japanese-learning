@@ -1,21 +1,25 @@
-import { createStore, localStorageAdapter } from './index'
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 const initialState = {
-  /**
-   * SRS state per card, keyed by card.kana.
-   * Each entry: { repetitions, easeFactor, interval, dueDate, lastReview }
-   */
   cards: {},
-
-  /**
-   * User's chosen language and level, discovered from the manifest.
-   * Both start as null — the onboarding flow sets them on first launch.
-   */
   selectedLanguageId: null,
   selectedLevelId: null,
 }
 
-export const appStore = createStore(
-  initialState,
-  localStorageAdapter('jp-flashcards-srs-v1')
+export const useAppStore = create(
+  persist(
+    (set) => ({
+      ...initialState,
+
+      setLanguage: (id) => set({ selectedLanguageId: id, selectedLevelId: null }),
+      setLevel: (id) => set({ selectedLevelId: id }),
+
+      applyCardReview: (kana, updated) =>
+        set((s) => ({ cards: { ...s.cards, [kana]: updated } })),
+
+      reset: () => set(initialState),
+    }),
+    { name: 'jp-flashcards-srs-v1' }
+  )
 )

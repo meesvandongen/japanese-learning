@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useStore } from '../store/index'
-import { appStore } from '../store/appStore'
+import { useAppStore } from '../store/appStore'
 import { formatDue } from '../srs/sm2'
 
 const MASTERED_INTERVAL = 21 // days — considered mastered
@@ -21,8 +20,8 @@ const STATUS_LABEL = { overdue: 'Overdue', learning: 'Learning', new: 'New', mas
  *   activeLang  — language entry from manifest (for display)
  *   activeLevel — level entry from manifest (for display)
  */
-export function ProfilePage({ words, activeLang, activeLevel }) {
-  const cardStates = useStore(appStore, (s) => s.cards)
+export function ProfilePage({ words, activeLang: _activeLang, activeLevel }) {
+  const cardStates = useAppStore((s) => s.cards)
   const [filter, setFilter] = useState('all')
 
   const enriched = words.map((v) => {

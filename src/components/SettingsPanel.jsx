@@ -1,15 +1,14 @@
-import { useStore } from '../store/index'
-import { settingsStore } from '../store/settingsStore'
+import { useSettingsStore } from '../store/settingsStore'
 
 export function SettingsPanel() {
-  const settings = useStore(settingsStore)
+  const settings = useSettingsStore()
 
   function set(key, value) {
-    settingsStore.setState({ [key]: value })
+    useSettingsStore.setState({ [key]: value })
   }
 
   function toggle(key) {
-    settingsStore.setState({ [key]: !settings[key] })
+    useSettingsStore.setState({ [key]: !settings[key] })
   }
 
   return (

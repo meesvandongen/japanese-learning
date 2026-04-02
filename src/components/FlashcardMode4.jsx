@@ -1,16 +1,17 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { RecordButton } from './RecordButton'
+import { CardTypeBadge } from './CardTypeBadge'
+import { FlashcardFeedback } from './FlashcardFeedback'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { compareEnglish } from '../utils/normalize'
-import { useStore } from '../store/index'
-import { settingsStore } from '../store/settingsStore'
+import { useSettingsStore } from '../store/settingsStore'
 
 export function FlashcardMode4({ card, cardType, onAnswer }) {
   const [result, setResult] = useState(null) // null | 'correct' | 'incorrect'
   const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-  const settings = useStore(settingsStore)
+  const settings = useSettingsStore()
   const { isSpeaking, speak } = useSpeechSynthesis()
   const autoStarted = useRef(false)
 
@@ -21,14 +22,14 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
         // onEnd: auto-start listening after the word finishes
         if (settings.autoListen && !autoStarted.current) {
           autoStarted.current = true
-          const startTimer = setTimeout(() => start(), settings.autoStartDelay)
-          // can't return cleanup here, but delay is short enough
-          void startTimer
+          setTimeout(() => start(), settings.autoStartDelay)
         }
       })
     }, 300)
     return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally fires only on card
+  // change; `start` and `settings.*` are read inside the speak onEnd callback where their
+  // current values are captured via closure at call time, not at effect setup time.
   }, [card, speak])
 
   const handleResult = useCallback(
@@ -72,7 +73,6 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
   }, [result, onAnswer])
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
-  const showText = settings.feedbackText
 
   return (
     <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
@@ -88,26 +88,14 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
 
       <div className="card-hint">Speak the English translation</div>
 
-      {/* Feedback rendered ABOVE the action area so it's not under the thumb */}
-      {result === 'correct' && showText && (
-        <div className="feedback correct">
-          ✓ <span className="answer-shown">{primaryEnglish}</span>
-        </div>
-      )}
-      {result === 'incorrect' && showText && (
-        <div className="feedback incorrect">
-          <span className="answer-shown">{card.english.join(' / ')}</span>
-        </div>
-      )}
-      {result && !showText && (
-        <div className={`feedback-icon ${result}`}>
-          {result === 'correct' ? '✓' : '✗'}
-        </div>
-      )}
-
-      {result !== null && settings.showTranscript && heard && (
-        <div className="transcript-heard">Heard: "{heard}"</div>
-      )}
+      <FlashcardFeedback
+        result={result}
+        heard={heard}
+        showText={settings.feedbackText}
+        showTranscript={settings.showTranscript}
+        correctText={primaryEnglish}
+        incorrectText={card.english.join(' / ')}
+      />
 
       {result === null && (
         <div className="answer-actions">
@@ -127,10 +115,4 @@ export function FlashcardMode4({ card, cardType, onAnswer }) {
       {errorMsg && <div className="error-msg">{errorMsg}</div>}
     </div>
   )
-}
-
-function CardTypeBadge({ type }) {
-  if (!type) return null
-  const labels = { due: 'Review', new: 'New', extra: 'Extra practice' }
-  return <span className={`card-type-badge badge-${type}`}>{labels[type]}</span>
 }

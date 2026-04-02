@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { appStore } from '../store/appStore'
+import { useAppStore } from '../store/appStore'
 import { LanguageSelector } from './LanguageSelector'
 import { LevelSelector } from './LevelSelector'
 import { SettingsPanel } from './SettingsPanel'
@@ -31,7 +31,7 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }) {
 
   function handleLevelPick(levelId) {
     const langId = pendingLangId ?? activeLang?.id
-    appStore.setState({ selectedLanguageId: langId, selectedLevelId: levelId })
+    useAppStore.setState({ selectedLanguageId: langId, selectedLevelId: levelId })
     setPendingLangId(null)
     setView('overview')
   }

@@ -1,16 +1,17 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { RecordButton } from './RecordButton'
+import { CardTypeBadge } from './CardTypeBadge'
+import { FlashcardFeedback } from './FlashcardFeedback'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { compareJapanese } from '../utils/normalize'
-import { useStore } from '../store/index'
-import { settingsStore } from '../store/settingsStore'
+import { useSettingsStore } from '../store/settingsStore'
 
 export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
   const [result, setResult] = useState(null) // null | 'correct' | 'incorrect'
   const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-  const settings = useStore(settingsStore)
+  const settings = useSettingsStore()
   const { speak } = useSpeechSynthesis()
   const autoStarted = useRef(false)
 
@@ -57,7 +58,6 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
   }, [result, onAnswer])
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
-  const showText = settings.feedbackText
 
   return (
     <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
@@ -69,26 +69,14 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
         <div className="synonyms">Also accepted: {card.english.slice(1).join(', ')}</div>
       )}
 
-      {/* Feedback rendered ABOVE the action area so it's not under the thumb */}
-      {result === 'correct' && showText && (
-        <div className="feedback correct">
-          ✓ <span className="answer-shown">{card.japanese}</span>
-        </div>
-      )}
-      {result === 'incorrect' && showText && (
-        <div className="feedback incorrect">
-          <span className="answer-shown">{card.japanese}</span>
-        </div>
-      )}
-      {result && !showText && (
-        <div className={`feedback-icon ${result}`}>
-          {result === 'correct' ? '✓' : '✗'}
-        </div>
-      )}
-
-      {result !== null && settings.showTranscript && heard && (
-        <div className="transcript-heard">Heard: "{heard}"</div>
-      )}
+      <FlashcardFeedback
+        result={result}
+        heard={heard}
+        showText={settings.feedbackText}
+        showTranscript={settings.showTranscript}
+        correctText={card.japanese}
+        incorrectText={card.japanese}
+      />
 
       {result === null && (
         <div className="answer-actions">
@@ -107,10 +95,4 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }) {
       {errorMsg && <div className="error-msg">{errorMsg}</div>}
     </div>
   )
-}
-
-function CardTypeBadge({ type }) {
-  if (!type) return null
-  const labels = { due: 'Review', new: 'New', extra: 'Extra practice' }
-  return <span className={`card-type-badge badge-${type}`}>{labels[type]}</span>
 }

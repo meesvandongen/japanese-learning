@@ -34,4 +34,8 @@ function dictBinaryPlugin() {
 
 export default defineConfig({
   plugins: [react(), cloudflare(), dictBinaryPlugin()],
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.js'],
+  },
 })

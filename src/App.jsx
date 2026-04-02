@@ -8,8 +8,7 @@ import { ProfilePage } from './components/ProfilePage'
 import { LanguageSelector } from './components/LanguageSelector'
 import { LevelSelector } from './components/LevelSelector'
 import { SettingsPage } from './components/SettingsPage'
-import { appStore } from './store/appStore'
-import { useStore } from './store/index'
+import { useAppStore } from './store/appStore'
 import { applyReview } from './srs/sm2'
 import { getNextCard, getSessionStats } from './srs/scheduler'
 
@@ -22,8 +21,9 @@ import { getNextCard, getSessionStats } from './srs/scheduler'
  * mounts) means StudyApp's hooks are always called unconditionally.
  */
 export default function App() {
-  const selectedLanguageId = useStore(appStore, (s) => s.selectedLanguageId)
-  const selectedLevelId = useStore(appStore, (s) => s.selectedLevelId)
+  const selectedLanguageId = useAppStore((s) => s.selectedLanguageId)
+  const selectedLevelId = useAppStore((s) => s.selectedLevelId)
+  const { setLanguage, setLevel } = useAppStore()
 
   const { words, isManifestLoading, isManifestError, isVocabLoading, isVocabError, manifest, activeLang, activeLevel } =
     useVocabulary(selectedLanguageId, selectedLevelId)
@@ -56,10 +56,7 @@ export default function App() {
     return (
       <div className="app">
         <main className="app-main">
-          <LanguageSelector
-            manifest={manifest}
-            onSelect={(id) => appStore.setState({ selectedLanguageId: id, selectedLevelId: null })}
-          />
+          <LanguageSelector manifest={manifest} onSelect={setLanguage} />
         </main>
       </div>
     )
@@ -71,8 +68,8 @@ export default function App() {
         <main className="app-main">
           <LevelSelector
             language={activeLang}
-            onSelect={(id) => appStore.setState({ selectedLevelId: id })}
-            onBack={() => appStore.setState({ selectedLanguageId: null })}
+            onSelect={setLevel}
+            onBack={() => useAppStore.setState({ selectedLanguageId: null })}
           />
         </main>
       </div>
@@ -103,7 +100,8 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   const [lastShownId, setLastShownId] = useState(null)
   const [cardKey, setCardKey] = useState(0)
 
-  const cardStates = useStore(appStore, (s) => s.cards)
+  const cardStates = useAppStore((s) => s.cards)
+  const { applyCardReview, reset } = useAppStore()
   const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
 
   const { card, cardType } = getNextCard(words, cardStates, lastShownId)
@@ -118,12 +116,12 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
     (quality) => {
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
-      appStore.setState((s) => ({ cards: { ...s.cards, [card.kana]: updated } }))
+      applyCardReview(card.kana, updated)
       setLastShownId(card.kana)
       setReviewedCount((n) => n + 1)
       setCardKey((k) => k + 1)
     },
-    [card, cardStates]
+    [card, cardStates, applyCardReview]
   )
 
   function handleModeChange(newMode) {
@@ -143,7 +141,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
 
   function handleReset() {
     if (window.confirm('Reset all learning progress? This cannot be undone.')) {
-      appStore.reset()
+      reset()
       setReviewedCount(0)
       setLastShownId(null)
       setCardKey((k) => k + 1)
