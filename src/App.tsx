@@ -153,7 +153,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
       const existing = cardStates[previousResult.kana]
       const updated = applyReview(existing, quality)
       applyCardReview(previousResult.kana, updated)
-      setPreviousResult(null)
+      setPreviousResult({ ...previousResult, result: quality >= 3 ? 'correct' : 'incorrect' })
     },
     [previousResult, cardStates, applyCardReview]
   )
