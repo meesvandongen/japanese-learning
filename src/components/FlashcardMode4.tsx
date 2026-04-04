@@ -49,17 +49,10 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally fires only on card change
   }, [card, speak])
 
-  const handleResult = useCallback(
-    (transcripts: string[]) => {
-      const phoneticAlgorithm: 'off' | 'soundex' | 'metaphone' | 'both' =
-        settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
-        : settings.phoneticSoundex ? 'soundex'
-        : settings.phoneticMetaphone ? 'metaphone'
-        : 'off'
-      const correct = compareEnglish(card.english, transcripts, { phoneticAlgorithm })
-      const r = correct ? 'correct' : 'incorrect'
-      setResult(r)
-      setHeard(transcripts[0] ?? '')
+  const applyResult = useCallback(
+    (correct: boolean, transcript: string) => {
+      setResult(correct ? 'correct' : 'incorrect')
+      setHeard(transcript)
       if (settings.feedbackSound) {
         if (correct) playCorrect(); else playIncorrect()
       }
@@ -68,12 +61,22 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
         speak(primaryEnglish, 'en-US')
       }
     },
-    [card, settings.phoneticSoundex, settings.phoneticMetaphone, settings.feedbackSound, settings.feedbackVoice, speak, playCorrect, playIncorrect]
+    [card, settings.feedbackSound, settings.feedbackVoice, speak, playCorrect, playIncorrect]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'en-US',
-    onResult: handleResult,
+    onResult: (transcripts) => {
+      const phoneticAlgorithm: 'off' | 'soundex' | 'metaphone' | 'both' =
+        settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
+        : settings.phoneticSoundex ? 'soundex'
+        : settings.phoneticMetaphone ? 'metaphone'
+        : 'off'
+      applyResult(
+        compareEnglish(card.english, transcripts, { phoneticAlgorithm }),
+        transcripts[0] ?? ''
+      )
+    },
     onError: setErrorMsg,
   })
 
@@ -143,7 +146,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          <button className="dont-know-btn" onClick={() => { if (settings.feedbackSound) playIncorrect(); setResult('incorrect') }} aria-label="Don't know">
+          <button className="dont-know-btn" onClick={() => applyResult(false, '')} aria-label="Don't know">
             ?
           </button>
         </div>

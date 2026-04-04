@@ -52,12 +52,10 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
     return () => clearTimeout(timer)
   }, [settings.autoListen, settings.autoStartDelay, settings.englishExerciseMode])  // oxlint-disable-line react-hooks/exhaustive-deps
 
-  const handleResult = useCallback(
-    (transcripts: string[]) => {
-      const correct = compareJapanese(card.kana, transcripts, tokenizer ?? null)
-      const r = correct ? 'correct' : 'incorrect'
-      setResult(r)
-      setHeard(transcripts[0] ?? '')
+  const applyResult = useCallback(
+    (correct: boolean, transcript: string) => {
+      setResult(correct ? 'correct' : 'incorrect')
+      setHeard(transcript)
       if (settings.feedbackSound) {
         if (correct) playCorrect(); else playIncorrect()
       }
@@ -65,12 +63,15 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
         speak(card.japanese, 'ja-JP')
       }
     },
-    [card, tokenizer, settings.feedbackSound, settings.feedbackVoice, speak, playCorrect, playIncorrect]
+    [card, settings.feedbackSound, settings.feedbackVoice, speak, playCorrect, playIncorrect]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'ja-JP',
-    onResult: handleResult,
+    onResult: (transcripts) => applyResult(
+      compareJapanese(card.kana, transcripts, tokenizer ?? null),
+      transcripts[0] ?? ''
+    ),
     onError: setErrorMsg,
   })
 
@@ -140,7 +141,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          <button className="dont-know-btn" onClick={() => { if (settings.feedbackSound) playIncorrect(); setResult('incorrect') }} aria-label="Don't know">
+          <button className="dont-know-btn" onClick={() => applyResult(false, '')} aria-label="Don't know">
             ?
           </button>
         </div>
