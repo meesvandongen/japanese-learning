@@ -10,9 +10,13 @@ export const useSettingsStore = create<Settings>()(
       maxListenDuration: 10000,
       feedbackText: true,
       feedbackVoice: true,
+      feedbackSound: true,
       phoneticSoundex: true,
       phoneticMetaphone: false,
       showTranscript: false,
+      japaneseExerciseMode: 'audio',
+      englishExerciseMode: 'audio',
+      manualGrading: false,
     }),
     { name: 'jp-flashcards-settings-v1' }
   )

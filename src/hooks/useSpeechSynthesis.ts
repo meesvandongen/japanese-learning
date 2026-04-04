@@ -1,5 +1,26 @@
 import { useCallback, useRef, useState } from 'react'
 
+// Prefer high-quality online voices (Google/Microsoft) over local system voices.
+// Local system voices (e.g. "Alex", "Samantha" on macOS) are lower quality than the
+// cloud-backed voices Chrome/Edge install. We detect them by checking localService:
+// false means the voice is fetched from a server and is typically much higher quality.
+function pickVoice(lang: string): SpeechSynthesisVoice | undefined {
+  const voices = window.speechSynthesis.getVoices()
+  const locale = lang.toLowerCase()
+
+  // Exact locale match e.g. 'en-us', 'ja-jp'
+  const exact = voices.filter((v) => v.lang.toLowerCase() === locale)
+  // Prefix match e.g. 'en-*' or 'ja-*'
+  const prefix = voices.filter((v) => v.lang.toLowerCase().startsWith(locale.split('-')[0]))
+
+  const pool = exact.length > 0 ? exact : prefix
+  if (pool.length === 0) return undefined
+
+  // Prefer online (non-local-service) voices — they are higher quality
+  const online = pool.filter((v) => !v.localService)
+  return online[0] ?? pool[0]
+}
+
 export function useSpeechSynthesis(): {
   isSpeaking: boolean
   speak: (text: string, lang?: string, rate?: number, onEnd?: () => void) => void
@@ -14,14 +35,8 @@ export function useSpeechSynthesis(): {
     utterance.lang = lang
     utterance.rate = rate
 
-    // Prefer a Japanese voice if available
-    if (lang === 'ja-JP') {
-      const voices = window.speechSynthesis.getVoices()
-      const jaVoice = voices.find(
-        (v) => v.lang === 'ja-JP' || v.lang.startsWith('ja')
-      )
-      if (jaVoice) utterance.voice = jaVoice
-    }
+    const voice = pickVoice(lang)
+    if (voice) utterance.voice = voice
 
     utterance.onstart = () => setIsSpeaking(true)
     utterance.onend = () => { setIsSpeaking(false); onEnd?.() }

@@ -934,3 +934,45 @@ body {
   text-align: center;
 }
 
+/* Manual grading override buttons */
+.manual-grading {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.override-btn {
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 1.5px solid currentColor;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.override-correct {
+  color: var(--primary);
+}
+.override-correct:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.override-incorrect {
+  color: var(--danger);
+}
+.override-incorrect:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Japanese prompt text in Mode 4 (text/audio+text modes) */
+.japanese-prompt {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 8px 0;
+}
+
