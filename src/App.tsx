@@ -273,7 +273,6 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                     data={previousResult}
                     manualGrading={settings.manualGrading}
                     onOverride={handlePreviousOverride}
-                    onDismiss={() => setPreviousResult(null)}
                   />
                 )}
 
