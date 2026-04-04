@@ -4,6 +4,7 @@ import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
+import { useAudioFeedback } from '../hooks/useAudioFeedback'
 import { compareJapanese } from '../utils/normalize'
 import { useSettingsStore } from '../store/settingsStore'
 import type { Word } from '../types'
@@ -21,8 +22,35 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
   const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const settings = useSettingsStore()
-  const { speak } = useSpeechSynthesis()
+  const { isSpeaking, speak } = useSpeechSynthesis()
+  const { playCorrect, playIncorrect } = useAudioFeedback()
   const autoStarted = useRef(false)
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Speak the English prompt on card load (if exercise mode includes audio)
+  useEffect(() => {
+    if (settings.englishExerciseMode === 'text') return
+    const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
+    const timer = setTimeout(() => {
+      speak(primaryEnglish, 'en-US', 0.9, () => {
+        if (settings.autoListen && !autoStarted.current) {
+          autoStarted.current = true
+          setTimeout(() => start(), settings.autoStartDelay)
+        }
+      })
+    }, 300)
+    return () => clearTimeout(timer)
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- fires only on card change
+  }, [card, speak])
+
+  // Auto-start listening when not using audio prompt (no speak callback to chain into)
+  useEffect(() => {
+    if (settings.englishExerciseMode !== 'text') return
+    if (!settings.autoListen || autoStarted.current) return
+    autoStarted.current = true
+    const timer = setTimeout(() => start(), settings.autoStartDelay)
+    return () => clearTimeout(timer)
+  }, [settings.autoListen, settings.autoStartDelay, settings.englishExerciseMode])  // oxlint-disable-line react-hooks/exhaustive-deps
 
   const handleResult = useCallback(
     (transcripts: string[]) => {
@@ -30,11 +58,14 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
       const r = correct ? 'correct' : 'incorrect'
       setResult(r)
       setHeard(transcripts[0] ?? '')
+      if (settings.feedbackSound) {
+        if (correct) playCorrect(); else playIncorrect()
+      }
       if (settings.feedbackVoice) {
         speak(card.japanese, 'ja-JP')
       }
     },
-    [card, tokenizer, settings.feedbackVoice, speak]
+    [card, tokenizer, settings.feedbackSound, settings.feedbackVoice, speak, playCorrect, playIncorrect]
   )
 
   const { isListening, start, stop } = useSpeechRecognition({
@@ -43,14 +74,6 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
     onError: setErrorMsg,
   })
 
-  // Auto-start listening on card mount
-  useEffect(() => {
-    if (!settings.autoListen || autoStarted.current) return
-    autoStarted.current = true
-    const timer = setTimeout(() => start(), settings.autoStartDelay)
-    return () => clearTimeout(timer)
-  }, [settings.autoListen, settings.autoStartDelay, start])
-
   // Enforce max listen duration in auto mode
   useEffect(() => {
     if (!isListening || !settings.maxListenDuration) return
@@ -58,23 +81,41 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
     return () => clearTimeout(timer)
   }, [isListening, settings.maxListenDuration, stop])
 
-  // Auto-advance after result
+  // Auto-advance after result (cancellable for manual grading override)
   useEffect(() => {
     if (!result) return
     const delay = result === 'correct' ? 1200 : 2500
-    const timer = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1), delay)
-    return () => clearTimeout(timer)
+    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1), delay)
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    }
   }, [result, onAnswer])
 
+  function overrideGrade(quality: number) {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    onAnswer(quality)
+  }
+
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
+  const showEnglishText = settings.englishExerciseMode !== 'audio'
 
   return (
     <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
       <CardTypeBadge type={cardType} />
       <div className="card-label">Say this in Japanese:</div>
-      <div className="card-prompt english-prompt">{primaryEnglish}</div>
 
-      {card.english.length > 1 && (
+      {showEnglishText ? (
+        <div className="card-prompt english-prompt">{primaryEnglish}</div>
+      ) : (
+        <button
+          className={`play-btn ${isSpeaking ? 'playing' : ''}`}
+          onClick={() => speak(primaryEnglish, 'en-US')}
+        >
+          {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
+        </button>
+      )}
+
+      {card.english.length > 1 && showEnglishText && (
         <div className="synonyms">Also accepted: {card.english.slice(1).join(', ')}</div>
       )}
 
@@ -85,6 +126,9 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
         showTranscript={settings.showTranscript}
         correctText={card.japanese}
         incorrectText={card.japanese}
+        manualGrading={settings.manualGrading}
+        onOverrideCorrect={() => overrideGrade(4)}
+        onOverrideIncorrect={() => overrideGrade(1)}
       />
 
       {result === null && (
@@ -93,6 +137,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
             isListening={isListening}
             onStart={start}
             onStop={stop}
+            disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
           <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">

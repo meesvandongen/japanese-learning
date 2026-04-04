@@ -1,19 +1,75 @@
 import { useSettingsStore } from '../store/settingsStore'
-import type { Settings } from '../types'
+import type { ExercisePromptMode, Settings } from '../types'
 
 export function SettingsPanel() {
   const settings = useSettingsStore()
 
-  function set(key: keyof Settings, value: Settings[keyof Settings]) {
-    useSettingsStore.setState({ [key]: value })
+  function set<K extends keyof Settings>(key: K, value: Settings[K]) {
+    useSettingsStore.setState({ [key]: value } as Partial<Settings>)
   }
 
   function toggle(key: keyof Settings) {
     useSettingsStore.setState({ [key]: !settings[key] })
   }
 
+  const promptModeOptions: { value: ExercisePromptMode; label: string; description: string }[] = [
+    { value: 'audio', label: 'Audio only', description: 'Hear the prompt, no text shown' },
+    { value: 'audio+text', label: 'Audio + text', description: 'Hear and see the prompt' },
+    { value: 'text', label: 'Text only', description: 'See the prompt, no audio' },
+  ]
+
   return (
     <>
+      <section className="settings-group">
+        <h3 className="settings-group-title">Exercise prompt — English</h3>
+        <p className="settings-hint">How the English prompt is presented in the "Say in Japanese" exercise</p>
+        <div className="settings-options">
+          {promptModeOptions.map((opt) => (
+            <label
+              key={opt.value}
+              className={`settings-option ${settings.englishExerciseMode === opt.value ? 'active' : ''}`}
+            >
+              <input
+                type="radio"
+                name="englishExerciseMode"
+                value={opt.value}
+                checked={settings.englishExerciseMode === opt.value}
+                onChange={() => set('englishExerciseMode', opt.value)}
+              />
+              <div>
+                <strong>{opt.label}</strong>
+                <span>{opt.description}</span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section className="settings-group">
+        <h3 className="settings-group-title">Exercise prompt — Japanese</h3>
+        <p className="settings-hint">How the Japanese prompt is presented in the "Translate to English" exercise</p>
+        <div className="settings-options">
+          {promptModeOptions.map((opt) => (
+            <label
+              key={opt.value}
+              className={`settings-option ${settings.japaneseExerciseMode === opt.value ? 'active' : ''}`}
+            >
+              <input
+                type="radio"
+                name="japaneseExerciseMode"
+                value={opt.value}
+                checked={settings.japaneseExerciseMode === opt.value}
+                onChange={() => set('japaneseExerciseMode', opt.value)}
+              />
+              <div>
+                <strong>{opt.label}</strong>
+                <span>{opt.description}</span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </section>
+
       <section className="settings-group">
         <h3 className="settings-group-title">Listening mode</h3>
         <div className="settings-options">
@@ -72,6 +128,17 @@ export function SettingsPanel() {
       <section className="settings-group">
         <h3 className="settings-group-title">Feedback mode</h3>
         <div className="settings-options">
+          <label className={`settings-option ${settings.feedbackSound ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.feedbackSound}
+              onChange={() => toggle('feedbackSound')}
+            />
+            <div>
+              <strong>Play sound</strong>
+              <span>A short tone indicates correct or incorrect (good for background use)</span>
+            </div>
+          </label>
           <label className={`settings-option ${settings.feedbackText ? 'active' : ''}`}>
             <input
               type="checkbox"
@@ -92,6 +159,23 @@ export function SettingsPanel() {
             <div>
               <strong>Speak answer</strong>
               <span>Speak the answer aloud (good for background use)</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section className="settings-group">
+        <h3 className="settings-group-title">Manual grading</h3>
+        <div className="settings-options">
+          <label className={`settings-option ${settings.manualGrading ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.manualGrading}
+              onChange={() => toggle('manualGrading')}
+            />
+            <div>
+              <strong>Allow grade correction</strong>
+              <span>Show buttons to mark a correct answer as wrong or a wrong answer as correct</span>
             </div>
           </label>
         </div>
