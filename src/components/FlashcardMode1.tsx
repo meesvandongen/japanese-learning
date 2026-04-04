@@ -140,7 +140,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          <button className="dont-know-btn" onClick={() => setResult('incorrect')} aria-label="Don't know">
+          <button className="dont-know-btn" onClick={() => { if (settings.feedbackSound) playIncorrect(); setResult('incorrect') }} aria-label="Don't know">
             ?
           </button>
         </div>
