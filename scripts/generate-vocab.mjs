@@ -95,6 +95,7 @@ for (const lang of LANGUAGES) {
       kana: w.kana,
       japanese: w.japanese,
       english: Array.isArray(w.english) ? w.english : [w.english],
+      ...(w.hint != null ? { hint: w.hint } : {}),
       ...(w.jlpt != null ? { jlpt: w.jlpt } : {}),
       ...(w.freq != null ? { freq: w.freq } : {}),
     }))
