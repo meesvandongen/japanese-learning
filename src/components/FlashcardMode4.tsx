@@ -12,7 +12,7 @@ import type { Word } from '../types'
 interface Props {
   card: Word
   cardType: 'due' | 'new' | 'extra'
-  onAnswer: (quality: number) => void
+  onAnswer: (quality: number, heard: string) => void
 }
 
 export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
@@ -91,15 +91,15 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
   useEffect(() => {
     if (!result) return
     const delay = result === 'correct' ? 1200 : 2500
-    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1), delay)
+    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1, heard), delay)
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
-  }, [result, onAnswer])
+  }, [result, heard, onAnswer])
 
   function overrideGrade(quality: number) {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
-    onAnswer(quality)
+    onAnswer(quality, heard)
   }
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english

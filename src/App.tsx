@@ -3,12 +3,15 @@ import { useKuromoji } from './hooks/useKuromoji'
 import { useVocabulary } from './hooks/useVocabulary'
 import { FlashcardMode1 } from './components/FlashcardMode1'
 import { FlashcardMode4 } from './components/FlashcardMode4'
+import { PreviousResult } from './components/PreviousResult'
+import type { PreviousResultData } from './components/PreviousResult'
 import { SessionStats } from './components/SessionStats'
 import { ProfilePage } from './components/ProfilePage'
 import { LanguageSelector } from './components/LanguageSelector'
 import { LevelSelector } from './components/LevelSelector'
 import { SettingsPage } from './components/SettingsPage'
 import { useAppStore } from './store/appStore'
+import { useSettingsStore } from './store/settingsStore'
 import { applyReview } from './srs/sm2'
 import { getNextCard, getSessionStats } from './srs/scheduler'
 import type { Word, Manifest, Language, Level } from './types'
@@ -109,9 +112,11 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   const [reviewedCount, setReviewedCount] = useState(0)
   const [lastShownId, setLastShownId] = useState<string | null>(null)
   const [cardKey, setCardKey] = useState(0)
+  const [previousResult, setPreviousResult] = useState<PreviousResultData | null>(null)
 
   const cardStates = useAppStore((s) => s.cards)
   const { applyCardReview, reset } = useAppStore()
+  const settings = useSettingsStore()
   const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
 
   const { card, cardType } = getNextCard(words, cardStates, lastShownId)
@@ -123,26 +128,47 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
       : null
 
   const handleAnswer = useCallback(
-    (quality: number) => {
+    (quality: number, heard: string) => {
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
       applyCardReview(card.kana, updated)
+      setPreviousResult({
+        japanese: card.japanese,
+        kana: card.kana,
+        english: card.english,
+        result: quality >= 3 ? 'correct' : 'incorrect',
+        heard,
+        mode,
+      })
       setLastShownId(card.kana)
       setReviewedCount((n) => n + 1)
       setCardKey((k) => k + 1)
     },
-    [card, cardStates, applyCardReview]
+    [card, cardStates, applyCardReview, mode]
+  )
+
+  const handlePreviousOverride = useCallback(
+    (quality: number) => {
+      if (!previousResult) return
+      const existing = cardStates[previousResult.kana]
+      const updated = applyReview(existing, quality)
+      applyCardReview(previousResult.kana, updated)
+      setPreviousResult({ ...previousResult, result: quality >= 3 ? 'correct' : 'incorrect' })
+    },
+    [previousResult, cardStates, applyCardReview]
   )
 
   function handleModeChange(newMode: 1 | 4) {
     setMode(newMode)
     setLastShownId(null)
+    setPreviousResult(null)
     setCardKey((k) => k + 1)
   }
 
   function handleSettingsClose() {
     setLastShownId(null)
     setReviewedCount(0)
+    setPreviousResult(null)
     setCardKey((k) => k + 1)
     setPage('study')
   }
@@ -241,6 +267,14 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                   nextDueDate={nextDueDate}
                   cardType={cardType}
                 />
+
+                {previousResult && settings.manualGrading && (
+                  <PreviousResult
+                    data={previousResult}
+                    manualGrading={settings.manualGrading}
+                    onOverride={handlePreviousOverride}
+                  />
+                )}
 
                 {mode === 1 && (
                   <FlashcardMode1

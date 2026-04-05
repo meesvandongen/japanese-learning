@@ -968,6 +968,74 @@ body {
   color: white;
 }
 
+/* ─── Previous result banner ───────────────────────────────────────────── */
+
+.prev-result {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  animation: prev-slide-in 0.25s ease-out;
+}
+
+@keyframes prev-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.prev-correct {
+  border: 1.5px solid #b7e4c7;
+  background: #f0fdf4;
+}
+
+.prev-incorrect {
+  border: 1.5px solid #fca5a5;
+  background: #fff5f5;
+}
+
+.prev-result-icon {
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.prev-correct .prev-result-icon { color: var(--primary); }
+.prev-incorrect .prev-result-icon { color: var(--danger); }
+
+.prev-result-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prev-result-word {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prev-result-heard {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prev-result .override-btn {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+}
+
 /* Japanese prompt text in Mode 4 (text/audio+text modes) */
 .japanese-prompt {
   font-size: 2rem;
