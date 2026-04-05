@@ -21,6 +21,9 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null)
   const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
+  const [correctionPhase, setCorrectionPhase] = useState(false)
+  const [correctionHeard, setCorrectionHeard] = useState('')
+  const [correctionResult, setCorrectionResult] = useState<'correct' | 'incorrect' | null>(null)
   const settings = useSettingsStore()
   const { isSpeaking, speak } = useSpeechSynthesis()
   const { playCorrect, playIncorrect } = useAudioFeedback()
@@ -82,15 +85,50 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
     return () => clearTimeout(timer)
   }, [isListening, settings.maxListenDuration, stop])
 
+  // Speech recognition for correction phase (speak the correct answer after getting it wrong)
+  const correction = useSpeechRecognition({
+    lang: 'ja-JP',
+    onResult: (transcripts) => {
+      const correct = compareJapanese(card.kana, transcripts, tokenizer ?? null)
+      setCorrectionHeard(transcripts[0] ?? '')
+      setCorrectionResult(correct ? 'correct' : 'incorrect')
+      if (correct) {
+        if (settings.feedbackSound) playCorrect()
+      } else {
+        if (settings.feedbackSound) playIncorrect()
+        if (settings.feedbackVoice) speak(card.japanese, 'ja-JP')
+      }
+    },
+    onError: setErrorMsg,
+  })
+
+  // Enter correction phase on incorrect result when speakToCorrect is on
+  useEffect(() => {
+    if (result === 'incorrect' && settings.speakToCorrect) {
+      setCorrectionPhase(true)
+    }
+  }, [result, settings.speakToCorrect])
+
   // Auto-advance after result (cancellable for manual grading override)
+  // When speakToCorrect is on and result is incorrect, don't auto-advance — wait for correction
   useEffect(() => {
     if (!result) return
+    if (result === 'incorrect' && settings.speakToCorrect) return
     const delay = result === 'correct' ? 1200 : 2500
     advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1, heard), delay)
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
-  }, [result, heard, onAnswer])
+  }, [result, heard, onAnswer, settings.speakToCorrect])
+
+  // Auto-advance after successful correction
+  useEffect(() => {
+    if (correctionResult !== 'correct') return
+    advanceTimerRef.current = setTimeout(() => onAnswer(1, heard), 1200)
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    }
+  }, [correctionResult, heard, onAnswer])
 
   function overrideGrade(quality: number) {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
@@ -134,6 +172,31 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
       />
+
+      {correctionPhase && correctionResult !== 'correct' && (
+        <div className="correction-phase">
+          <div className="correction-prompt">Now say the correct answer:</div>
+          <RecordButton
+            isListening={correction.isListening}
+            onStart={correction.start}
+            onStop={correction.stop}
+            disabled={isSpeaking}
+            listenMode="hold"
+          />
+          {correctionResult === 'incorrect' && (
+            <div className="correction-retry">Try again</div>
+          )}
+          {settings.showTranscript && correctionHeard && (
+            <div className="transcript-heard">Heard: "{correctionHeard}"</div>
+          )}
+          <button
+            className="correction-skip-btn"
+            onClick={() => onAnswer(1, heard)}
+          >
+            Skip
+          </button>
+        </div>
+      )}
 
       {result === null && (
         <div className="answer-actions">

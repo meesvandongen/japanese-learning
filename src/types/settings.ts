@@ -13,4 +13,5 @@ export interface Settings {
   japaneseExerciseMode: ExercisePromptMode
   englishExerciseMode: ExercisePromptMode
   manualGrading: boolean
+  speakToCorrect: boolean
 }

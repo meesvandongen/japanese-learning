@@ -17,6 +17,7 @@ export const useSettingsStore = create<Settings>()(
       japaneseExerciseMode: 'audio',
       englishExerciseMode: 'audio',
       manualGrading: false,
+      speakToCorrect: false,
     }),
     { name: 'jp-flashcards-settings-v1' }
   )
