@@ -1052,3 +1052,43 @@ body {
   margin: 8px 0;
 }
 
+/* Correction phase — speak the correct answer after getting it wrong */
+.correction-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: var(--radius);
+  background: #fff8e1;
+  border: 1.5px solid #ffe082;
+}
+
+.correction-prompt {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.correction-retry {
+  font-size: 0.85rem;
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.correction-skip-btn {
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1.5px solid var(--muted);
+  background: transparent;
+  font-size: 0.8rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.correction-skip-btn:hover {
+  background: var(--muted);
+  color: white;
+}
+

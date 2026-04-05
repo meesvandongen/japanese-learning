@@ -182,6 +182,23 @@ export function SettingsPanel() {
       </section>
 
       <section className="settings-group">
+        <h3 className="settings-group-title">Speak to correct</h3>
+        <div className="settings-options">
+          <label className={`settings-option ${settings.speakToCorrect ? 'active' : ''}`}>
+            <input
+              type="checkbox"
+              checked={settings.speakToCorrect}
+              onChange={() => toggle('speakToCorrect')}
+            />
+            <div>
+              <strong>Speak wrong answers</strong>
+              <span>When you get an answer wrong, you must speak the correct answer before moving on. Reinforces learning through active recall and production.</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section className="settings-group">
         <h3 className="settings-group-title">Phonetic matching</h3>
         <div className="settings-options">
           <label className={`settings-option ${settings.phoneticSoundex ? 'active' : ''}`}>
