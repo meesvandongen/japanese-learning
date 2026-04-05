@@ -17,7 +17,7 @@
       "japanese": "(かさを～) さす",
       "english": [
         "to open",
-        "hold (an umbrella)"
+        "to hold an umbrella"
       ]
     },
     {
@@ -41,7 +41,7 @@
       "kana": "～いち (にほんいち)",
       "japanese": "～いち (にほんいち)",
       "english": [
-        "No. 1 ~ (in)"
+        "number one in"
       ]
     },
     {
@@ -49,8 +49,9 @@
       "kana": "～えん",
       "japanese": "～園",
       "english": [
-        "~ garden (especially man made)"
-      ]
+        "garden"
+      ],
+      "hint": "especially man-made"
     },
     {
       "id": "～おしまい (おわり)",
@@ -90,7 +91,8 @@
       "kana": "～がたい",
       "japanese": "～難い",
       "english": [
-        "hard (difficult) to do ~"
+        "hard to do",
+        "difficult to do"
       ]
     },
     {
@@ -106,8 +108,9 @@
       "kana": "～かん",
       "japanese": "～刊",
       "english": [
-        "~ issued (magazine, newspaper)"
-      ]
+        "issued"
+      ],
+      "hint": "magazine, newspaper"
     },
     {
       "id": "～き",
@@ -451,8 +454,9 @@
       "kana": "～ちょうめ",
       "japanese": "～丁目",
       "english": [
-        "~ district (of a town; city, block)"
-      ]
+        "district"
+      ],
+      "hint": "of a town, city block"
     },
     {
       "id": "～つう",
@@ -569,7 +573,7 @@
       "kana": "～はく",
       "japanese": "～泊",
       "english": [
-        "counter for staying (e.g., 2 nights)"
+        "counter for nights stayed"
       ]
     },
     {
@@ -667,7 +671,7 @@
       "kana": "～ほう (ひかく)",
       "japanese": "～ほう (ひかく)",
       "english": [
-        "(in comparison)"
+        "in comparison"
       ]
     },
     {
@@ -986,7 +990,7 @@
       "japanese": "当てはまる",
       "english": [
         "to be applicable",
-        "to come under (a category)"
+        "to come under a category"
       ]
     },
     {
@@ -1200,7 +1204,7 @@
       "kana": "あわてる",
       "japanese": "慌てる",
       "english": [
-        "to become confused (disconcerted, disorganized)",
+        "to become confused",
         "to be flustered",
         "to panic",
         "to hurry",
@@ -1449,9 +1453,9 @@
       "kana": "いってきます",
       "japanese": "いってきます",
       "english": [
-        "(Lit.) I'll go and come back",
-        "'I'm going",
-        "see you later'"
+        "I'll go and come back",
+        "I'm going",
+        "see you later"
       ]
     },
     {
@@ -1459,9 +1463,9 @@
       "kana": "いってまいります",
       "japanese": "いってまいります",
       "english": [
-        "(Lit.) I'll go and come back",
-        "'I'm going",
-        "see you later'"
+        "I'll go and come back",
+        "I'm going",
+        "see you later"
       ]
     },
     {
@@ -1625,10 +1629,11 @@
       "kana": "うけたまわる",
       "japanese": "承る",
       "english": [
-        "(humble) to hear",
+        "to hear",
         "to be told",
         "to know"
-      ]
+      ],
+      "hint": "humble"
     },
     {
       "id": "うけとり",
@@ -1643,7 +1648,8 @@
       "kana": "うけもつ",
       "japanese": "受け持つ",
       "english": [
-        "to take (be in) charge of"
+        "to take charge of",
+        "to be in charge of"
       ]
     },
     {
@@ -1696,7 +1702,8 @@
       "kana": "うどん",
       "japanese": "うどん",
       "english": [
-        "udon noodles (Japanese traditional noodles)"
+        "udon noodles",
+        "udon"
       ]
     },
     {
@@ -1724,7 +1731,7 @@
       "english": [
         "to bury",
         "to fill up",
-        "to fill (a seat, a vacant position)"
+        "to fill a seat"
       ]
     },
     {
@@ -1742,7 +1749,7 @@
       "japanese": "裏返す",
       "english": [
         "to turn inside out",
-        "to turn (something) over"
+        "to turn something over"
       ]
     },
     {
@@ -1869,8 +1876,9 @@
       "kana": "えいわ",
       "japanese": "英和",
       "english": [
-        "English-Japanese (e.g., dictionary)"
-      ]
+        "English-Japanese"
+      ],
+      "hint": "e.g. dictionary"
     },
     {
       "id": "ええと",
@@ -1949,8 +1957,9 @@
       "kana": "えんげき",
       "japanese": "演劇",
       "english": [
-        "play (theatrical)"
-      ]
+        "play"
+      ],
+      "hint": "theatrical"
     },
     {
       "id": "えんしゅう",
@@ -2016,10 +2025,11 @@
       "kana": "おいこす",
       "japanese": "追い越す",
       "english": [
-        "to pass (e.g., car)",
+        "to pass",
         "to outdistance",
         "to outstrip"
-      ]
+      ],
+      "hint": "e.g. car"
     },
     {
       "id": "オイル",
@@ -2039,7 +2049,7 @@
         "help",
         "support",
         "reinforcement cheering",
-        "rooting (for)",
+        "rooting for",
         "support"
       ]
     },
@@ -2082,7 +2092,7 @@
       "kana": "おうふく",
       "japanese": "往復",
       "english": [
-        "(col) round trip",
+        "round trip",
         "coming and going",
         "return ticket"
       ]
@@ -2110,10 +2120,11 @@
       "kana": "おおざっぱ",
       "japanese": "おおざっぱ",
       "english": [
-        "rough (not precise)",
+        "rough",
         "broad",
         "sketchy"
-      ]
+      ],
+      "hint": "not precise"
     },
     {
       "id": "おおどおり",
@@ -2251,9 +2262,7 @@
         "to hold down",
         "to press down",
         "to hold in place",
-        "to hold steady to cover (esp. a part of one's body with one's hand)",
-        "to clutch (a body part in pain)",
-        "to press (a body part) to get a hold of",
+        "to clutch a body part in pain",
         "to obtain",
         "to seize",
         "to catch",
@@ -2274,8 +2283,9 @@
       "kana": "おじ",
       "japanese": "伯父",
       "english": [
-        "(humble) uncle (older than one's parent)"
-      ]
+        "uncle"
+      ],
+      "hint": "humble, older than one's parent"
     },
     {
       "id": "おしい",
@@ -2291,9 +2301,10 @@
       "kana": "おじさん",
       "japanese": "伯父さん",
       "english": [
-        "(hon.) middle-aged gentleman",
+        "middle-aged gentleman",
         "uncle"
-      ]
+      ],
+      "hint": "honorific"
     },
     {
       "id": "おじゃまします",
@@ -2377,7 +2388,8 @@
       "kana": "おねがいします",
       "japanese": "お願いします",
       "english": [
-        "Please (lit., I request)"
+        "please",
+        "I request"
       ]
     },
     {
@@ -2395,8 +2407,9 @@
       "kana": "おば",
       "japanese": "伯母",
       "english": [
-        "(humble) aunt (older than one's parent)"
-      ]
+        "aunt"
+      ],
+      "hint": "humble, older than one's parent"
     },
     {
       "id": "おばさん",
@@ -2413,7 +2426,7 @@
       "kana": "おはよう",
       "japanese": "おはよう",
       "english": [
-        "(abbr.) Good morning"
+        "good morning"
       ]
     },
     {
@@ -2472,7 +2485,7 @@
       "kana": "おもいきり",
       "japanese": "思い切り",
       "english": [
-        "with all one's strength (heart)",
+        "with all one's strength",
         "resignation",
         "resolution"
       ]
@@ -2513,7 +2526,7 @@
       "english": [
         "holiday",
         "absence",
-        "(exp.) Good night"
+        "good night"
       ]
     },
     {
@@ -2613,8 +2626,9 @@
       "japanese": "カーブ",
       "english": [
         "curve",
-        "curve ball (baseball)"
-      ]
+        "curve ball"
+      ],
+      "hint": "baseball"
     },
     {
       "id": "かい",
@@ -2840,7 +2854,8 @@
       "kana": "かぎり",
       "japanese": "限り",
       "english": [
-        "limit(s)",
+        "limits",
+        "limit",
         "as far as possible"
       ]
     },
@@ -2929,7 +2944,8 @@
       "kana": "がくぶ",
       "japanese": "学部",
       "english": [
-        "department of a university undergraduate (course, program, etc.)"
+        "department of a university",
+        "undergraduate course"
       ]
     },
     {
@@ -2971,17 +2987,19 @@
       "japanese": "可決",
       "english": [
         "approval",
-        "adoption (e.g., motion, bill)",
+        "adoption",
         "passage"
-      ]
+      ],
+      "hint": "e.g. motion, bill"
     },
     {
       "id": "かこう",
       "kana": "かこう",
       "japanese": "火口",
       "english": [
-        "crater (of a volcano)"
-      ]
+        "crater"
+      ],
+      "hint": "of a volcano"
     },
     {
       "id": "かさねる",
@@ -3090,7 +3108,7 @@
       "japanese": "かじる",
       "english": [
         "to chew",
-        "to bite (at)"
+        "to bite at"
       ]
     },
     {
@@ -3106,7 +3124,8 @@
       "kana": "カセット",
       "japanese": "カセット",
       "english": [
-        "cassette (tape)"
+        "cassette",
+        "cassette tape"
       ]
     },
     {
@@ -3177,7 +3196,8 @@
       "kana": "かたみち",
       "japanese": "片道",
       "english": [
-        "one-way (trip)"
+        "one-way trip",
+        "one-way"
       ]
     },
     {
@@ -3272,10 +3292,11 @@
       "kana": "かつやく",
       "japanese": "活躍",
       "english": [
-        "activity (esp. energetic or successful)",
+        "activity",
         "great efforts",
         "active participation"
-      ]
+      ],
+      "hint": "energetic or successful"
     },
     {
       "id": "かつりょく",
@@ -3317,9 +3338,10 @@
       "kana": "かね",
       "japanese": "鐘",
       "english": [
-        "bell (often a large hanging bell)",
+        "bell",
         "chime"
-      ]
+      ],
+      "hint": "often a large hanging bell"
     },
     {
       "id": "かねつ",
@@ -3342,8 +3364,9 @@
       "kana": "カバー",
       "japanese": "カバー",
       "english": [
-        "cover (e.g., book)"
-      ]
+        "cover"
+      ],
+      "hint": "e.g. book"
     },
     {
       "id": "かはんすう",
@@ -3367,7 +3390,7 @@
       "kana": "かぶせる",
       "japanese": "被せる",
       "english": [
-        "to cover (with something)"
+        "to cover with something"
       ]
     },
     {
@@ -3483,7 +3506,7 @@
       "kana": "かるた",
       "japanese": "かるた",
       "english": [
-        "playing cards (POR: carta)"
+        "playing cards"
       ]
     },
     {
@@ -3492,9 +3515,9 @@
       "japanese": "枯れる",
       "english": [
         "to wither",
-        "to die (plant)",
-        "to be blasted (plant)"
-      ]
+        "to die"
+      ],
+      "hint": "plant"
     },
     {
       "id": "カロリー",
@@ -3518,7 +3541,7 @@
       "kana": "かわかす",
       "japanese": "乾かす",
       "english": [
-        "to dry (clothes, etc.)",
+        "to dry",
         "to desiccate"
       ]
     },
@@ -3697,7 +3720,8 @@
       "kana": "かんぱい",
       "japanese": "乾杯",
       "english": [
-        "Cheers! (a toast)"
+        "cheers!",
+        "a toast"
       ]
     },
     {
@@ -3714,8 +3738,9 @@
       "kana": "かんびょう",
       "japanese": "看病",
       "english": [
-        "nursing (a patient)"
-      ]
+        "nursing"
+      ],
+      "hint": "a patient"
     },
     {
       "id": "かんむり",
@@ -3731,8 +3756,9 @@
       "kana": "かんわ",
       "japanese": "漢和",
       "english": [
-        "Chinese Character-Japanese (e.g., dictionary)"
-      ]
+        "Chinese character-Japanese"
+      ],
+      "hint": "e.g. dictionary"
     },
     {
       "id": "きあつ",
@@ -3756,7 +3782,7 @@
       "kana": "きがえる",
       "japanese": "着替える",
       "english": [
-        "to change (one's) clothes"
+        "to change clothes"
       ]
     },
     {
@@ -3791,9 +3817,10 @@
       "english": [
         "term",
         "period",
-        "time frame time limit",
+        "time frame",
+        "time limit",
         "deadline",
-        "cutoff (date)"
+        "cutoff date"
       ]
     },
     {
@@ -4046,15 +4073,17 @@
       "english": [
         "line",
         "procession",
-        "matrix (math)"
-      ]
+        "matrix"
+      ],
+      "hint": "math"
     },
     {
       "id": "ぎょぎょう",
       "kana": "ぎょぎょう",
       "japanese": "漁業",
       "english": [
-        "fishing (industry)"
+        "fishing industry",
+        "fishing"
       ]
     },
     {
@@ -4230,8 +4259,9 @@
       "japanese": "崩す",
       "english": [
         "to destroy",
-        "to make change (money)"
-      ]
+        "to make change"
+      ],
+      "hint": "money"
     },
     {
       "id": "くすりゆび",
@@ -4337,8 +4367,9 @@
       "english": [
         "verbose",
         "importunate",
-        "heavy (taste)"
-      ]
+        "heavy"
+      ],
+      "hint": "taste"
     },
     {
       "id": "くとうてん",
@@ -4457,7 +4488,8 @@
       "kana": "けいご",
       "japanese": "敬語",
       "english": [
-        "honorific language (lit., respect language)"
+        "honorific language",
+        "keigo"
       ]
     },
     {
@@ -4596,7 +4628,7 @@
       "kana": "げじゅん",
       "japanese": "下旬",
       "english": [
-        "month (last third of)"
+        "last third of month"
       ]
     },
     {
@@ -4635,9 +4667,10 @@
       "kana": "げた",
       "japanese": "下駄",
       "english": [
-        "(Japanese footwear)",
-        "wooden clogs"
-      ]
+        "wooden clogs",
+        "geta"
+      ],
+      "hint": "Japanese footwear"
     },
     {
       "id": "けつあつ",
@@ -4865,8 +4898,9 @@
       "kana": "ご",
       "japanese": "碁",
       "english": [
-        "go (board game)"
-      ]
+        "go"
+      ],
+      "hint": "board game"
     },
     {
       "id": "こ～",
@@ -4907,7 +4941,7 @@
       "kana": "こう～",
       "japanese": "高～",
       "english": [
-        "high (level) ~"
+        "high level"
       ]
     },
     {
@@ -5203,7 +5237,8 @@
       "kana": "こうよう",
       "japanese": "紅葉",
       "english": [
-        "fall colors (of leaves)"
+        "fall colors",
+        "autumn leaves"
       ]
     },
     {
@@ -5211,7 +5246,8 @@
       "kana": "こうよう もみじ",
       "japanese": "こうよう もみじ",
       "english": [
-        "(Japanese) maple"
+        "Japanese maple",
+        "maple"
       ]
     },
     {
@@ -5342,7 +5378,7 @@
       "kana": "こしかける",
       "japanese": "腰掛ける",
       "english": [
-        "to sit (down)"
+        "to sit down"
       ]
     },
     {
@@ -5370,8 +5406,8 @@
         "to rub",
         "to chafe",
         "to file",
-        "to frost (glass)",
-        "to strike (match)"
+        "to frost glass",
+        "to strike a match"
       ]
     },
     {
@@ -5485,7 +5521,7 @@
       "kana": "ごめん",
       "japanese": "御免",
       "english": [
-        "declining (something)",
+        "declining",
         "pardon",
         "sorry"
       ]
@@ -5532,10 +5568,11 @@
       "kana": "ごらん",
       "japanese": "御覧",
       "english": [
-        "(hon.) look",
+        "look",
         "inspection",
         "try"
-      ]
+      ],
+      "hint": "honorific"
     },
     {
       "id": "コレクション",
@@ -5586,7 +5623,8 @@
       "kana": "コンクール",
       "japanese": "コンクール",
       "english": [
-        "contest (FRE: concours)"
+        "contest",
+        "competition"
       ]
     },
     {
@@ -5637,7 +5675,7 @@
       "japanese": "サークル",
       "english": [
         "circle",
-        "sports club (e.g., at a company)"
+        "sports club"
       ]
     },
     {
@@ -5653,7 +5691,7 @@
       "kana": "ざいがく",
       "japanese": "在学",
       "english": [
-        "(enrolled) in school"
+        "enrolled in school"
       ]
     },
     {
@@ -5680,7 +5718,7 @@
       "japanese": "催促",
       "english": [
         "demand",
-        "urge (action)",
+        "urge action",
         "press for"
       ]
     },
@@ -5932,8 +5970,9 @@
       "kana": "ざつおん",
       "japanese": "雑音",
       "english": [
-        "noise (jarring, grating)"
-      ]
+        "noise"
+      ],
+      "hint": "jarring, grating"
     },
     {
       "id": "さっさと",
@@ -5958,7 +5997,7 @@
       "kana": "さび",
       "japanese": "錆",
       "english": [
-        "rust (color)"
+        "rust"
       ]
     },
     {
@@ -5975,8 +6014,9 @@
       "kana": "ざぶとん",
       "japanese": "座布団",
       "english": [
-        "cushion (Japanese)"
-      ]
+        "cushion"
+      ],
+      "hint": "Japanese floor cushion"
     },
     {
       "id": "さまたげる",
@@ -6075,8 +6115,9 @@
       "kana": "シーズン",
       "japanese": "シーズン",
       "english": [
-        "season (sporting)"
-      ]
+        "season"
+      ],
+      "hint": "sporting"
     },
     {
       "id": "シーツ",
@@ -6115,8 +6156,8 @@
       "kana": "しいんと (する)",
       "japanese": "しいんと (する)",
       "english": [
-        "silent (as the grave)",
-        "(deathly) quiet"
+        "silent",
+        "deathly quiet"
       ]
     },
     {
@@ -6132,16 +6173,18 @@
       "kana": "しおから",
       "japanese": "塩辛",
       "english": [
-        "salty (taste)"
-      ]
+        "salty"
+      ],
+      "hint": "taste"
     },
     {
       "id": "しおからい",
       "kana": "しおからい",
       "japanese": "塩辛い",
       "english": [
-        "salty (taste)"
-      ]
+        "salty"
+      ],
+      "hint": "taste"
     },
     {
       "id": "しかい",
@@ -6242,8 +6285,9 @@
       "kana": "ししゃごにゅう",
       "japanese": "四捨五入",
       "english": [
-        "rounding up (fractions)"
-      ]
+        "rounding up"
+      ],
+      "hint": "fractions"
     },
     {
       "id": "しじゅう",
@@ -6294,7 +6338,7 @@
       "kana": "じそく",
       "japanese": "時速",
       "english": [
-        "speed (per hour)"
+        "speed per hour"
       ]
     },
     {
@@ -6328,7 +6372,7 @@
       "kana": "じたく",
       "japanese": "自宅",
       "english": [
-        "one's own home (same as 自分の家 (じぶんのいえ))"
+        "one's own home"
       ]
     },
     {
@@ -6431,8 +6475,9 @@
       "kana": "しっぽ",
       "japanese": "しっぽ",
       "english": [
-        "tail (animal)"
-      ]
+        "tail"
+      ],
+      "hint": "animal"
     },
     {
       "id": "じつよう",
@@ -6448,7 +6493,7 @@
       "kana": "じつりょく",
       "japanese": "実力",
       "english": [
-        "(real) ability",
+        "real ability",
         "true strength",
         "merit",
         "efficiency",
@@ -6523,7 +6568,7 @@
       "kana": "じばん",
       "japanese": "地盤",
       "english": [
-        "(the) ground"
+        "the ground"
       ]
     },
     {
@@ -6702,7 +6747,8 @@
       "kana": "しゃしょう",
       "japanese": "車掌",
       "english": [
-        "(train) conductor"
+        "train conductor",
+        "conductor"
       ]
     },
     {
@@ -6753,7 +6799,8 @@
       "kana": "しゃりん",
       "japanese": "車輪",
       "english": [
-        "(car) wheel"
+        "car wheel",
+        "wheel"
       ]
     },
     {
@@ -6859,7 +6906,7 @@
       "japanese": "終点",
       "english": [
         "terminus",
-        "last stop (e.g train)"
+        "last stop"
       ]
     },
     {
@@ -6964,16 +7011,18 @@
       "kana": "しゅご",
       "japanese": "主語",
       "english": [
-        "(gram) subject"
-      ]
+        "subject"
+      ],
+      "hint": "grammatical"
     },
     {
       "id": "しゅじん",
       "kana": "しゅじん",
       "japanese": "主人",
       "english": [
-        "(one's own) husband"
-      ]
+        "husband"
+      ],
+      "hint": "one's own"
     },
     {
       "id": "しゅっきん",
@@ -7022,7 +7071,8 @@
       "kana": "じゅわき",
       "japanese": "受話器",
       "english": [
-        "(telephone) receiver"
+        "telephone receiver",
+        "receiver"
       ]
     },
     {
@@ -7150,7 +7200,8 @@
       "kana": "じょうぎ",
       "japanese": "定規",
       "english": [
-        "(measuring) ruler"
+        "measuring ruler",
+        "ruler"
       ]
     },
     {
@@ -7237,7 +7288,7 @@
       "kana": "しょうすう",
       "japanese": "小数",
       "english": [
-        "fraction (part of)",
+        "fraction",
         "decimal"
       ]
     },
@@ -7274,7 +7325,7 @@
       "japanese": "勝敗",
       "english": [
         "victory or defeat",
-        "issue (of battle)"
+        "issue of battle"
       ]
     },
     {
@@ -7319,9 +7370,10 @@
       "kana": "しょうべん",
       "japanese": "小便",
       "english": [
-        "(col) urine",
+        "urine",
         "piss"
-      ]
+      ],
+      "hint": "colloquial"
     },
     {
       "id": "しょうぼうしょ",
@@ -7336,7 +7388,8 @@
       "kana": "しょうみ",
       "japanese": "正味",
       "english": [
-        "net (weight)"
+        "net weight",
+        "net"
       ]
     },
     {
@@ -7495,8 +7548,9 @@
       "kana": "しりつ",
       "japanese": "私立",
       "english": [
-        "private (establishment)"
-      ]
+        "private"
+      ],
+      "hint": "establishment"
     },
     {
       "id": "しりょう",
@@ -7647,7 +7701,7 @@
       "kana": "じんめい",
       "japanese": "人命",
       "english": [
-        "(human) life"
+        "human life"
       ]
     },
     {
@@ -7672,7 +7726,8 @@
       "kana": "しんるい",
       "japanese": "親類",
       "english": [
-        "relative(s) (same as 親戚 (しんせき))"
+        "relatives",
+        "relative"
       ]
     },
     {
@@ -7903,7 +7958,7 @@
       "kana": "すきとおる",
       "japanese": "透き通る",
       "english": [
-        "to be(come) transparent"
+        "to become transparent"
       ]
     },
     {
@@ -8070,7 +8125,7 @@
       "kana": "すまない",
       "japanese": "すまない",
       "english": [
-        "sorry (phrase)"
+        "sorry"
       ]
     },
     {
@@ -8226,15 +8281,17 @@
       "kana": "せいちょう",
       "japanese": "生長",
       "english": [
-        "growth (of a plant)"
-      ]
+        "growth"
+      ],
+      "hint": "of a plant"
     },
     {
       "id": "せいとう",
       "kana": "せいとう",
       "japanese": "政党",
       "english": [
-        "(member of) political party"
+        "political party member",
+        "political party"
       ]
     },
     {
@@ -8315,7 +8372,7 @@
       "japanese": "西暦",
       "english": [
         "Christian Era",
-        "after (Christ’s) death (A.D.)"
+        "AD"
       ]
     },
     {
@@ -8324,7 +8381,7 @@
       "japanese": "背負う",
       "english": [
         "to be burdened with",
-        "to carry on (one's) back or shoulder(s)"
+        "to carry on one's back"
       ]
     },
     {
@@ -8360,7 +8417,7 @@
       "kana": "せっする",
       "japanese": "接する",
       "english": [
-        "to attend to (someone)",
+        "to attend to someone",
         "to associate with"
       ]
     },
@@ -8400,7 +8457,7 @@
       "kana": "ぜひとも",
       "japanese": "ぜひとも",
       "english": [
-        "by all means (with sense of not taking 'no' for an answer)"
+        "by all means"
       ]
     },
     {
@@ -8510,8 +8567,8 @@
       "kana": "ぜんしん",
       "japanese": "全身",
       "english": [
-        "whole (body)",
-        "full-length (e.g., portrait) systemic"
+        "whole body",
+        "full-length"
       ]
     },
     {
@@ -8598,7 +8655,7 @@
       "kana": "ぜんぱん",
       "japanese": "全般",
       "english": [
-        "(the) whole",
+        "the whole",
         "general"
       ]
     },
@@ -8615,8 +8672,8 @@
       "kana": "せんめん",
       "japanese": "洗面",
       "english": [
-        "wash up (one's face)",
-        "have a wash"
+        "to wash up",
+        "to wash one's face"
       ]
     },
     {
@@ -8770,7 +8827,8 @@
       "kana": "ぞうり",
       "japanese": "草履",
       "english": [
-        "Japanese sandals (footwear)"
+        "Japanese sandals",
+        "zori"
       ]
     },
     {
@@ -8856,7 +8914,8 @@
       "kana": "そせん",
       "japanese": "祖先",
       "english": [
-        "ancestor(s)"
+        "ancestors",
+        "ancestor"
       ]
     },
     {
@@ -8910,7 +8969,8 @@
       "kana": "そば",
       "japanese": "そば",
       "english": [
-        "soba (buckwheat noodles)"
+        "soba",
+        "buckwheat noodles"
       ]
     },
     {
@@ -8953,7 +9013,7 @@
       "kana": "それる",
       "japanese": "逸れる",
       "english": [
-        "to stray (turn) from subject",
+        "to stray from subject",
         "to go astray"
       ]
     },
@@ -8965,10 +9025,12 @@
         "to collect",
         "to gather",
         "to get together",
-        "to complete (a collection) to arrange",
+        "to complete a collection",
+        "to arrange",
         "to put in order",
         "to prepare",
-        "to get ready to make uniform",
+        "to get ready",
+        "to make uniform",
         "to make even",
         "to match"
       ]
@@ -8986,16 +9048,18 @@
       "kana": "ぞんじる",
       "japanese": "存じる",
       "english": [
-        "(humble) to know"
-      ]
+        "to know"
+      ],
+      "hint": "humble"
     },
     {
       "id": "ぞんずる",
       "kana": "ぞんずる",
       "japanese": "存ずる",
       "english": [
-        "(humble) to know"
-      ]
+        "to know"
+      ],
+      "hint": "humble"
     },
     {
       "id": "そんとく",
@@ -9080,8 +9144,8 @@
       "kana": "たいして",
       "japanese": "大して",
       "english": [
-        "(not so) much",
-        "(not) very"
+        "not so much",
+        "not very"
       ]
     },
     {
@@ -9295,8 +9359,9 @@
       "kana": "たたむ",
       "japanese": "畳む",
       "english": [
-        "to fold (e.g., clothes, umbrella)"
-      ]
+        "to fold"
+      ],
+      "hint": "e.g. clothes, umbrella"
     },
     {
       "id": "たちどまる",
@@ -9369,8 +9434,9 @@
       "japanese": "足袋",
       "english": [
         "tabi",
-        "Japanese socks (with split toe)"
-      ]
+        "Japanese socks"
+      ],
+      "hint": "with split toe"
     },
     {
       "id": "ダブル",
@@ -9497,8 +9563,9 @@
       "kana": "たんすう",
       "japanese": "単数",
       "english": [
-        "singular (number)"
-      ]
+        "singular"
+      ],
+      "hint": "number"
     },
     {
       "id": "だんち",
@@ -9522,8 +9589,9 @@
       "kana": "たんぺん",
       "japanese": "短編",
       "english": [
-        "short (e.g., story, film)"
-      ]
+        "short"
+      ],
+      "hint": "e.g. story, film"
     },
     {
       "id": "たんぼ",
@@ -9595,7 +9663,7 @@
       "japanese": "ちぎる",
       "english": [
         "to cut up fine",
-        "to pick (fruit)"
+        "to pick fruit"
       ]
     },
     {
@@ -10023,8 +10091,10 @@
       "kana": "つうやく",
       "japanese": "通訳",
       "english": [
-        "interpretation (i.e., oral translation) interpreter"
-      ]
+        "interpretation",
+        "interpreter"
+      ],
+      "hint": "oral translation"
     },
     {
       "id": "つうよう",
@@ -10049,8 +10119,9 @@
       "kana": "つきあたり",
       "japanese": "突き当たり",
       "english": [
-        "end (e.g., of street)"
-      ]
+        "end"
+      ],
+      "hint": "e.g. of street"
     },
     {
       "id": "つきあたる",
@@ -10078,7 +10149,7 @@
       "english": [
         "to follow",
         "to come after",
-        "to come next (to)"
+        "to come next to"
       ]
     },
     {
@@ -10086,13 +10157,14 @@
       "kana": "つたわる",
       "japanese": "伝わる",
       "english": [
-        "to spread (of a rumor, news, etc.)",
+        "to spread",
         "to travel",
         "to circulate",
         "to go around",
         "to be passed around",
         "to become known"
-      ]
+      ],
+      "hint": "of a rumor, news"
     },
     {
       "id": "つっこむ",
@@ -10252,7 +10324,7 @@
       "english": [
         "theme",
         "project",
-        "topic (GER: Thema)"
+        "topic"
       ]
     },
     {
@@ -10277,9 +10349,10 @@
       "kana": "ていいん",
       "japanese": "定員",
       "english": [
-        "fixed number of regular personnel",
-        "capacity (e.g., of boat)"
-      ]
+        "fixed number of personnel",
+        "capacity"
+      ],
+      "hint": "e.g. of boat"
     },
     {
       "id": "ていか",
@@ -10321,8 +10394,9 @@
       "kana": "ていしゃ",
       "japanese": "停車",
       "english": [
-        "stopping (e.g., train)"
-      ]
+        "stopping"
+      ],
+      "hint": "e.g. train"
     },
     {
       "id": "ていでん",
@@ -10456,7 +10530,7 @@
       "japanese": "手続き",
       "english": [
         "procedure",
-        "(legal) process",
+        "legal process",
         "formalities"
       ]
     },
@@ -10481,7 +10555,8 @@
       "kana": "てぬぐい",
       "japanese": "手拭い",
       "english": [
-        "(hand) towel"
+        "hand towel",
+        "towel"
       ]
     },
     {
@@ -10534,7 +10609,7 @@
       "japanese": "展開",
       "english": [
         "develop",
-        "expansion (opposite of compression)"
+        "expansion"
       ]
     },
     {
@@ -10698,7 +10773,7 @@
       "japanese": "峠",
       "english": [
         "ridge",
-        "(mountain) pass",
+        "mountain pass",
         "difficult part"
       ]
     },
@@ -10753,7 +10828,8 @@
       "kana": "とうじょう",
       "japanese": "登場",
       "english": [
-        "entry (on stage)"
+        "entry on stage",
+        "appearance"
       ]
     },
     {
@@ -10866,7 +10942,7 @@
       "japanese": "どきどき",
       "english": [
         "throb",
-        "beat (fast)"
+        "beat fast"
       ]
     },
     {
@@ -10919,11 +10995,12 @@
       "kana": "とける",
       "japanese": "溶ける",
       "english": [
-        "(intransitive) to melt",
+        "to melt",
         "to thaw",
         "to fuse",
         "to dissolve"
-      ]
+      ],
+      "hint": "intransitive"
     },
     {
       "id": "どける",
@@ -10948,7 +11025,7 @@
       "japanese": "所々",
       "english": [
         "here and there",
-        "some parts (of something)"
+        "some parts"
       ]
     },
     {
@@ -10956,7 +11033,8 @@
       "kana": "としん",
       "japanese": "都心",
       "english": [
-        "heart (of city)"
+        "heart of city",
+        "city center"
       ]
     },
     {
@@ -11003,7 +11081,7 @@
       "english": [
         "to be fixed",
         "to abide",
-        "to stay (in the one place)"
+        "to stay in one place"
       ]
     },
     {
@@ -11020,8 +11098,9 @@
       "kana": "どの",
       "japanese": "殿",
       "english": [
-        "Mister (mostly in addressing someone on an envelope)"
-      ]
+        "Mister"
+      ],
+      "hint": "formal, used on envelopes"
     },
     {
       "id": "とびこむ",
@@ -11040,7 +11119,7 @@
       "english": [
         "to be fixed",
         "to abide",
-        "to stay (in the one place)"
+        "to stay in one place"
       ]
     },
     {
@@ -11104,9 +11183,10 @@
       "kana": "とる",
       "japanese": "採る",
       "english": [
-        "to adopt (measure, proposal)",
-        "to pick (fruit)"
-      ]
+        "to adopt",
+        "to pick fruit"
+      ],
+      "hint": "measure, proposal"
     },
     {
       "id": "どんぶり",
@@ -11371,10 +11451,11 @@
       "kana": "なんとも",
       "japanese": "なんとも",
       "english": [
-        "nothing (with neg. verb)",
+        "nothing",
         "quite",
         "not a bit"
-      ]
+      ],
+      "hint": "with negative verb"
     },
     {
       "id": "ナンバー",
@@ -11511,11 +11592,12 @@
       "kana": "にぶい",
       "japanese": "鈍い",
       "english": [
-        "dull (e.g., a knife)",
+        "dull",
         "thickheaded",
-        "slow (opposite of fast)",
+        "slow",
         "stupid"
-      ]
+      ],
+      "hint": "e.g. a knife"
     },
     {
       "id": "にゅうしゃ",
@@ -11577,7 +11659,7 @@
       "kana": "ねじ",
       "japanese": "ねじ",
       "english": [
-        "(a) screw"
+        "screw"
       ]
     },
     {
@@ -11701,9 +11783,10 @@
       "kana": "のぼり",
       "japanese": "上り",
       "english": [
-        "up-train (going to Tokyo)",
+        "up-train",
         "ascent"
-      ]
+      ],
+      "hint": "going to Tokyo"
     },
     {
       "id": "のり",
@@ -11720,15 +11803,16 @@
       "kana": "のりかえ",
       "japanese": "乗換",
       "english": [
-        "a transfer (e.g., trains, buses)"
-      ]
+        "transfer"
+      ],
+      "hint": "e.g. trains, buses"
     },
     {
       "id": "のりこし",
       "kana": "のりこし",
       "japanese": "乗り越し",
       "english": [
-        "riding past (one's station)"
+        "riding past one's station"
       ]
     },
     {
@@ -11736,8 +11820,8 @@
       "kana": "のろい",
       "japanese": "鈍い",
       "english": [
-        "dull (e.g., a knife)",
-        "slow (opposite of fast)",
+        "dull",
+        "slow",
         "stupid"
       ]
     },
@@ -11954,7 +12038,7 @@
         "to be disconnected",
         "to get out of place",
         "to be off",
-        "to be out (e.g., of gear)"
+        "to be out of gear"
       ]
     },
     {
@@ -11996,8 +12080,9 @@
       "kana": "はつ",
       "japanese": "発",
       "english": [
-        "to depart (e.g., on a plane, train)"
-      ]
+        "to depart"
+      ],
+      "hint": "e.g. plane, train"
     },
     {
       "id": "ばつ",
@@ -12031,7 +12116,7 @@
       "japanese": "発想",
       "english": [
         "idea",
-        "way of thinking (same as 考え方 (かんがえかた))"
+        "way of thinking"
       ]
     },
     {
@@ -12039,8 +12124,9 @@
       "kana": "はつでん",
       "japanese": "発電",
       "english": [
-        "generation (e.g., power)"
-      ]
+        "generation"
+      ],
+      "hint": "e.g. power"
     },
     {
       "id": "はつばい",
@@ -12076,7 +12162,7 @@
       "japanese": "話し掛ける",
       "english": [
         "to accost a person",
-        "to talk (to someone)"
+        "to talk to someone"
       ]
     },
     {
@@ -12119,8 +12205,9 @@
       "kana": "ばね",
       "japanese": "ばね",
       "english": [
-        "spring (e.g., coil, leaf)"
-      ]
+        "spring"
+      ],
+      "hint": "e.g. coil, leaf spring"
     },
     {
       "id": "はねる",
@@ -12154,10 +12241,11 @@
       "kana": "はめる",
       "japanese": "はめる",
       "english": [
-        "(col) to get in",
+        "to get in",
         "to insert",
         "to put on"
-      ]
+      ],
+      "hint": "colloquial"
     },
     {
       "id": "はやくち",
@@ -12233,8 +12321,9 @@
       "kana": "はんこ",
       "japanese": "判子",
       "english": [
-        "seal (used for signature)"
-      ]
+        "seal"
+      ],
+      "hint": "used for signature"
     },
     {
       "id": "ばんざい",
@@ -12422,9 +12511,10 @@
       "kana": "ひきわけ",
       "japanese": "引分け",
       "english": [
-        "a draw (in competition)",
+        "draw",
         "tie game"
-      ]
+      ],
+      "hint": "in competition"
     },
     {
       "id": "ひざし",
@@ -12512,7 +12602,7 @@
       "kana": "ひっこし",
       "japanese": "引っ越し",
       "english": [
-        "moving (dwelling, office, etc.)",
+        "moving",
         "changing residence"
       ]
     },
@@ -12592,8 +12682,9 @@
       "kana": "ひとみ",
       "japanese": "瞳",
       "english": [
-        "pupil (of eye)"
-      ]
+        "pupil"
+      ],
+      "hint": "of eye"
     },
     {
       "id": "ひとやすみ",
@@ -12704,7 +12795,7 @@
       "kana": "ひやす",
       "japanese": "冷やす",
       "english": [
-        "to cool (from room temperature)",
+        "to cool",
         "to chill",
         "to refrigerate"
       ]
@@ -12783,7 +12874,7 @@
       "kana": "ひるね",
       "japanese": "昼寝",
       "english": [
-        "nap (at home)",
+        "nap",
         "siesta"
       ]
     },
@@ -12975,7 +13066,7 @@
       "japanese": "膨らむ",
       "english": [
         "to expand",
-        "to swell (out)",
+        "to swell out",
         "to become inflated"
       ]
     },
@@ -13032,7 +13123,7 @@
       "english": [
         "to stuff",
         "to close up",
-        "to block (up)"
+        "to block up"
       ]
     },
     {
@@ -13067,15 +13158,17 @@
       "kana": "ぶしゅ",
       "japanese": "部首",
       "english": [
-        "radical (of a kanji character)"
-      ]
+        "radical"
+      ],
+      "hint": "of a kanji character"
     },
     {
       "id": "ふす",
       "kana": "ふす",
       "japanese": "蒸す",
       "english": [
-        "to steam (food, towel, etc.) to be hot and humid",
+        "to steam",
+        "to be hot and humid",
         "to be sultry"
       ]
     },
@@ -13143,8 +13236,9 @@
       "kana": "ふなびん",
       "japanese": "船便",
       "english": [
-        "surface mail (ship)"
-      ]
+        "surface mail"
+      ],
+      "hint": "by ship"
     },
     {
       "id": "ぶひん",
@@ -13191,8 +13285,9 @@
       "english": [
         "the foot",
         "the bottom",
-        "the base (of a mountain)"
-      ]
+        "the base"
+      ],
+      "hint": "of a mountain"
     },
     {
       "id": "フライパン",
@@ -13363,7 +13458,7 @@
       "japanese": "文献",
       "english": [
         "literature",
-        "books (reference)"
+        "reference books"
       ]
     },
     {
@@ -13379,8 +13474,9 @@
       "kana": "ぶんすう",
       "japanese": "分数",
       "english": [
-        "fraction (in math)"
-      ]
+        "fraction"
+      ],
+      "hint": "in math"
     },
     {
       "id": "ぶんたい",
@@ -13454,7 +13550,7 @@
       "kana": "へいこう",
       "japanese": "並行",
       "english": [
-        "(going) side by side",
+        "side by side",
         "concurrent",
         "at the same time"
       ]
@@ -13561,7 +13657,7 @@
       "english": [
         "editing",
         "compilation",
-        "editorial (e.g., committee)"
+        "editorial"
       ]
     },
     {
@@ -13578,7 +13674,7 @@
       "kana": "ペンチ",
       "japanese": "ペンチ",
       "english": [
-        "pliers (lit: pinchers)"
+        "pliers"
       ]
     },
     {
@@ -13759,7 +13855,8 @@
       "japanese": "朗らか(な)",
       "english": [
         "cheerful",
-        "merry bright (sky, day, etc.)",
+        "merry",
+        "bright",
         "fine",
         "clear"
       ]
@@ -13769,9 +13866,10 @@
       "kana": "ぼくじょう",
       "japanese": "牧場",
       "english": [
-        "farm (livestock)",
+        "farm",
         "pasture land"
-      ]
+      ],
+      "hint": "livestock"
     },
     {
       "id": "ぼくちく",
@@ -13830,8 +13928,9 @@
       "kana": "ぼっちゃん",
       "japanese": "坊っちゃん",
       "english": [
-        "son (of others)"
-      ]
+        "son"
+      ],
+      "hint": "of others"
     },
     {
       "id": "ほどく",
@@ -13873,8 +13972,9 @@
       "kana": "ぼんち",
       "japanese": "盆地",
       "english": [
-        "basin (e.g., between mountains)"
-      ]
+        "basin"
+      ],
+      "hint": "between mountains"
     },
     {
       "id": "ほんの～",
@@ -14111,7 +14211,8 @@
       "kana": "まどぐち",
       "japanese": "窓口",
       "english": [
-        "(ticket) window"
+        "ticket window",
+        "window"
       ]
     },
     {
@@ -14257,8 +14358,9 @@
       "kana": "みさき",
       "japanese": "岬",
       "english": [
-        "cape (on coast)"
-      ]
+        "cape"
+      ],
+      "hint": "on coast"
     },
     {
       "id": "みじめ",
@@ -14304,7 +14406,8 @@
       "kana": "みずぎ",
       "japanese": "水着",
       "english": [
-        "bathing suit (woman's)"
+        "bathing suit",
+        "swimsuit"
       ]
     },
     {
@@ -14409,7 +14512,7 @@
       "kana": "みまう",
       "japanese": "見舞う",
       "english": [
-        "to ask after (health)",
+        "to ask after health",
         "to visit"
       ]
     },
@@ -14444,8 +14547,9 @@
       "kana": "みる",
       "japanese": "診る",
       "english": [
-        "to examine (medically)"
-      ]
+        "to examine"
+      ],
+      "hint": "medically"
     },
     {
       "id": "みんかん",
@@ -14783,7 +14887,7 @@
       "japanese": "儲ける",
       "english": [
         "to earn",
-        "to have (bear, beget) a child"
+        "to have a child"
       ]
     },
     {
@@ -14926,7 +15030,8 @@
       "kana": "もみじ",
       "japanese": "紅葉",
       "english": [
-        "(Japanese) maple"
+        "Japanese maple",
+        "maple"
       ]
     },
     {
@@ -14935,7 +15040,7 @@
       "japanese": "揉む",
       "english": [
         "to rub",
-        "to crumple (up)",
+        "to crumple up",
         "to wrinkle"
       ]
     },
@@ -14962,7 +15067,7 @@
       "kana": "もる",
       "japanese": "盛る",
       "english": [
-        "to serve (food)",
+        "to serve food",
         "to fill up",
         "to prescribe"
       ]
@@ -15024,8 +15129,8 @@
       "kana": "やくひん",
       "japanese": "薬品",
       "english": [
-        "medicine(s)",
-        "chemical(s)"
+        "medicines",
+        "chemicals"
       ]
     },
     {
@@ -15087,7 +15192,7 @@
       "kana": "やっつける",
       "japanese": "やっつける",
       "english": [
-        "to attack (an enemy)",
+        "to attack an enemy",
         "to beat",
         "to finish off"
       ]
@@ -15173,15 +15278,16 @@
       "kana": "ゆうだち",
       "japanese": "夕立",
       "english": [
-        "(sudden) evening shower (rain)"
-      ]
+        "sudden evening shower"
+      ],
+      "hint": "rain"
     },
     {
       "id": "ゆうひ",
       "kana": "ゆうひ",
       "japanese": "夕日",
       "english": [
-        "(in) the evening sun",
+        "evening sun",
         "setting sun"
       ]
     },
@@ -15438,7 +15544,7 @@
       "english": [
         "to send",
         "to forward",
-        "to hand over (e.g., money)"
+        "to hand over"
       ]
     },
     {
@@ -15446,9 +15552,9 @@
       "kana": "よごす",
       "japanese": "よごす",
       "english": [
-        "(1) to disgrace",
+        "to disgrace",
         "to dishonour",
-        "(2) to pollute",
+        "to pollute",
         "to contaminate",
         "to soil",
         "to make dirty",
@@ -15461,13 +15567,13 @@
       "japanese": "寄せる",
       "english": [
         "to come near",
-        "to let someone approach to bring near",
+        "to bring near",
         "to bring together",
         "to collect",
-        "to gather to deliver (opinion, news, etc.)",
-        "to send (e.g. a letter)",
+        "to gather",
+        "to send",
         "to contribute",
-        "to donate to let someone drop by"
+        "to donate"
       ]
     },
     {
@@ -15513,7 +15619,7 @@
       "english": [
         "to call out to",
         "to accost",
-        "to address (crowd)",
+        "to address a crowd",
         "to appeal"
       ]
     },
@@ -15523,8 +15629,9 @@
       "japanese": "呼び出す",
       "english": [
         "to summon",
-        "to call (e.g., phone)"
-      ]
+        "to call"
+      ],
+      "hint": "e.g. phone"
     },
     {
       "id": "よみがえる",
@@ -15575,8 +15682,9 @@
       "kana": "らん",
       "japanese": "欄",
       "english": [
-        "column of text (e.g., as in a newspaper)"
-      ]
+        "column of text"
+      ],
+      "hint": "e.g. newspaper"
     },
     {
       "id": "ランチ",
@@ -15668,7 +15776,7 @@
       "kana": "りゅういき",
       "japanese": "流域",
       "english": [
-        "(river) basin"
+        "river basin"
       ]
     },
     {
@@ -15831,7 +15939,7 @@
       "japanese": "ローマ字",
       "english": [
         "romanization",
-        "Roman letters (alphabet)"
+        "Roman letters"
       ]
     },
     {
@@ -15847,7 +15955,8 @@
       "kana": "ろくおん",
       "japanese": "録音",
       "english": [
-        "(audio) recording"
+        "audio recording",
+        "recording"
       ]
     },
     {
@@ -15951,8 +16060,9 @@
       "kana": "わりざん",
       "japanese": "割算",
       "english": [
-        "division (math)"
-      ]
+        "division"
+      ],
+      "hint": "math"
     },
     {
       "id": "わりと",

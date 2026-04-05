@@ -2,6 +2,7 @@ export interface Word {
   kana: string
   japanese: string
   english: string[]
+  hint?: string
 }
 
 export interface Level {

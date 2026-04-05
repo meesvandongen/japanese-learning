@@ -130,8 +130,8 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
         heard={heard}
         showText={settings.feedbackText}
         showTranscript={settings.showTranscript}
-        correctText={primaryEnglish}
-        incorrectText={card.english.join(' / ')}
+        correctText={primaryEnglish + (card.hint ? ` (${card.hint})` : '')}
+        incorrectText={card.english.join(' / ') + (card.hint ? ` (${card.hint})` : '')}
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}

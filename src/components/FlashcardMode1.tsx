@@ -106,7 +106,10 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
       <div className="card-label">Say this in Japanese:</div>
 
       {showEnglishText ? (
-        <div className="card-prompt english-prompt">{primaryEnglish}</div>
+        <div className="card-prompt english-prompt">
+          {primaryEnglish}
+          {card.hint && <span className="card-hint-tag">{card.hint}</span>}
+        </div>
       ) : (
         <button
           className={`play-btn ${isSpeaking ? 'playing' : ''}`}

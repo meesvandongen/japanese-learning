@@ -61,8 +61,9 @@
     "japanese": "鳴る",
     "english": [
       "to sound",
-      "to ring (v.i.)"
-    ]
+      "to ring"
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "しっかり",
@@ -115,7 +116,8 @@
     "kana": "まんが",
     "japanese": "漫画",
     "english": [
-      "comic (book)",
+      "comic",
+      "comic book",
       "cartoon"
     ]
   },
@@ -183,8 +185,9 @@
     "kana": "ぼく",
     "japanese": "僕",
     "english": [
-      "I (used by men towards those of equal or lower status)"
-    ]
+      "I"
+    ],
+    "hint": "used by men, informal"
   },
   {
     "kana": "かならず",
@@ -214,14 +217,15 @@
     "kana": "とこや",
     "japanese": "床屋",
     "english": [
-      "barber's (shop)"
+      "barber shop",
+      "barber"
     ]
   },
   {
     "kana": "オートバイ",
     "japanese": "オートバイ",
     "english": [
-      "motorcycle (lit: auto-bi(ke))"
+      "motorcycle"
     ]
   },
   {
@@ -267,15 +271,18 @@
     "kana": "うんてんしゅ",
     "japanese": "運転手",
     "english": [
-      "driver (by occupation)"
-    ]
+      "driver"
+    ],
+    "hint": "by occupation"
   },
   {
     "kana": "よしゅう",
     "japanese": "予習",
     "english": [
-      "preparation of lessons (for class)"
-    ]
+      "preparation of lessons",
+      "lesson preparation"
+    ],
+    "hint": "for class"
   },
   {
     "kana": "しんぱいする",
@@ -305,23 +312,25 @@
     "kana": "おたく",
     "japanese": "お宅",
     "english": [
-      "(someone else's) house",
-      "home -- polite word for 家 (いえ) --"
-    ]
+      "house",
+      "home"
+    ],
+    "hint": "someone else's, polite"
   },
   {
     "kana": "やわらかい",
     "japanese": "柔らかい",
     "english": [
-      "soft (in reference to texture)",
+      "soft",
       "tender"
-    ]
+    ],
+    "hint": "texture"
   },
   {
     "kana": "ひろう",
     "japanese": "拾う",
     "english": [
-      "to pick up (something)",
+      "to pick up",
       "to find"
     ]
   },
@@ -329,9 +338,10 @@
     "kana": "～ございます",
     "japanese": "～ございます",
     "english": [
-      "to be (polite)",
+      "to be",
       "to exist"
-    ]
+    ],
+    "hint": "polite"
   },
   {
     "kana": "き",
@@ -408,9 +418,11 @@
     "kana": "うん",
     "japanese": "うん",
     "english": [
-      "yes (informal)",
-      "all right (ok)"
-    ]
+      "yes",
+      "all right",
+      "ok"
+    ],
+    "hint": "informal"
   },
   {
     "kana": "はつおん",
@@ -473,9 +485,10 @@
     "kana": "いっしょうけんめい",
     "japanese": "一生懸命",
     "english": [
-      "very hard (as in to work hard)",
+      "very hard",
       "with utmost effort"
-    ]
+    ],
+    "hint": "as in to work hard"
   },
   {
     "kana": "こんど",
@@ -603,7 +616,7 @@
     "japanese": "そう",
     "english": [
       "really",
-      "(is that) so",
+      "is that so",
       "yes",
       "right"
     ]
@@ -612,7 +625,7 @@
     "kana": "とおる",
     "japanese": "通る",
     "english": [
-      "to pass (by)",
+      "to pass by",
       "to go through"
     ]
   },
@@ -731,8 +744,9 @@
     "kana": "ちっとも",
     "japanese": "ちっとも",
     "english": [
-      "not at all (neg. verb)"
-    ]
+      "not at all"
+    ],
+    "hint": "with negative verb"
   },
   {
     "kana": "ふかい",
@@ -824,7 +838,7 @@
     "kana": "おこす",
     "japanese": "起こす",
     "english": [
-      "to wake (someone) up"
+      "to wake someone up"
     ]
   },
   {
@@ -907,8 +921,9 @@
     "kana": "パート (タイム)",
     "japanese": "パート (タイム)",
     "english": [
-      "part time (esp. female part time employees)"
-    ]
+      "part time"
+    ],
+    "hint": "especially female part time employees"
   },
   {
     "kana": "じだい",
@@ -924,9 +939,10 @@
     "kana": "もうしあげる",
     "japanese": "申し上げる",
     "english": [
-      "(humble)to say",
+      "to say",
       "to tell"
-    ]
+    ],
+    "hint": "humble"
   },
   {
     "kana": "～しき",
@@ -1001,8 +1017,9 @@
     "kana": "きせつ",
     "japanese": "季節",
     "english": [
-      "season (in reference to weather)"
-    ]
+      "season"
+    ],
+    "hint": "weather"
   },
   {
     "kana": "よる",
@@ -1016,15 +1033,16 @@
     "japanese": "決まる",
     "english": [
       "to be set",
-      "fixed (v.i.)"
-    ]
+      "to be fixed"
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "ひらく",
     "japanese": "開く",
     "english": [
       "to open",
-      "to hold (an event)"
+      "to hold an event"
     ]
   },
   {
@@ -1055,7 +1073,7 @@
     "kana": "たたみ",
     "japanese": "畳",
     "english": [
-      "tatami mat (Japanese straw mat)"
+      "tatami mat"
     ]
   },
   {
@@ -1162,7 +1180,7 @@
     "kana": "とめる",
     "japanese": "止める",
     "english": [
-      "to stop (something)"
+      "to stop something"
     ]
   },
   {
@@ -1193,7 +1211,7 @@
     "kana": "ビル",
     "japanese": "ビル",
     "english": [
-      "(abbr.) building"
+      "building"
     ]
   },
   {
@@ -1239,9 +1257,10 @@
     "kana": "うける",
     "japanese": "受ける",
     "english": [
-      "to take (an examination, interview, etc.)",
+      "to take",
       "to receive"
-    ]
+    ],
+    "hint": "an examination, interview"
   },
   {
     "kana": "きぶん",
@@ -1303,8 +1322,9 @@
     "japanese": "行う",
     "english": [
       "to carry out",
-      "to conduct (typically used in written language)"
-    ]
+      "to conduct"
+    ],
+    "hint": "written language"
   },
   {
     "kana": "ぶどう",
@@ -1391,8 +1411,9 @@
     "kana": "きめる",
     "japanese": "決める",
     "english": [
-      "to decide (v.t.)"
-    ]
+      "to decide"
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "しらべる",
@@ -1528,9 +1549,9 @@
     "kana": "すてる",
     "japanese": "捨てる",
     "english": [
-      "throw away (trash)",
-      "dump",
-      "discard"
+      "to throw away",
+      "to dump",
+      "to discard"
     ]
   },
   {
@@ -1544,8 +1565,9 @@
     "kana": "こと",
     "japanese": "事",
     "english": [
-      "thing(s)",
-      "matter(s)",
+      "thing",
+      "things",
+      "matter",
       "fact"
     ]
   },
@@ -1684,8 +1706,9 @@
     "japanese": "治る",
     "english": [
       "to get better",
-      "to recover from illness (v.i.)"
-    ]
+      "to recover from illness"
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "ねつ",
@@ -1768,9 +1791,10 @@
     "kana": "のこる",
     "japanese": "残る",
     "english": [
-      "to remain (v.i.)",
+      "to remain",
       "to be left"
-    ]
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "くれる",
@@ -1856,7 +1880,8 @@
     "kana": "うけつけ",
     "japanese": "受付",
     "english": [
-      "reception(ist) desk"
+      "reception desk",
+      "receptionist"
     ]
   },
   {
@@ -1894,9 +1919,10 @@
     "kana": "けがする",
     "japanese": "けがする",
     "english": [
-      "injury (to animate object)",
+      "injury",
       "hurt"
-    ]
+    ],
+    "hint": "to animate object"
   },
   {
     "kana": "いか",
@@ -1948,14 +1974,16 @@
     "kana": "とどける",
     "japanese": "届ける",
     "english": [
-      "to deliver (v.t.)"
-    ]
+      "to deliver"
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "あいさつする",
     "japanese": "挨拶",
     "english": [
-      "greet(ing)"
+      "greeting",
+      "to greet"
     ]
   },
   {
@@ -2002,7 +2030,8 @@
     "japanese": "以内",
     "english": [
       "within",
-      "less (no more) than"
+      "less than",
+      "no more than"
     ]
   },
   {
@@ -2074,8 +2103,9 @@
     "kana": "ごしゅじん",
     "japanese": "ご主人",
     "english": [
-      "(your, her) husband"
-    ]
+      "husband"
+    ],
+    "hint": "your or her, honorific"
   },
   {
     "kana": "めずらしい",
@@ -2091,7 +2121,7 @@
     "english": [
       "errand",
       "task",
-      "business (to take care of)"
+      "business to take care of"
     ]
   },
   {
@@ -2106,8 +2136,9 @@
     "kana": "おじょうさん",
     "japanese": "お嬢さん",
     "english": [
-      "(someone's) daughter (polite)"
-    ]
+      "daughter"
+    ],
+    "hint": "someone's, polite"
   },
   {
     "kana": "ようい",
@@ -2195,9 +2226,10 @@
     "kana": "そだてる",
     "japanese": "育てる",
     "english": [
-      "to raise (v.t.)",
+      "to raise",
       "to bring up"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "みそ",
@@ -2243,7 +2275,7 @@
     "japanese": "連れる",
     "english": [
       "to lead",
-      "to take (a person)"
+      "to take a person"
     ]
   },
   {
@@ -2340,8 +2372,9 @@
     "kana": "もうす",
     "japanese": "申す",
     "english": [
-      "-- extra-modest (humble) expression for 言う (いう) --"
-    ]
+      "to say"
+    ],
+    "hint": "extra-humble, equivalent of いう"
   },
   {
     "kana": "しけん",
@@ -2370,17 +2403,19 @@
     "kana": "とまる",
     "japanese": "泊まる",
     "english": [
-      "to stay (over night) (v.i.)"
-    ]
+      "to stay overnight"
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "よろしい",
     "japanese": "よろしい",
     "english": [
-      "(hon.) good",
+      "good",
       "OK",
       "all right"
-    ]
+    ],
+    "hint": "honorific"
   },
   {
     "kana": "こんや",
@@ -2477,7 +2512,8 @@
     "kana": "てぶくろ",
     "japanese": "手袋",
     "english": [
-      "glove(s)"
+      "gloves",
+      "glove"
     ]
   },
   {
@@ -2493,7 +2529,7 @@
     "japanese": "ごちそう",
     "english": [
       "feast",
-      "treating (someone)"
+      "treating someone"
     ]
   },
   {
@@ -2507,8 +2543,9 @@
     "kana": "きょうみ",
     "japanese": "興味",
     "english": [
-      "interest (in something)"
-    ]
+      "interest"
+    ],
+    "hint": "in something"
   },
   {
     "kana": "ひっこす",
@@ -2614,30 +2651,35 @@
     "kana": "かたづける",
     "japanese": "片付ける",
     "english": [
-      "to (clean) tidy up (v.t.)",
+      "to tidy up",
+      "to clean up",
       "to put away"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "うつす",
     "japanese": "写す",
     "english": [
-      "to copy (v.t.)",
+      "to copy",
       "to photograph"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "パソコン",
     "japanese": "パソコン",
     "english": [
-      "(personal) computer"
+      "personal computer",
+      "computer"
     ]
   },
   {
     "kana": "ぶちょう",
     "japanese": "部長",
     "english": [
-      "department (division) manager"
+      "department manager",
+      "division manager"
     ]
   },
   {
@@ -2651,8 +2693,9 @@
     "kana": "たす",
     "japanese": "足す",
     "english": [
-      "to add (numbers)"
-    ]
+      "to add"
+    ],
+    "hint": "numbers"
   },
   {
     "kana": "きょうかい",
@@ -2665,8 +2708,9 @@
     "kana": "かれら",
     "japanese": "彼ら",
     "english": [
-      "they (usually male)"
-    ]
+      "they"
+    ],
+    "hint": "usually male"
   },
   {
     "kana": "いっぱい",
@@ -2733,8 +2777,9 @@
     "kana": "～ちゃん",
     "japanese": "～ちゃん",
     "english": [
-      "suffix for familiar (female) person"
-    ]
+      "suffix for familiar person"
+    ],
+    "hint": "often female"
   },
   {
     "kana": "うつ",
@@ -3026,7 +3071,8 @@
     "japanese": "空く",
     "english": [
       "to open",
-      "to become empty (vacant)"
+      "to become empty",
+      "to become vacant"
     ]
   },
   {
@@ -3100,17 +3146,19 @@
     "kana": "おいでになる",
     "japanese": "おいでになる",
     "english": [
-      "(hon.) to be"
-    ]
+      "to be"
+    ],
+    "hint": "honorific"
   },
   {
     "kana": "かわる",
     "japanese": "変わる",
     "english": [
-      "to change (v.i.)",
+      "to change",
       "to be transformed",
       "to vary"
-    ]
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "いがい",
@@ -3176,8 +3224,9 @@
     "japanese": "見える",
     "english": [
       "to be visible",
-      "-- polite verb meaning 来る (くる) --"
-    ]
+      "to come"
+    ],
+    "hint": "polite form of くる"
   },
   {
     "kana": "じゅうぶん",
@@ -3208,7 +3257,7 @@
     "kana": "まず",
     "japanese": "まず",
     "english": [
-      "first (of all)",
+      "first of all",
       "to start with"
     ]
   },
@@ -3227,7 +3276,7 @@
       "approximately",
       "in most cases",
       "in general",
-      "to begin with (same as もともと)"
+      "to begin with"
     ]
   },
   {
@@ -3237,7 +3286,7 @@
       "to break",
       "to be folded",
       "to give in",
-      "to turn (a corner)"
+      "to turn a corner"
     ]
   },
   {
@@ -3280,7 +3329,7 @@
     "kana": "つたえる",
     "japanese": "伝える",
     "english": [
-      "to convey (a message)",
+      "to convey a message",
       "to tell",
       "to report"
     ]
@@ -3348,8 +3397,9 @@
     "kana": "とっきゅう",
     "japanese": "特急",
     "english": [
-      "limited express (train faster than an express)"
-    ]
+      "limited express"
+    ],
+    "hint": "faster than express train"
   },
   {
     "kana": "プレゼント",
@@ -3370,8 +3420,9 @@
     "kana": "つま",
     "japanese": "妻",
     "english": [
-      "wife (humble)"
-    ]
+      "wife"
+    ],
+    "hint": "humble"
   },
   {
     "kana": "かえり",
@@ -3463,7 +3514,7 @@
     "kana": "それで",
     "japanese": "それで",
     "english": [
-      "and (conj.)",
+      "and",
       "thereupon",
       "because of that"
     ]
@@ -3519,7 +3570,7 @@
     "kana": "たずねる",
     "japanese": "尋ねる",
     "english": [
-      "to inquire (same as 質問する)"
+      "to inquire"
     ]
   },
   {
@@ -3554,16 +3605,18 @@
     "kana": "まける",
     "japanese": "負ける",
     "english": [
-      "to lose (a game) (v.i.)",
+      "to lose",
       "to be defeated"
-    ]
+    ],
+    "hint": "a game, intransitive"
   },
   {
     "kana": "ゆびわ",
     "japanese": "指輪",
     "english": [
-      "(finger) ring"
-    ]
+      "ring"
+    ],
+    "hint": "finger ring"
   },
   {
     "kana": "いなか",
@@ -3578,8 +3631,9 @@
     "japanese": "見つける",
     "english": [
       "to discover",
-      "to find (v.t.)"
-    ]
+      "to find"
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "こうこうせい",
@@ -3632,8 +3686,9 @@
     "kana": "うで",
     "japanese": "腕",
     "english": [
-      "arm (in reference to body)"
-    ]
+      "arm"
+    ],
+    "hint": "body part"
   },
   {
     "kana": "わけ",
@@ -3747,23 +3802,26 @@
     "kana": "くださる",
     "japanese": "くださる",
     "english": [
-      "(hon.) to give",
+      "to give",
       "to confer"
-    ]
+    ],
+    "hint": "honorific"
   },
   {
     "kana": "むすこ",
     "japanese": "息子",
     "english": [
-      "(humble) son"
-    ]
+      "son"
+    ],
+    "hint": "humble"
   },
   {
     "kana": "おこさん",
     "japanese": "お子さん",
     "english": [
-      "(someone else's) child (polite)"
-    ]
+      "child"
+    ],
+    "hint": "someone else's, polite"
   },
   {
     "kana": "かいじょう",
@@ -3871,9 +3929,10 @@
     "kana": "すく",
     "japanese": "空く",
     "english": [
-      "to be empty (in reference to people)",
+      "to be empty",
       "to be less crowded"
-    ]
+    ],
+    "hint": "in reference to people"
   },
   {
     "kana": "あ",
@@ -3953,30 +4012,35 @@
     "kana": "きしゃ",
     "japanese": "汽車",
     "english": [
-      "train (steam)"
-    ]
+      "train"
+    ],
+    "hint": "steam train"
   },
   {
     "kana": "おくれる",
     "japanese": "遅れる",
     "english": [
-      "to (be) become late"
+      "to become late",
+      "to be late"
     ]
   },
   {
     "kana": "みつかる",
     "japanese": "見つかる",
     "english": [
-      "to be found (v.i.)",
+      "to be found",
       "to be discovered"
-    ]
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "めしあがる",
     "japanese": "召し上がる",
     "english": [
-      "-- honorific form of 食べる (たべる) and 飲む (のむ) --"
-    ]
+      "to eat",
+      "to drink"
+    ],
+    "hint": "honorific form of たべる and のむ"
   },
   {
     "kana": "ふとる",
@@ -4027,17 +4091,19 @@
     "japanese": "集める",
     "english": [
       "to collect",
-      "to gather (v.t.)",
+      "to gather",
       "to assemble"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "なおす",
     "japanese": "直す",
     "english": [
-      "to correct (v.t.)",
+      "to correct",
       "to fix"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "つづく",
@@ -4081,9 +4147,10 @@
     "kana": "しょうらい",
     "japanese": "将来",
     "english": [
-      "(in the) future",
+      "future",
       "prospects"
-    ]
+    ],
+    "hint": "in the future"
   },
   {
     "kana": "おく",
@@ -4117,8 +4184,9 @@
     "kana": "しゅうかん",
     "japanese": "習慣",
     "english": [
-      "custom (in reference to culture)"
-    ]
+      "custom"
+    ],
+    "hint": "culture"
   },
   {
     "kana": "やける",
@@ -4132,8 +4200,9 @@
     "kana": "きみ",
     "japanese": "君",
     "english": [
-      "you (informal for men)"
-    ]
+      "you"
+    ],
+    "hint": "informal, used by men"
   },
   {
     "kana": "ひえる",
@@ -4204,9 +4273,10 @@
     "kana": "はいけんする",
     "japanese": "拝見",
     "english": [
-      "(humble) (polite) seeing",
-      "look at"
-    ]
+      "seeing",
+      "to look at"
+    ],
+    "hint": "humble"
   },
   {
     "kana": "われる",
@@ -4219,8 +4289,9 @@
     "kana": "せなか",
     "japanese": "背中",
     "english": [
-      "back (of body)"
-    ]
+      "back"
+    ],
+    "hint": "of body"
   },
   {
     "kana": "しんぶんしゃ",
@@ -4249,9 +4320,10 @@
     "kana": "～くん",
     "japanese": "～君",
     "english": [
-      "Mr. (junior) ~",
-      "master ~"
-    ]
+      "Mr.",
+      "master"
+    ],
+    "hint": "suffix for junior male"
   },
   {
     "kana": "おっしゃる",
@@ -4301,7 +4373,7 @@
     "kana": "かんがえる",
     "japanese": "考える",
     "english": [
-      "to think (about)",
+      "to think about",
       "to consider"
     ]
   },
@@ -4324,7 +4396,8 @@
     "kana": "しかた",
     "japanese": "仕方",
     "english": [
-      "way (of doing something)"
+      "way",
+      "way of doing something"
     ]
   },
   {
@@ -4362,15 +4435,16 @@
     "kana": "こうぎょう",
     "japanese": "工業",
     "english": [
-      "(manufacturing) industry"
+      "manufacturing industry",
+      "industry"
     ]
   },
   {
     "kana": "うつる",
     "japanese": "移る",
     "english": [
-      "to move (from a house)",
-      "to transfer (from a department)",
+      "to move",
+      "to transfer",
       "to shift"
     ]
   },
@@ -4459,10 +4533,11 @@
     "kana": "やさしい",
     "japanese": "優しい",
     "english": [
-      "kind (person)",
-      "gentle (person)",
-      "easy (problem)"
-    ]
+      "kind",
+      "gentle",
+      "easy"
+    ],
+    "hint": "person or problem"
   },
   {
     "kana": "コンピュータ; コンピューター",
@@ -4580,9 +4655,10 @@
     "kana": "ふくしゅう",
     "japanese": "復習",
     "english": [
-      "review (of lessons)",
+      "review",
       "revision"
-    ]
+    ],
+    "hint": "of lessons"
   },
   {
     "kana": "まにあう",
@@ -4620,9 +4696,10 @@
     "kana": "もどる",
     "japanese": "戻る",
     "english": [
-      "to return (v.i.)",
+      "to return",
       "to come back"
-    ]
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "けんきゅう",
@@ -4666,9 +4743,10 @@
     "kana": "さげる",
     "japanese": "下げる",
     "english": [
-      "to lower (v.t.)",
+      "to lower",
       "to hang"
-    ]
+    ],
+    "hint": "transitive"
   },
   {
     "kana": "はなみ",
@@ -4696,9 +4774,10 @@
     "kana": "のりかえる",
     "japanese": "乗り換える",
     "english": [
-      "to transfer (trains)",
-      "to change (bus, train, etc.)"
-    ]
+      "to transfer",
+      "to change"
+    ],
+    "hint": "trains, bus"
   },
   {
     "kana": "わかれる",
@@ -4727,8 +4806,9 @@
     "kana": "かんごふ",
     "japanese": "看護婦",
     "english": [
-      "(female) nurse"
-    ]
+      "nurse"
+    ],
+    "hint": "female"
   },
   {
     "kana": "けんぶつ",
@@ -4799,8 +4879,9 @@
     "kana": "むすめ",
     "japanese": "娘",
     "english": [
-      "daughter (humble)"
-    ]
+      "daughter"
+    ],
+    "hint": "humble"
   },
   {
     "kana": "ゆ",
@@ -4836,9 +4917,10 @@
     "kana": "あつまる",
     "japanese": "集まる",
     "english": [
-      "to gather (v.i.)",
+      "to gather",
       "to collect"
-    ]
+    ],
+    "hint": "intransitive"
   },
   {
     "kana": "～にくい",
@@ -4867,7 +4949,8 @@
     "kana": "かんけい",
     "japanese": "関係",
     "english": [
-      "relation(ship)",
+      "relationship",
+      "relation",
       "connection"
     ]
   },
@@ -5008,8 +5091,9 @@
     "kana": "かない",
     "japanese": "家内",
     "english": [
-      "(one's own) wife"
-    ]
+      "wife"
+    ],
+    "hint": "one's own, humble"
   },
   {
     "kana": "ゆび",

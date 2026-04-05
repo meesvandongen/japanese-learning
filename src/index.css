@@ -122,6 +122,14 @@ body {
   color: var(--muted);
 }
 
+.card-hint-tag {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
 .synonyms {
   font-size: 0.8rem;
   color: var(--muted);
