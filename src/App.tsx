@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Page, Navbar, Tabbar, TabbarLink, Segmented, SegmentedButton, Block, Preloader, Button, Dialog, DialogButton, Badge } from 'konsta/react'
+import { Page, Navbar, Tabbar, TabbarLink, ToolbarPane, Segmented, SegmentedButton, Block, Preloader, Button, Dialog, DialogButton, Badge } from 'konsta/react'
 import { useKuromoji } from './hooks/useKuromoji'
 import { useVocabulary } from './hooks/useVocabulary'
 import { FlashcardMode1 } from './components/FlashcardMode1'
@@ -178,7 +178,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   const isStudyReady = page === 'study' && !isVocabLoading && !isVocabError && !kuromojiLoading && !kuromojiError
 
   return (
-    <Page>
+    <Page className="flex flex-col">
       <Navbar
         title={navbarTitle}
         right={
@@ -189,7 +189,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
       />
 
       {page === 'study' && (
-        <Block className="!mt-2 !mb-0">
+        <Block className="!mt-2 !mb-0 shrink-0">
           <Segmented strong rounded>
             <SegmentedButton active={mode === 1} onClick={() => handleModeChange(1)}>
               Say in Japanese
@@ -201,9 +201,9 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
         </Block>
       )}
 
-      {/* Non-study pages: scrollable content */}
+      {/* Non-study pages: scrollable content with bottom padding for tabbar */}
       {page !== 'study' && (
-        <div className="overflow-auto px-4 pb-20">
+        <div className="flex-1 overflow-auto px-4 pb-safe-20">
           {page === 'settings' && (
             <SettingsPage
               manifest={manifest!}
@@ -219,7 +219,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
         </div>
       )}
 
-      {/* Study page: full-height flex layout for centering */}
+      {/* Study page: flex column that fills between header and bottom chrome */}
       {page === 'study' && (
         <>
           {(isVocabLoading || kuromojiLoading) && (
@@ -237,7 +237,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
           )}
 
           {isStudyReady && (
-            <div className="flex flex-col study-layout">
+            <div className="flex flex-col flex-1 min-h-0">
               {/* Top: stats + previous result */}
               <div className="px-4 shrink-0">
                 <SessionStats
@@ -258,7 +258,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                 )}
               </div>
 
-              {/* Center: flashcard content fills remaining space, action bar is fixed */}
+              {/* Flashcard content fills remaining space */}
               {mode === 1 && (
                 <FlashcardMode1
                   key={`m1-${cardKey}`}
@@ -282,23 +282,36 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
         </>
       )}
 
-      <Tabbar labels icons={false} className="fixed bottom-0 left-0 right-0">
-        <TabbarLink
-          active={page === 'study'}
-          label="Study"
-          onClick={() => setPage('study')}
-        />
-        <TabbarLink
-          active={page === 'profile'}
-          label="Profile"
-          onClick={() => setPage('profile')}
-        />
-        <TabbarLink
-          active={page === 'settings'}
-          label="Settings"
-          onClick={() => setPage('settings')}
-        />
-      </Tabbar>
+      {/*
+        Fixed bottom chrome: action bar (study only) + tabbar.
+        Stacked in a single fixed container so they don't independently
+        overlap each other or the scrollable content.
+      */}
+      <div className="fixed left-0 right-0 bottom-0 z-20 flex flex-col">
+        {/* Study action bar — rendered by flashcard via portal target */}
+        <div id="study-action-bar" />
+
+        {/* Tabbar with ToolbarPane wrapping links */}
+        <Tabbar labels icons={false}>
+          <ToolbarPane>
+            <TabbarLink
+              active={page === 'study'}
+              label="Study"
+              onClick={() => setPage('study')}
+            />
+            <TabbarLink
+              active={page === 'profile'}
+              label="Profile"
+              onClick={() => setPage('profile')}
+            />
+            <TabbarLink
+              active={page === 'settings'}
+              label="Settings"
+              onClick={() => setPage('settings')}
+            />
+          </ToolbarPane>
+        </Tabbar>
+      </div>
 
       <Dialog
         opened={resetDialogOpen}

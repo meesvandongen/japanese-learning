@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { Button } from 'konsta/react'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
@@ -151,9 +152,11 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
   const showEnglishText = settings.englishExerciseMode !== 'audio'
 
+  const portalTarget = document.getElementById('study-action-bar')
+
   return (
     <>
-      {/* ── Card content: scrollable ── */}
+      {/* ── Card content: centered in remaining flex space ── */}
       <div className="flex flex-col items-center flex-1 justify-center px-4">
         <div className={`w-full flex flex-col items-center gap-4 rounded-2xl p-6 ${
           result === 'correct' ? 'flash-correct' : result === 'incorrect' ? 'flash-incorrect' : ''
@@ -198,62 +201,97 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
         </div>
       </div>
 
-      {/* ── Fixed bottom action bar ── */}
-      <div className="fixed bottom-[calc(var(--k-tabbar-height,3rem)+env(safe-area-inset-bottom))] left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-gray-200">
-        <div className="max-w-lg mx-auto px-4 py-3">
-          {/* Correction phase */}
-          {correctionPhase && correctionResult !== 'correct' && (
-            <div className="flex flex-col items-center gap-3">
-              <p className="text-sm font-semibold text-amber-700">Now say the correct answer:</p>
-              <RecordButton
-                isListening={correction.isListening}
-                onStart={correction.start}
-                onStop={correction.stop}
-                disabled={isSpeaking}
-                listenMode="hold"
-              />
-              {correctionResult === 'incorrect' && (
-                <p className="text-sm text-red-500 font-medium">Try again</p>
-              )}
-              {settings.showTranscript && correctionHeard && (
-                <p className="text-xs text-gray-400 italic">Heard: &quot;{correctionHeard}&quot;</p>
-              )}
-              <Button small clear className="!text-gray-400" onClick={() => onAnswer(1, heard)}>
-                Skip
-              </Button>
-            </div>
-          )}
-
-          {/* Primary action: waiting for answer */}
-          {result === null && (
-            <div className="flex flex-col items-center gap-2">
-              <RecordButton
-                isListening={isListening}
-                onStart={start}
-                onStop={stop}
-                disabled={isSpeaking}
-                listenMode={settings.autoListen ? 'auto' : 'hold'}
-              />
-              <button
-                className="text-sm text-gray-400 hover:text-red-400 transition-colors py-1"
-                onClick={() => applyResult(false, '')}
-                aria-label="Don't know"
-              >
-                I don&apos;t know
-              </button>
-            </div>
-          )}
-
-          {/* Post-result: show nothing in action bar (correction or auto-advance handles it) */}
-          {result !== null && !(correctionPhase && correctionResult !== 'correct') && (
-            <div className="flex justify-center py-1">
-              <p className="text-sm text-gray-400">
-                {result === 'correct' ? 'Correct! Moving on...' : 'Moving on...'}
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
+      {/* ── Action bar: portaled into #study-action-bar above the Tabbar ── */}
+      {portalTarget && createPortal(
+        <ActionBar
+          result={result}
+          correctionPhase={correctionPhase}
+          correctionResult={correctionResult}
+          correctionHeard={correctionHeard}
+          isListening={isListening}
+          isSpeaking={isSpeaking}
+          correction={correction}
+          settings={settings}
+          start={start}
+          stop={stop}
+          applyResult={applyResult}
+          onAnswer={onAnswer}
+          heard={heard}
+        />,
+        portalTarget
+      )}
     </>
+  )
+}
+
+function ActionBar({ result, correctionPhase, correctionResult, correctionHeard, isListening, isSpeaking, correction, settings, start, stop, applyResult, onAnswer, heard }: {
+  result: 'correct' | 'incorrect' | null
+  correctionPhase: boolean
+  correctionResult: 'correct' | 'incorrect' | null
+  correctionHeard: string
+  isListening: boolean
+  isSpeaking: boolean
+  correction: { isListening: boolean; start: () => void; stop: () => void }
+  settings: { autoListen: boolean; showTranscript: boolean }
+  start: () => void
+  stop: () => void
+  applyResult: (correct: boolean, transcript: string) => void
+  onAnswer: (quality: number, heard: string) => void
+  heard: string
+}) {
+  return (
+    <div className="action-bar-inner">
+      {/* Correction phase */}
+      {correctionPhase && correctionResult !== 'correct' && (
+        <div className="flex flex-col items-center gap-3 py-3 px-4">
+          <p className="text-sm font-semibold text-amber-700">Now say the correct answer:</p>
+          <RecordButton
+            isListening={correction.isListening}
+            onStart={correction.start}
+            onStop={correction.stop}
+            disabled={isSpeaking}
+            listenMode="hold"
+          />
+          {correctionResult === 'incorrect' && (
+            <p className="text-sm text-red-500 font-medium">Try again</p>
+          )}
+          {settings.showTranscript && correctionHeard && (
+            <p className="text-xs text-gray-400 italic">Heard: &quot;{correctionHeard}&quot;</p>
+          )}
+          <Button small clear className="!text-gray-400" onClick={() => onAnswer(1, heard)}>
+            Skip
+          </Button>
+        </div>
+      )}
+
+      {/* Primary action: waiting for answer */}
+      {result === null && (
+        <div className="flex flex-col items-center gap-2 py-3 px-4">
+          <RecordButton
+            isListening={isListening}
+            onStart={start}
+            onStop={stop}
+            disabled={isSpeaking}
+            listenMode={settings.autoListen ? 'auto' : 'hold'}
+          />
+          <button
+            className="text-sm text-gray-400 hover:text-red-400 transition-colors py-1"
+            onClick={() => applyResult(false, '')}
+            aria-label="Don't know"
+          >
+            I don&apos;t know
+          </button>
+        </div>
+      )}
+
+      {/* Post-result status */}
+      {result !== null && !(correctionPhase && correctionResult !== 'correct') && (
+        <div className="flex justify-center py-3 px-4">
+          <p className="text-sm text-gray-400">
+            {result === 'correct' ? 'Correct! Moving on...' : 'Moving on...'}
+          </p>
+        </div>
+      )}
+    </div>
   )
 }

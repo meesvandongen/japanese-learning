@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 @import 'konsta/react/theme.css';
 
-/* ── Study layout: fill viewport between header and tabbar ── */
-.study-layout {
-  /* Navbar ~44px + segmented ~56px on top, tabbar ~48px + action bar ~120px on bottom */
-  min-height: calc(100vh - 100px);
-  min-height: calc(100dvh - 100px);
-  padding-bottom: 180px; /* space for fixed action bar + tabbar */
+/* ── Action bar: frosted glass divider above the tabbar ── */
+.action-bar-inner {
+  background: color-mix(in srgb, var(--ios-light-surface, #fff) 90%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid rgba(0, 0, 0, 0.12);
 }
 
 /* ── Flash animations for auto-advance feedback ── */
@@ -35,8 +35,3 @@
 .flash-incorrect { animation: flash-incorrect 2.5s ease-out forwards; }
 .animate-pulse-recording { animation: pulse 1s ease-in-out infinite; }
 .animate-prev-slide-in { animation: prev-slide-in 0.25s ease-out; }
-
-/* Konsta tabbar height CSS variable (used by action bar positioning) */
-:root {
-  --k-tabbar-height: 48px;
-}
