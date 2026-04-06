@@ -5,7 +5,7 @@ import { FlashcardFeedback } from './FlashcardFeedback'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { useAudioFeedback } from '../hooks/useAudioFeedback'
-import { compareJapanese } from '../utils/normalize'
+import { compareJapanese, toHiragana } from '../utils/normalize'
 import { useSettingsStore } from '../store/settingsStore'
 import type { Word } from '../types'
 import type { KuromojiTokenizer } from '../types/kuromoji'
@@ -88,10 +88,13 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
 
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'ja-JP',
-    onResult: (transcripts) => applyResult(
-      compareJapanese(acceptedAnswers, transcripts, tokenizer ?? null),
-      transcripts[0] ?? ''
-    ),
+    onResult: (transcripts) => {
+      const normalized = transcripts.map(t => toHiragana(t, tokenizer ?? null))
+      applyResult(
+        compareJapanese(acceptedAnswers, [...transcripts, ...normalized], tokenizer ?? null),
+        transcripts[0] ?? ''
+      )
+    },
     onError: setErrorMsg,
   })
 
@@ -111,7 +114,8 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const correction = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => {
-      const correct = compareJapanese(acceptedAnswers, transcripts, tokenizer ?? null)
+      const normalized = transcripts.map(t => toHiragana(t, tokenizer ?? null))
+      const correct = compareJapanese(acceptedAnswers, [...transcripts, ...normalized], tokenizer ?? null)
       setCorrectionHeard(transcripts[0] ?? '')
       setCorrectionResult(correct ? 'correct' : 'incorrect')
       if (correct) {
