@@ -1,0 +1,17 @@
+{
+  "name": "Japanese Flashcards",
+  "short_name": "Flashcards",
+  "description": "Japanese language learning flashcards",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e53935",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
