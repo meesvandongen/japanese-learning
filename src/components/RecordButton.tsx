@@ -1,5 +1,3 @@
-import { Button } from 'konsta/react'
-
 interface Props {
   isListening: boolean
   onStart: () => void
@@ -22,7 +20,7 @@ export function RecordButton({ isListening, onStart, onStop, disabled, listenMod
   }
 
   const label = isListening
-    ? (listenMode === 'auto' ? 'Tap to stop' : 'Recording — release to stop')
+    ? (listenMode === 'auto' ? 'Tap to stop' : 'Recording \u2014 release to stop')
     : (listenMode === 'auto' ? 'Tap to speak' : 'Hold to speak')
 
   const micLabel = isListening
@@ -30,21 +28,32 @@ export function RecordButton({ isListening, onStart, onStop, disabled, listenMod
     : (listenMode === 'auto' ? 'Tap to speak' : 'Hold to speak')
 
   return (
-    <Button
-      rounded
-      large
-      className={isListening ? '!bg-red-500 !border-red-500 animate-pulse-recording' : ''}
-      onMouseDown={listenMode === 'hold' ? onStart : undefined}
-      onMouseUp={listenMode === 'hold' ? onStop : undefined}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={listenMode === 'hold' ? onStop : undefined}
-      onClick={listenMode === 'auto' ? handleClick : undefined}
-      onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
-      disabled={disabled}
-      aria-label={label}
-    >
-      <span className="mr-2 text-lg">{isListening ? '\uD83D\uDD34' : '\uD83C\uDF99\uFE0F'}</span>
-      {micLabel}
-    </Button>
+    <div className="flex flex-col items-center gap-1.5">
+      <button
+        className={`
+          w-[72px] h-[72px] rounded-full flex items-center justify-center
+          text-3xl transition-all select-none touch-none
+          ${isListening
+            ? 'bg-red-500 text-white shadow-lg shadow-red-200 animate-pulse-recording scale-110'
+            : disabled
+              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              : 'bg-primary text-white shadow-lg shadow-primary/30 active:scale-95'
+          }
+        `}
+        onMouseDown={listenMode === 'hold' ? onStart : undefined}
+        onMouseUp={listenMode === 'hold' ? onStop : undefined}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={listenMode === 'hold' ? onStop : undefined}
+        onClick={listenMode === 'auto' ? handleClick : undefined}
+        onContextMenu={(e) => e.preventDefault()}
+        disabled={disabled}
+        aria-label={label}
+      >
+        {isListening ? '\uD83D\uDD34' : '\uD83C\uDF99\uFE0F'}
+      </button>
+      <span className={`text-xs font-medium ${isListening ? 'text-red-500' : 'text-gray-500'}`}>
+        {micLabel}
+      </span>
+    </div>
   )
 }

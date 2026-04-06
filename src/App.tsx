@@ -175,6 +175,8 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
     </span>
   )
 
+  const isStudyReady = page === 'study' && !isVocabLoading && !isVocabError && !kuromojiLoading && !kuromojiError
+
   return (
     <Page>
       <Navbar
@@ -199,38 +201,45 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
         </Block>
       )}
 
-      <div className="flex-1 overflow-auto px-4 pb-20">
-        {page === 'settings' && (
-          <SettingsPage
-            manifest={manifest!}
-            activeLang={activeLang}
-            activeLevel={activeLevel}
-            onClose={handleSettingsClose}
-          />
-        )}
+      {/* Non-study pages: scrollable content */}
+      {page !== 'study' && (
+        <div className="overflow-auto px-4 pb-20">
+          {page === 'settings' && (
+            <SettingsPage
+              manifest={manifest!}
+              activeLang={activeLang}
+              activeLevel={activeLevel}
+              onClose={handleSettingsClose}
+            />
+          )}
 
-        {page === 'profile' && (
-          <ProfilePage words={words} activeLang={activeLang} activeLevel={activeLevel} />
-        )}
+          {page === 'profile' && (
+            <ProfilePage words={words} activeLang={activeLang} activeLevel={activeLevel} />
+          )}
+        </div>
+      )}
 
-        {page === 'study' && (
-          <>
-            {(isVocabLoading || kuromojiLoading) && (
-              <div className="flex flex-col items-center gap-4 py-12 text-gray-500">
-                <Preloader />
-                <p>Loading {activeLang?.name ?? ''} dictionary...</p>
-                <p className="text-xs text-gray-400">First load ~20MB -- subsequent loads are instant</p>
-              </div>
-            )}
+      {/* Study page: full-height flex layout for centering */}
+      {page === 'study' && (
+        <>
+          {(isVocabLoading || kuromojiLoading) && (
+            <div className="flex flex-col items-center gap-4 py-12 text-gray-500">
+              <Preloader />
+              <p>Loading {activeLang?.name ?? ''} dictionary...</p>
+              <p className="text-xs text-gray-400">First load ~20MB -- subsequent loads are instant</p>
+            </div>
+          )}
 
-            {!isVocabLoading && (isVocabError || kuromojiError) && (
-              <Block strong inset className="text-center">
-                <p className="text-red-500">Failed to load dictionary. Check your connection and refresh.</p>
-              </Block>
-            )}
+          {!isVocabLoading && (isVocabError || kuromojiError) && (
+            <Block strong inset className="text-center">
+              <p className="text-red-500">Failed to load dictionary. Check your connection and refresh.</p>
+            </Block>
+          )}
 
-            {!isVocabLoading && !isVocabError && !kuromojiLoading && !kuromojiError && (
-              <>
+          {isStudyReady && (
+            <div className="flex flex-col study-layout">
+              {/* Top: stats + previous result */}
+              <div className="px-4 shrink-0">
                 <SessionStats
                   dueCount={dueCount}
                   newCount={newCount}
@@ -247,30 +256,31 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                     onOverride={handlePreviousOverride}
                   />
                 )}
+              </div>
 
-                {mode === 1 && (
-                  <FlashcardMode1
-                    key={`m1-${cardKey}`}
-                    card={card}
-                    words={words}
-                    tokenizer={tokenizer}
-                    cardType={cardType}
-                    onAnswer={handleAnswer}
-                  />
-                )}
-                {mode === 4 && (
-                  <FlashcardMode4
-                    key={`m4-${cardKey}`}
-                    card={card}
-                    cardType={cardType}
-                    onAnswer={handleAnswer}
-                  />
-                )}
-              </>
-            )}
-          </>
-        )}
-      </div>
+              {/* Center: flashcard content fills remaining space, action bar is fixed */}
+              {mode === 1 && (
+                <FlashcardMode1
+                  key={`m1-${cardKey}`}
+                  card={card}
+                  words={words}
+                  tokenizer={tokenizer}
+                  cardType={cardType}
+                  onAnswer={handleAnswer}
+                />
+              )}
+              {mode === 4 && (
+                <FlashcardMode4
+                  key={`m4-${cardKey}`}
+                  card={card}
+                  cardType={cardType}
+                  onAnswer={handleAnswer}
+                />
+              )}
+            </div>
+          )}
+        </>
+      )}
 
       <Tabbar labels icons={false} className="fixed bottom-0 left-0 right-0">
         <TabbarLink

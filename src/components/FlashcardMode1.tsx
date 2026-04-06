@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import { Card, Button } from 'konsta/react'
+import { Button } from 'konsta/react'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
@@ -152,92 +152,108 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const showEnglishText = settings.englishExerciseMode !== 'audio'
 
   return (
-    <Card
-      outline
-      className={`${result ? `flash-${result}` : ''}`}
-    >
-      <div className="flex flex-col items-center gap-5">
-        <CardTypeBadge type={cardType} />
-        <p className="text-xs uppercase tracking-wide text-gray-500">Say this in Japanese:</p>
+    <>
+      {/* ── Card content: scrollable ── */}
+      <div className="flex flex-col items-center flex-1 justify-center px-4">
+        <div className={`w-full flex flex-col items-center gap-4 rounded-2xl p-6 ${
+          result === 'correct' ? 'flash-correct' : result === 'incorrect' ? 'flash-incorrect' : ''
+        }`}>
+          <CardTypeBadge type={cardType} />
+          <p className="text-xs uppercase tracking-wide text-gray-500">Say this in Japanese:</p>
 
-        {showEnglishText ? (
-          <div className="text-center">
-            <p className="text-3xl font-bold">{primaryEnglish}</p>
-            {card.hint && <p className="text-sm text-gray-400 mt-1">{card.hint}</p>}
-          </div>
-        ) : (
-          <Button
-            rounded
-            tonal
-            onClick={() => speak(primaryEnglish, 'en-US')}
-          >
-            {isSpeaking ? '\uD83D\uDD0A Playing...' : '\uD83D\uDD0A Play again'}
-          </Button>
-        )}
-
-        {card.english.length > 1 && showEnglishText && (
-          <p className="text-xs text-gray-400 italic">Also accepted: {card.english.slice(1).join(', ')}</p>
-        )}
-
-        <FlashcardFeedback
-          result={result}
-          heard={heard}
-          showText={settings.feedbackText}
-          showTranscript={settings.showTranscript}
-          correctText={card.japanese}
-          incorrectText={card.japanese}
-          manualGrading={settings.manualGrading}
-          onOverrideCorrect={() => overrideGrade(4)}
-          onOverrideIncorrect={() => overrideGrade(1)}
-        />
-
-        {correctionPhase && correctionResult !== 'correct' && (
-          <div className="flex flex-col items-center gap-3 mt-4 p-4 rounded-xl bg-amber-50 border border-amber-300">
-            <p className="font-semibold">Now say the correct answer:</p>
-            <RecordButton
-              isListening={correction.isListening}
-              onStart={correction.start}
-              onStop={correction.stop}
-              disabled={isSpeaking}
-              listenMode="hold"
-            />
-            {correctionResult === 'incorrect' && (
-              <p className="text-sm text-red-500 font-medium">Try again</p>
-            )}
-            {settings.showTranscript && correctionHeard && (
-              <p className="text-xs text-gray-400 italic">Heard: &quot;{correctionHeard}&quot;</p>
-            )}
-            <Button small clear className="!text-gray-500" onClick={() => onAnswer(1, heard)}>
-              Skip
-            </Button>
-          </div>
-        )}
-
-        {result === null && (
-          <div className="flex items-center gap-3">
-            <RecordButton
-              isListening={isListening}
-              onStart={start}
-              onStop={stop}
-              disabled={isSpeaking}
-              listenMode={settings.autoListen ? 'auto' : 'hold'}
-            />
+          {showEnglishText ? (
+            <div className="text-center">
+              <p className="text-4xl font-bold leading-tight">{primaryEnglish}</p>
+              {card.hint && <p className="text-sm text-gray-400 mt-1">{card.hint}</p>}
+            </div>
+          ) : (
             <Button
               rounded
-              outline
-              className="!w-12 !h-12 !p-0 !text-red-500 !border-red-300 !text-xl !font-bold"
-              onClick={() => applyResult(false, '')}
-              aria-label="Don't know"
+              tonal
+              onClick={() => speak(primaryEnglish, 'en-US')}
             >
-              ?
+              {isSpeaking ? '\uD83D\uDD0A Playing...' : '\uD83D\uDD0A Play again'}
             </Button>
-          </div>
-        )}
+          )}
 
-        {errorMsg && (
-          <p className="text-sm text-red-500 bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-center">{errorMsg}</p>
-        )}
+          {card.english.length > 1 && showEnglishText && (
+            <p className="text-xs text-gray-400 italic">Also accepted: {card.english.slice(1).join(', ')}</p>
+          )}
+
+          <FlashcardFeedback
+            result={result}
+            heard={heard}
+            showText={settings.feedbackText}
+            showTranscript={settings.showTranscript}
+            correctText={card.japanese}
+            incorrectText={card.japanese}
+            manualGrading={settings.manualGrading}
+            onOverrideCorrect={() => overrideGrade(4)}
+            onOverrideIncorrect={() => overrideGrade(1)}
+          />
+
+          {errorMsg && (
+            <p className="text-sm text-red-500 bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-center">{errorMsg}</p>
+          )}
+        </div>
       </div>
-    </Card>
+
+      {/* ── Fixed bottom action bar ── */}
+      <div className="fixed bottom-[calc(var(--k-tabbar-height,3rem)+env(safe-area-inset-bottom))] left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-gray-200">
+        <div className="max-w-lg mx-auto px-4 py-3">
+          {/* Correction phase */}
+          {correctionPhase && correctionResult !== 'correct' && (
+            <div className="flex flex-col items-center gap-3">
+              <p className="text-sm font-semibold text-amber-700">Now say the correct answer:</p>
+              <RecordButton
+                isListening={correction.isListening}
+                onStart={correction.start}
+                onStop={correction.stop}
+                disabled={isSpeaking}
+                listenMode="hold"
+              />
+              {correctionResult === 'incorrect' && (
+                <p className="text-sm text-red-500 font-medium">Try again</p>
+              )}
+              {settings.showTranscript && correctionHeard && (
+                <p className="text-xs text-gray-400 italic">Heard: &quot;{correctionHeard}&quot;</p>
+              )}
+              <Button small clear className="!text-gray-400" onClick={() => onAnswer(1, heard)}>
+                Skip
+              </Button>
+            </div>
+          )}
+
+          {/* Primary action: waiting for answer */}
+          {result === null && (
+            <div className="flex flex-col items-center gap-2">
+              <RecordButton
+                isListening={isListening}
+                onStart={start}
+                onStop={stop}
+                disabled={isSpeaking}
+                listenMode={settings.autoListen ? 'auto' : 'hold'}
+              />
+              <button
+                className="text-sm text-gray-400 hover:text-red-400 transition-colors py-1"
+                onClick={() => applyResult(false, '')}
+                aria-label="Don't know"
+              >
+                I don&apos;t know
+              </button>
+            </div>
+          )}
+
+          {/* Post-result: show nothing in action bar (correction or auto-advance handles it) */}
+          {result !== null && !(correctionPhase && correctionResult !== 'correct') && (
+            <div className="flex justify-center py-1">
+              <p className="text-sm text-gray-400">
+                {result === 'correct' ? 'Correct! Moving on...' : 'Moving on...'}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   )
 }
