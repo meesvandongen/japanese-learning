@@ -1,30 +1,18 @@
-import { useState, useCallback } from 'react'
-import { useKuromoji } from './hooks/useKuromoji'
+import { useState, useRef, useEffect } from 'react'
+import { Outlet, Link, useLocation } from '@tanstack/react-router'
 import { useVocabulary } from './hooks/useVocabulary'
-import { FlashcardMode1 } from './components/FlashcardMode1'
-import { FlashcardMode4 } from './components/FlashcardMode4'
-import { PreviousResult } from './components/PreviousResult'
-import type { PreviousResultData } from './components/PreviousResult'
-import { SessionStats } from './components/SessionStats'
-import { ProfilePage } from './components/ProfilePage'
 import { LanguageSelector } from './components/LanguageSelector'
 import { LevelSelector } from './components/LevelSelector'
-import { SettingsPage } from './components/SettingsPage'
 import { useAppStore } from './store/appStore'
-import { useSettingsStore } from './store/settingsStore'
-import { applyReview } from './srs/sm2'
-import { getNextCard, getSessionStats } from './srs/scheduler'
-import type { Word, Manifest, Language, Level } from './types'
+import { VocabularyProvider, useVocabContext } from './context/VocabularyContext'
 
 /**
- * App — onboarding gate and manifest loader.
+ * RootLayout — onboarding gate, compact header with hamburger menu, and route outlet.
  *
  * Renders loading/error states and the language/level selectors until the user
- * has made their selections, then hands off to StudyApp which owns all
- * study-specific state. Keeping the onboarding gates here (before StudyApp
- * mounts) means StudyApp's hooks are always called unconditionally.
+ * has made their selections, then renders the router outlet for child routes.
  */
-export default function App() {
+export default function RootLayout() {
   const selectedLanguageId = useAppStore((s) => s.selectedLanguageId)
   const selectedLevelId = useAppStore((s) => s.selectedLevelId)
   const { setLanguage, setLevel } = useAppStore()
@@ -81,226 +69,24 @@ export default function App() {
   }
 
   return (
-    <StudyApp
-      words={words}
-      isVocabLoading={isVocabLoading}
-      isVocabError={isVocabError}
-      manifest={manifest}
-      activeLang={activeLang}
-      activeLevel={activeLevel}
-    />
+    <VocabularyProvider value={{ words, isVocabLoading, isVocabError, manifest: manifest!, activeLang: activeLang!, activeLevel: activeLevel! }}>
+      <AppShell />
+    </VocabularyProvider>
   )
 }
 
-interface StudyAppProps {
-  words: Word[]
-  isVocabLoading: boolean
-  isVocabError: boolean
-  manifest: Manifest | undefined
-  activeLang: Language | undefined
-  activeLevel: Level | undefined
-}
-
-/**
- * StudyApp — the full app shell, rendered only after onboarding is complete.
- *
- * All hooks here are unconditional — the component is either mounted or not.
- */
-function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, activeLevel }: StudyAppProps) {
-  const [page, setPage] = useState<'study' | 'profile' | 'settings'>('study')
-  const [mode, setMode] = useState<1 | 4>(1)
-  const [reviewedCount, setReviewedCount] = useState(0)
-  const [lastShownId, setLastShownId] = useState<string | null>(null)
-  const [cardKey, setCardKey] = useState(0)
-  const [previousResult, setPreviousResult] = useState<PreviousResultData | null>(null)
-
-  const cardStates = useAppStore((s) => s.cards)
-  const streakCount = useAppStore((s) => s.streakCount)
-  const { applyCardReview, reset, recordStudyDay } = useAppStore()
-  const settings = useSettingsStore()
-  const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
-
-  const { card, cardType } = getNextCard(words, cardStates, lastShownId)
-  const { dueCount, newCount } = getSessionStats(words, cardStates)
-
-  const nextDueDate =
-    cardType === 'extra'
-      ? Math.min(...words.map((v) => cardStates[v.kana]?.dueDate ?? Infinity).filter(isFinite))
-      : null
-
-  const handleAnswer = useCallback(
-    (quality: number, heard: string) => {
-      const existing = cardStates[card.kana]
-      const updated = applyReview(existing, quality)
-      applyCardReview(card.kana, updated)
-      recordStudyDay()
-      setPreviousResult({
-        japanese: card.japanese,
-        kana: card.kana,
-        english: card.english,
-        result: quality >= 3 ? 'correct' : 'incorrect',
-        heard,
-        mode,
-      })
-      setLastShownId(card.kana)
-      setReviewedCount((n) => n + 1)
-      setCardKey((k) => k + 1)
-    },
-    [card, cardStates, applyCardReview, recordStudyDay, mode]
-  )
-
-  const handlePreviousOverride = useCallback(
-    (quality: number) => {
-      if (!previousResult) return
-      const existing = cardStates[previousResult.kana]
-      const updated = applyReview(existing, quality)
-      applyCardReview(previousResult.kana, updated)
-      setPreviousResult({ ...previousResult, result: quality >= 3 ? 'correct' : 'incorrect' })
-    },
-    [previousResult, cardStates, applyCardReview]
-  )
-
-  function handleModeChange(newMode: 1 | 4) {
-    setMode(newMode)
-    setLastShownId(null)
-    setPreviousResult(null)
-    setCardKey((k) => k + 1)
-  }
-
-  function handleSettingsClose() {
-    setLastShownId(null)
-    setReviewedCount(0)
-    setPreviousResult(null)
-    setCardKey((k) => k + 1)
-    setPage('study')
-  }
-
-  function handleReset() {
-    if (window.confirm('Reset all learning progress? This cannot be undone.')) {
-      reset()
-      setReviewedCount(0)
-      setLastShownId(null)
-      setCardKey((k) => k + 1)
-      setPage('study')
-    }
-  }
+function AppShell() {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   return (
     <div className="app">
       <header className="app-header">
-        <div className="header-top">
-          <h1>
-            {activeLang?.name ?? 'Flashcards'}
-            {activeLevel && <span className="header-level-badge">{activeLevel.label}</span>}
-          </h1>
-          <div className="header-actions">
-            <button
-              className={`nav-tab ${page === 'study' ? 'active' : ''}`}
-              onClick={() => setPage('study')}
-            >
-              Study
-            </button>
-            <button
-              className={`nav-tab ${page === 'profile' ? 'active' : ''}`}
-              onClick={() => setPage('profile')}
-            >
-              Profile
-            </button>
-            <button
-              className={`nav-tab ${page === 'settings' ? 'active' : ''}`}
-              onClick={() => setPage('settings')}
-            >
-              Settings
-            </button>
-            <button className="reset-btn" onClick={handleReset} title="Reset progress">
-              Reset
-            </button>
-          </div>
-        </div>
-
-        {page === 'study' && (
-          <nav className="mode-nav">
-            <button className={mode === 1 ? 'active' : ''} onClick={() => handleModeChange(1)}>
-              Say in Japanese
-            </button>
-            <button className={mode === 4 ? 'active' : ''} onClick={() => handleModeChange(4)}>
-              Translate to English
-            </button>
-          </nav>
-        )}
+        {isHome ? <HomeHeader /> : <SubpageHeader />}
       </header>
 
       <main className="app-main">
-        {page === 'settings' && (
-          <SettingsPage
-            manifest={manifest!}
-            activeLang={activeLang}
-            activeLevel={activeLevel}
-            onClose={handleSettingsClose}
-          />
-        )}
-
-        {page === 'profile' && (
-          <ProfilePage words={words} activeLang={activeLang} activeLevel={activeLevel} />
-        )}
-
-        {page === 'study' && (
-          <>
-            {(isVocabLoading || kuromojiLoading) && (
-              <div className="loading">
-                <div className="spinner" />
-                <p>Loading {activeLang?.name ?? ''} dictionary…</p>
-                <p className="loading-sub">First load ~20MB — subsequent loads are instant</p>
-              </div>
-            )}
-
-            {!isVocabLoading && (isVocabError || kuromojiError) && (
-              <div className="error-msg">
-                Failed to load dictionary. Check your connection and refresh.
-              </div>
-            )}
-
-            {!isVocabLoading && !isVocabError && !kuromojiLoading && !kuromojiError && (
-              <>
-                <SessionStats
-                  dueCount={dueCount}
-                  newCount={newCount}
-                  reviewedCount={reviewedCount}
-                  nextDueDate={nextDueDate}
-                  cardType={cardType}
-                  streakCount={streakCount}
-                />
-
-                {previousResult && settings.manualGrading && (
-                  <PreviousResult
-                    data={previousResult}
-                    manualGrading={settings.manualGrading}
-                    onOverride={handlePreviousOverride}
-                  />
-                )}
-
-                {mode === 1 && (
-                  <FlashcardMode1
-                    key={`m1-${cardKey}`}
-                    card={card}
-                    words={words}
-                    tokenizer={tokenizer}
-                    cardType={cardType}
-                    onAnswer={handleAnswer}
-                  />
-                )}
-                {mode === 4 && (
-                  <FlashcardMode4
-                    key={`m4-${cardKey}`}
-                    card={card}
-                    cardType={cardType}
-                    onAnswer={handleAnswer}
-                  />
-                )}
-              </>
-            )}
-          </>
-        )}
+        <Outlet />
       </main>
 
       <footer className="app-footer">
@@ -311,6 +97,68 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
           </a>
         </p>
       </footer>
+    </div>
+  )
+}
+
+function HomeHeader() {
+  const { activeLang, activeLevel } = useVocabContext()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    function handleClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [menuOpen])
+
+  return (
+    <div className="header-compact">
+      <span className="header-title-compact">
+        {activeLang.name}
+        {activeLevel && <span className="header-level-badge">{activeLevel.label}</span>}
+      </span>
+      <div className="menu-wrapper" ref={menuRef}>
+        <button
+          className="menu-btn"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label="Menu"
+          aria-expanded={menuOpen}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        {menuOpen && (
+          <nav className="menu-dropdown">
+            <Link to="/profile" className="menu-item" onClick={() => setMenuOpen(false)}>
+              Profile
+            </Link>
+            <Link to="/settings" className="menu-item" onClick={() => setMenuOpen(false)}>
+              Settings
+            </Link>
+          </nav>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function SubpageHeader() {
+  const location = useLocation()
+  const title = location.pathname === '/settings' ? 'Settings' : location.pathname === '/profile' ? 'Profile' : ''
+
+  return (
+    <div className="header-compact">
+      <Link to="/" className="back-btn">← Back</Link>
+      <span className="header-page-title">{title}</span>
     </div>
   )
 }
