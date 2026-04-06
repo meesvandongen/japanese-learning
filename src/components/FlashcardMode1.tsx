@@ -27,17 +27,20 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const [correctionResult, setCorrectionResult] = useState<'correct' | 'incorrect' | null>(null)
   const settings = useSettingsStore()
 
-  // Build list of all kana that share an English translation with this card,
-  // so e.g. both あお and あおい are accepted for "blue"
-  const acceptedKana = useMemo(() => {
+  // Build list of all accepted answers (kana + kanji forms) that share an
+  // English translation with this card, so e.g. both あお and あおい are
+  // accepted for "blue". Including kanji forms ensures STT returning kanji
+  // matches even when the tokenizer isn't loaded.
+  const acceptedAnswers = useMemo(() => {
     const englishSet = new Set(card.english.map((e) => e.toLowerCase()))
-    const kanaSet = new Set<string>([card.kana])
+    const answerSet = new Set<string>([card.kana, card.japanese])
     for (const w of words) {
       if (w.english.some((e) => englishSet.has(e.toLowerCase()))) {
-        kanaSet.add(w.kana)
+        answerSet.add(w.kana)
+        answerSet.add(w.japanese)
       }
     }
-    return [...kanaSet]
+    return [...answerSet]
   }, [card, words])
   const { isSpeaking, speak } = useSpeechSynthesis()
   const { playCorrect, playIncorrect } = useAudioFeedback()
@@ -86,7 +89,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => applyResult(
-      compareJapanese(acceptedKana, transcripts, tokenizer ?? null),
+      compareJapanese(acceptedAnswers, transcripts, tokenizer ?? null),
       transcripts[0] ?? ''
     ),
     onError: setErrorMsg,
@@ -108,7 +111,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const correction = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => {
-      const correct = compareJapanese(acceptedKana, transcripts, tokenizer ?? null)
+      const correct = compareJapanese(acceptedAnswers, transcripts, tokenizer ?? null)
       setCorrectionHeard(transcripts[0] ?? '')
       setCorrectionResult(correct ? 'correct' : 'incorrect')
       if (correct) {
@@ -132,6 +135,22 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
       setCorrectionPhase(true)
     }
   }, [result, settings.speakToCorrect])
+
+  // Auto-start correction listening (same behavior as initial answer)
+  useEffect(() => {
+    if (!correctionPhase || correctionResult === 'correct') return
+    if (!settings.autoListen) return
+    if (isSpeaking) return
+    const timer = setTimeout(() => correction.start(), settings.autoStartDelay)
+    return () => clearTimeout(timer)
+  }, [correctionPhase, correctionResult, settings.autoListen, settings.autoStartDelay, isSpeaking]) // oxlint-disable-line react-hooks/exhaustive-deps
+
+  // Enforce max listen duration for correction phase
+  useEffect(() => {
+    if (!correction.isListening || !settings.maxListenDuration) return
+    const timer = setTimeout(() => correction.stop(), settings.maxListenDuration)
+    return () => clearTimeout(timer)
+  }, [correction.isListening, settings.maxListenDuration, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
 
   // Auto-advance after result (cancellable for manual grading override)
   // When speakToCorrect is on and result is incorrect, don't auto-advance — wait for correction
@@ -205,7 +224,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
             onStart={correction.start}
             onStop={correction.stop}
             disabled={isSpeaking}
-            listenMode="hold"
+            listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
           {correctionResult === 'incorrect' && (
             <div className="correction-retry">Try again</div>
