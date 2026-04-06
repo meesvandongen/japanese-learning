@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useAppStore } from '../store/appStore'
 import { LanguageSelector } from './LanguageSelector'
 import { LevelSelector } from './LevelSelector'
@@ -9,7 +10,6 @@ interface Props {
   manifest: Manifest
   activeLang?: Language
   activeLevel?: Level
-  onClose: () => void
 }
 
 /**
@@ -21,12 +21,13 @@ interface Props {
  * once both selections are confirmed, preventing a half-set state from
  * triggering the App-level onboarding gates mid-flow.
  */
-export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Props) {
+export function SettingsPage({ manifest, activeLang, activeLevel }: Props) {
   const [view, setView] = useState<'overview' | 'language' | 'level'>('overview')
-  // pendingLangId tracks a language pick that hasn't been paired with a level yet
   const [pendingLangId, setPendingLangId] = useState<string | null>(null)
   const streakCount = useAppStore((s) => s.streakCount)
   const importStreak = useAppStore((s) => s.importStreak)
+  const reset = useAppStore((s) => s.reset)
+  const navigate = useNavigate()
   const streakInputRef = useRef<HTMLInputElement>(null)
 
   function handleLanguagePick(langId: string) {
@@ -75,16 +76,16 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
     )
   }
 
+  function handleReset() {
+    if (window.confirm('Reset all learning progress? This cannot be undone.')) {
+      reset()
+      navigate({ to: '/' })
+    }
+  }
+
   // ── Overview ──────────────────────────────────────────────────────────────
   return (
     <div className="settings-page">
-      <div className="settings-header">
-        <h2>Settings</h2>
-        <button className="nav-tab active" onClick={onClose}>
-          Done
-        </button>
-      </div>
-
       <div className="settings-section">
         <h3 className="settings-section-title">Study selection</h3>
 
@@ -152,6 +153,13 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
       </div>
 
       <SettingsPanel />
+
+      <section className="settings-group">
+        <h3 className="settings-group-title">Danger zone</h3>
+        <button className="reset-btn-settings" onClick={handleReset}>
+          Reset all progress
+        </button>
+      </section>
     </div>
   )
 }

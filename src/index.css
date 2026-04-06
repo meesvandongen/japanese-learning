@@ -35,20 +35,91 @@ body {
 }
 
 .app-header {
-  padding: 24px 0 16px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
 }
 
-.app-header h1 {
-  font-size: 1.5rem;
+/* ─── Compact header ────────────────────────────────────────────────────── */
+
+.header-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+}
+
+.header-title-compact {
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 12px;
   color: var(--primary);
+}
+
+.header-page-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Hamburger menu */
+.menu-wrapper {
+  position: relative;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.menu-btn:hover {
+  border-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  min-width: 160px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: block;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.1s;
+}
+
+.menu-item:hover {
+  background: #f0fdf4;
+  color: var(--primary);
+}
+
+.menu-item + .menu-item {
+  border-top: 1px solid var(--border);
 }
 
 .mode-nav {
   display: flex;
   gap: 8px;
+  margin-bottom: 20px;
 }
 
 .mode-nav button {
@@ -330,56 +401,24 @@ body {
   max-width: 400px;
 }
 
-/* Header top row */
-.header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Study / Profile nav tabs in header */
-.nav-tab {
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
+/* Reset button in settings */
+.reset-btn-settings {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid var(--danger-light);
   background: transparent;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.nav-tab.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: white;
-}
-.nav-tab:hover:not(.active) {
-  border-color: var(--primary-light);
-  color: var(--primary);
-}
-
-.reset-btn {
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border);
-  background: transparent;
-  color: var(--muted);
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.reset-btn:hover {
-  border-color: var(--danger-light);
   color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+}
+
+.reset-btn-settings:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: white;
 }
 
 /* ─── Profile page ─────────────────────────────────────────────────────────── */
@@ -651,15 +690,15 @@ body {
 /* ─── Header level badge ────────────────────────────────────────────────── */
 
 .header-level-badge {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   background: #d8f3dc;
   color: var(--primary);
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 20px;
-  margin-left: 8px;
+  margin-left: 6px;
   vertical-align: middle;
 }
 
