@@ -115,7 +115,8 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   const [previousResult, setPreviousResult] = useState<PreviousResultData | null>(null)
 
   const cardStates = useAppStore((s) => s.cards)
-  const { applyCardReview, reset } = useAppStore()
+  const streakCount = useAppStore((s) => s.streakCount)
+  const { applyCardReview, reset, recordStudyDay } = useAppStore()
   const settings = useSettingsStore()
   const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
 
@@ -132,6 +133,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
       applyCardReview(card.kana, updated)
+      recordStudyDay()
       setPreviousResult({
         japanese: card.japanese,
         kana: card.kana,
@@ -144,7 +146,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
       setReviewedCount((n) => n + 1)
       setCardKey((k) => k + 1)
     },
-    [card, cardStates, applyCardReview, mode]
+    [card, cardStates, applyCardReview, recordStudyDay, mode]
   )
 
   const handlePreviousOverride = useCallback(
@@ -266,6 +268,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                   reviewedCount={reviewedCount}
                   nextDueDate={nextDueDate}
                   cardType={cardType}
+                  streakCount={streakCount}
                 />
 
                 {previousResult && settings.manualGrading && (
@@ -302,6 +305,11 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
 
       <footer className="app-footer">
         <p>Requires Chrome or Edge · Progress saved automatically</p>
+        <p>
+          <a href="https://github.com/meesvandongen/japanese-learning" target="_blank" rel="noopener noreferrer" className="github-link">
+            GitHub
+          </a>
+        </p>
       </footer>
     </div>
   )
