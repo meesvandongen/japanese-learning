@@ -280,6 +280,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
                   <FlashcardMode1
                     key={`m1-${cardKey}`}
                     card={card}
+                    words={words}
                     tokenizer={tokenizer}
                     cardType={cardType}
                     onAnswer={handleAnswer}

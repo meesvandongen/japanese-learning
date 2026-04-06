@@ -21,30 +21,40 @@ describe('toHiragana', () => {
 
 describe('compareJapanese', () => {
   it('matches exact hiragana', () => {
-    expect(compareJapanese('あつい', ['あつい'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あつい'], ['あつい'], noTokenizer)).toBe(true)
   })
 
   it('matches katakana candidate for hiragana expected', () => {
-    expect(compareJapanese('あつい', ['アツイ'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あつい'], ['アツイ'], noTokenizer)).toBe(true)
   })
 
   it('accepts levenshtein-1 difference', () => {
     // one character off
-    expect(compareJapanese('あつい', ['あつい'], noTokenizer)).toBe(true)
-    expect(compareJapanese('あつい', ['あついい'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あつい'], ['あつい'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あつい'], ['あついい'], noTokenizer)).toBe(true)
   })
 
   it('accepts expected as substring of candidate (politeness forms)', () => {
     // "あつい" is contained in "あついです"
-    expect(compareJapanese('あつい', ['あついです'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あつい'], ['あついです'], noTokenizer)).toBe(true)
   })
 
   it('rejects clearly wrong answer', () => {
-    expect(compareJapanese('あつい', ['まずい'], noTokenizer)).toBe(false)
+    expect(compareJapanese(['あつい'], ['まずい'], noTokenizer)).toBe(false)
   })
 
   it('returns false for empty candidates', () => {
-    expect(compareJapanese('あつい', [], noTokenizer)).toBe(false)
+    expect(compareJapanese(['あつい'], [], noTokenizer)).toBe(false)
+  })
+
+  it('accepts any of multiple expected answers', () => {
+    // e.g. あお (noun) and あおい (i-adj) both valid for "blue"
+    expect(compareJapanese(['あお', 'あおい'], ['あお'], noTokenizer)).toBe(true)
+    expect(compareJapanese(['あお', 'あおい'], ['あおい'], noTokenizer)).toBe(true)
+  })
+
+  it('rejects wrong answer even with multiple expected', () => {
+    expect(compareJapanese(['あお', 'あおい'], ['まずい'], noTokenizer)).toBe(false)
   })
 })
 
