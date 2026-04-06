@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+import { Card, Button } from 'konsta/react'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
@@ -27,8 +28,6 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const [correctionResult, setCorrectionResult] = useState<'correct' | 'incorrect' | null>(null)
   const settings = useSettingsStore()
 
-  // Build list of all kana that share an English translation with this card,
-  // so e.g. both あお and あおい are accepted for "blue"
   const acceptedKana = useMemo(() => {
     const englishSet = new Set(card.english.map((e) => e.toLowerCase()))
     const kanaSet = new Set<string>([card.kana])
@@ -44,7 +43,6 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const autoStarted = useRef(false)
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Speak the English prompt on card load (if exercise mode includes audio)
   useEffect(() => {
     if (settings.englishExerciseMode === 'text') return
     const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
@@ -60,7 +58,6 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- fires only on card change
   }, [card, speak])
 
-  // Auto-start listening when not using audio prompt (no speak callback to chain into)
   useEffect(() => {
     if (settings.englishExerciseMode !== 'text') return
     if (!settings.autoListen || autoStarted.current) return
@@ -92,19 +89,16 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     onError: setErrorMsg,
   })
 
-  // Pause microphone when audio is playing to prevent recording playback
   useEffect(() => {
     if (isSpeaking && isListening) stop()
   }, [isSpeaking, isListening, stop])
 
-  // Enforce max listen duration in auto mode
   useEffect(() => {
     if (!isListening || !settings.maxListenDuration) return
     const timer = setTimeout(() => stop(), settings.maxListenDuration)
     return () => clearTimeout(timer)
   }, [isListening, settings.maxListenDuration, stop])
 
-  // Speech recognition for correction phase (speak the correct answer after getting it wrong)
   const correction = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => {
@@ -121,20 +115,16 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     onError: setErrorMsg,
   })
 
-  // Pause correction microphone when audio is playing
   useEffect(() => {
     if (isSpeaking && correction.isListening) correction.stop()
   }, [isSpeaking, correction.isListening, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
 
-  // Enter correction phase on incorrect result when speakToCorrect is on
   useEffect(() => {
     if (result === 'incorrect' && settings.speakToCorrect) {
       setCorrectionPhase(true)
     }
   }, [result, settings.speakToCorrect])
 
-  // Auto-advance after result (cancellable for manual grading override)
-  // When speakToCorrect is on and result is incorrect, don't auto-advance — wait for correction
   useEffect(() => {
     if (!result) return
     if (result === 'incorrect' && settings.speakToCorrect) return
@@ -145,7 +135,6 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     }
   }, [result, heard, onAnswer, settings.speakToCorrect])
 
-  // Auto-advance after successful correction
   useEffect(() => {
     if (correctionResult !== 'correct') return
     advanceTimerRef.current = setTimeout(() => onAnswer(1, heard), 1200)
@@ -163,81 +152,92 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   const showEnglishText = settings.englishExerciseMode !== 'audio'
 
   return (
-    <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
-      <CardTypeBadge type={cardType} />
-      <div className="card-label">Say this in Japanese:</div>
+    <Card
+      outline
+      className={`${result ? `flash-${result}` : ''}`}
+    >
+      <div className="flex flex-col items-center gap-5">
+        <CardTypeBadge type={cardType} />
+        <p className="text-xs uppercase tracking-wide text-gray-500">Say this in Japanese:</p>
 
-      {showEnglishText ? (
-        <div className="card-prompt english-prompt">
-          {primaryEnglish}
-          {card.hint && <span className="card-hint-tag">{card.hint}</span>}
-        </div>
-      ) : (
-        <button
-          className={`play-btn ${isSpeaking ? 'playing' : ''}`}
-          onClick={() => speak(primaryEnglish, 'en-US')}
-        >
-          {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
-        </button>
-      )}
-
-      {card.english.length > 1 && showEnglishText && (
-        <div className="synonyms">Also accepted: {card.english.slice(1).join(', ')}</div>
-      )}
-
-      <FlashcardFeedback
-        result={result}
-        heard={heard}
-        showText={settings.feedbackText}
-        showTranscript={settings.showTranscript}
-        correctText={card.japanese}
-        incorrectText={card.japanese}
-        manualGrading={settings.manualGrading}
-        onOverrideCorrect={() => overrideGrade(4)}
-        onOverrideIncorrect={() => overrideGrade(1)}
-      />
-
-      {correctionPhase && correctionResult !== 'correct' && (
-        <div className="correction-phase">
-          <div className="correction-prompt">Now say the correct answer:</div>
-          <RecordButton
-            isListening={correction.isListening}
-            onStart={correction.start}
-            onStop={correction.stop}
-            disabled={isSpeaking}
-            listenMode="hold"
-          />
-          {correctionResult === 'incorrect' && (
-            <div className="correction-retry">Try again</div>
-          )}
-          {settings.showTranscript && correctionHeard && (
-            <div className="transcript-heard">Heard: "{correctionHeard}"</div>
-          )}
-          <button
-            className="correction-skip-btn"
-            onClick={() => onAnswer(1, heard)}
+        {showEnglishText ? (
+          <div className="text-center">
+            <p className="text-3xl font-bold">{primaryEnglish}</p>
+            {card.hint && <p className="text-sm text-gray-400 mt-1">{card.hint}</p>}
+          </div>
+        ) : (
+          <Button
+            rounded
+            tonal
+            onClick={() => speak(primaryEnglish, 'en-US')}
           >
-            Skip
-          </button>
-        </div>
-      )}
+            {isSpeaking ? '\uD83D\uDD0A Playing...' : '\uD83D\uDD0A Play again'}
+          </Button>
+        )}
 
-      {result === null && (
-        <div className="answer-actions">
-          <RecordButton
-            isListening={isListening}
-            onStart={start}
-            onStop={stop}
-            disabled={isSpeaking}
-            listenMode={settings.autoListen ? 'auto' : 'hold'}
-          />
-          <button className="dont-know-btn" onClick={() => applyResult(false, '')} aria-label="Don't know">
-            ?
-          </button>
-        </div>
-      )}
+        {card.english.length > 1 && showEnglishText && (
+          <p className="text-xs text-gray-400 italic">Also accepted: {card.english.slice(1).join(', ')}</p>
+        )}
 
-      {errorMsg && <div className="error-msg">{errorMsg}</div>}
-    </div>
+        <FlashcardFeedback
+          result={result}
+          heard={heard}
+          showText={settings.feedbackText}
+          showTranscript={settings.showTranscript}
+          correctText={card.japanese}
+          incorrectText={card.japanese}
+          manualGrading={settings.manualGrading}
+          onOverrideCorrect={() => overrideGrade(4)}
+          onOverrideIncorrect={() => overrideGrade(1)}
+        />
+
+        {correctionPhase && correctionResult !== 'correct' && (
+          <div className="flex flex-col items-center gap-3 mt-4 p-4 rounded-xl bg-amber-50 border border-amber-300">
+            <p className="font-semibold">Now say the correct answer:</p>
+            <RecordButton
+              isListening={correction.isListening}
+              onStart={correction.start}
+              onStop={correction.stop}
+              disabled={isSpeaking}
+              listenMode="hold"
+            />
+            {correctionResult === 'incorrect' && (
+              <p className="text-sm text-red-500 font-medium">Try again</p>
+            )}
+            {settings.showTranscript && correctionHeard && (
+              <p className="text-xs text-gray-400 italic">Heard: &quot;{correctionHeard}&quot;</p>
+            )}
+            <Button small clear className="!text-gray-500" onClick={() => onAnswer(1, heard)}>
+              Skip
+            </Button>
+          </div>
+        )}
+
+        {result === null && (
+          <div className="flex items-center gap-3">
+            <RecordButton
+              isListening={isListening}
+              onStart={start}
+              onStop={stop}
+              disabled={isSpeaking}
+              listenMode={settings.autoListen ? 'auto' : 'hold'}
+            />
+            <Button
+              rounded
+              outline
+              className="!w-12 !h-12 !p-0 !text-red-500 !border-red-300 !text-xl !font-bold"
+              onClick={() => applyResult(false, '')}
+              aria-label="Don't know"
+            >
+              ?
+            </Button>
+          </div>
+        )}
+
+        {errorMsg && (
+          <p className="text-sm text-red-500 bg-red-50 border border-red-200 rounded-lg px-3 py-2 text-center">{errorMsg}</p>
+        )}
+      </div>
+    </Card>
   )
 }

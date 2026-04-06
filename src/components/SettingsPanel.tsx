@@ -1,3 +1,4 @@
+import { BlockTitle, List, ListItem, Toggle, Range } from 'konsta/react'
 import { useSettingsStore } from '../store/settingsStore'
 import type { ExercisePromptMode, Settings } from '../types'
 
@@ -20,228 +21,203 @@ export function SettingsPanel() {
 
   return (
     <>
-      <section className="settings-group">
-        <h3 className="settings-group-title">Exercise prompt — English</h3>
-        <p className="settings-hint">How the English prompt is presented in the "Say in Japanese" exercise</p>
-        <div className="settings-options">
-          {promptModeOptions.map((opt) => (
-            <label
-              key={opt.value}
-              className={`settings-option ${settings.englishExerciseMode === opt.value ? 'active' : ''}`}
-            >
+      <BlockTitle>Exercise prompt -- English</BlockTitle>
+      <List strong inset outline>
+        {promptModeOptions.map((opt) => (
+          <ListItem
+            key={opt.value}
+            label
+            title={opt.label}
+            subtitle={opt.description}
+            media={
               <input
                 type="radio"
                 name="englishExerciseMode"
-                value={opt.value}
                 checked={settings.englishExerciseMode === opt.value}
                 onChange={() => set('englishExerciseMode', opt.value)}
+                className="accent-primary"
               />
-              <div>
-                <strong>{opt.label}</strong>
-                <span>{opt.description}</span>
-              </div>
-            </label>
-          ))}
-        </div>
-      </section>
+            }
+            onClick={() => set('englishExerciseMode', opt.value)}
+          />
+        ))}
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Exercise prompt — Japanese</h3>
-        <p className="settings-hint">How the Japanese prompt is presented in the "Translate to English" exercise</p>
-        <div className="settings-options">
-          {promptModeOptions.map((opt) => (
-            <label
-              key={opt.value}
-              className={`settings-option ${settings.japaneseExerciseMode === opt.value ? 'active' : ''}`}
-            >
+      <BlockTitle>Exercise prompt -- Japanese</BlockTitle>
+      <List strong inset outline>
+        {promptModeOptions.map((opt) => (
+          <ListItem
+            key={opt.value}
+            label
+            title={opt.label}
+            subtitle={opt.description}
+            media={
               <input
                 type="radio"
                 name="japaneseExerciseMode"
-                value={opt.value}
                 checked={settings.japaneseExerciseMode === opt.value}
                 onChange={() => set('japaneseExerciseMode', opt.value)}
+                className="accent-primary"
               />
-              <div>
-                <strong>{opt.label}</strong>
-                <span>{opt.description}</span>
-              </div>
-            </label>
-          ))}
-        </div>
-      </section>
+            }
+            onClick={() => set('japaneseExerciseMode', opt.value)}
+          />
+        ))}
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Listening mode</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.autoListen ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Listening mode</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Auto-start"
+          subtitle="Listening starts automatically each exercise"
+          after={
+            <Toggle
               checked={settings.autoListen}
               onChange={() => toggle('autoListen')}
             />
-            <div>
-              <strong>Auto-start</strong>
-              <span>Listening starts automatically each exercise</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
 
       {settings.autoListen && (
-        <section className="settings-group">
-          <h3 className="settings-group-title">Auto-start delay</h3>
-          <div className="settings-slider-row">
-            <input
-              type="range"
-              min="0"
-              max="3000"
-              step="250"
-              value={settings.autoStartDelay}
-              onChange={(e) => set('autoStartDelay', Number(e.target.value))}
+        <>
+          <BlockTitle>Auto-start delay</BlockTitle>
+          <List strong inset outline>
+            <ListItem
+              title={`${settings.autoStartDelay}ms`}
+              subtitle="Time to wait before listening starts"
+              innerChildren={
+                <Range
+                  value={settings.autoStartDelay}
+                  min={0}
+                  max={3000}
+                  step={250}
+                  onInput={(e) => set('autoStartDelay', Number(e.target.value))}
+                  className="w-full mt-2"
+                />
+              }
             />
-            <span className="settings-value">{settings.autoStartDelay}ms</span>
-          </div>
-          <p className="settings-hint">Time to wait before listening starts</p>
-        </section>
+          </List>
+
+          <BlockTitle>Max listen duration</BlockTitle>
+          <List strong inset outline>
+            <ListItem
+              title={settings.maxListenDuration === 0 ? 'No limit' : `${settings.maxListenDuration / 1000}s`}
+              subtitle="Stop listening after this duration (0 = browser decides)"
+              innerChildren={
+                <Range
+                  value={settings.maxListenDuration}
+                  min={0}
+                  max={30000}
+                  step={1000}
+                  onInput={(e) => set('maxListenDuration', Number(e.target.value))}
+                  className="w-full mt-2"
+                />
+              }
+            />
+          </List>
+        </>
       )}
 
-      {settings.autoListen && (
-        <section className="settings-group">
-          <h3 className="settings-group-title">Max listen duration</h3>
-          <div className="settings-slider-row">
-            <input
-              type="range"
-              min="0"
-              max="30000"
-              step="1000"
-              value={settings.maxListenDuration}
-              onChange={(e) => set('maxListenDuration', Number(e.target.value))}
-            />
-            <span className="settings-value">
-              {settings.maxListenDuration === 0 ? 'No limit' : `${settings.maxListenDuration / 1000}s`}
-            </span>
-          </div>
-          <p className="settings-hint">Stop listening after this duration (0 = browser decides)</p>
-        </section>
-      )}
-
-      <section className="settings-group">
-        <h3 className="settings-group-title">Feedback mode</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.feedbackSound ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Feedback mode</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Play sound"
+          subtitle="A short tone indicates correct or incorrect"
+          after={
+            <Toggle
               checked={settings.feedbackSound}
               onChange={() => toggle('feedbackSound')}
             />
-            <div>
-              <strong>Play sound</strong>
-              <span>A short tone indicates correct or incorrect (good for background use)</span>
-            </div>
-          </label>
-          <label className={`settings-option ${settings.feedbackText ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+          }
+        />
+        <ListItem
+          title="Show text"
+          subtitle="Show the answer on screen"
+          after={
+            <Toggle
               checked={settings.feedbackText}
               onChange={() => toggle('feedbackText')}
             />
-            <div>
-              <strong>Show text</strong>
-              <span>Show the answer on screen</span>
-            </div>
-          </label>
-          <label className={`settings-option ${settings.feedbackVoice ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+          }
+        />
+        <ListItem
+          title="Speak answer"
+          subtitle="Speak the answer aloud"
+          after={
+            <Toggle
               checked={settings.feedbackVoice}
               onChange={() => toggle('feedbackVoice')}
             />
-            <div>
-              <strong>Speak answer</strong>
-              <span>Speak the answer aloud (good for background use)</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Manual grading</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.manualGrading ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Manual grading</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Allow grade correction"
+          subtitle="Show buttons to mark a correct answer as wrong or vice versa"
+          after={
+            <Toggle
               checked={settings.manualGrading}
               onChange={() => toggle('manualGrading')}
             />
-            <div>
-              <strong>Allow grade correction</strong>
-              <span>Show buttons to mark a correct answer as wrong or a wrong answer as correct</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Speak to correct</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.speakToCorrect ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Speak to correct</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Speak wrong answers"
+          subtitle="When wrong, you must speak the correct answer before moving on"
+          after={
+            <Toggle
               checked={settings.speakToCorrect}
               onChange={() => toggle('speakToCorrect')}
             />
-            <div>
-              <strong>Speak wrong answers</strong>
-              <span>When you get an answer wrong, you must speak the correct answer before moving on. Reinforces learning through active recall and production.</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Phonetic matching</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.phoneticSoundex ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Phonetic matching</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Soundex"
+          subtitle="Catches vowel variations and same-consonant homophones"
+          after={
+            <Toggle
               checked={settings.phoneticSoundex}
               onChange={() => toggle('phoneticSoundex')}
             />
-            <div>
-              <strong>Soundex</strong>
-              <span>Catches vowel variations (hot / hut) and same-consonant homophones (two / too).</span>
-            </div>
-          </label>
-          <label className={`settings-option ${settings.phoneticMetaphone ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+          }
+        />
+        <ListItem
+          title="Metaphone"
+          subtitle="Better for silent-letter homophones (write/right, know/no)"
+          after={
+            <Toggle
               checked={settings.phoneticMetaphone}
               onChange={() => toggle('phoneticMetaphone')}
             />
-            <div>
-              <strong>Metaphone</strong>
-              <span>Better for silent-letter homophones (write / right, know / no). May miss some vowel homophones.</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
 
-      <section className="settings-group">
-        <h3 className="settings-group-title">Show microphone transcript</h3>
-        <div className="settings-options">
-          <label className={`settings-option ${settings.showTranscript ? 'active' : ''}`}>
-            <input
-              type="checkbox"
+      <BlockTitle>Show microphone transcript</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Show after answer"
+          subtitle="Displays what the microphone heard once the result is shown"
+          after={
+            <Toggle
               checked={settings.showTranscript}
               onChange={() => toggle('showTranscript')}
             />
-            <div>
-              <strong>Show after answer</strong>
-              <span>Displays what the microphone heard once the result is shown. Useful for understanding why an answer was accepted or rejected.</span>
-            </div>
-          </label>
-        </div>
-      </section>
+          }
+        />
+      </List>
     </>
   )
 }

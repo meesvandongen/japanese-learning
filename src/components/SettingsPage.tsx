@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
+import { BlockTitle, List, ListItem, Button } from 'konsta/react'
 import { useAppStore } from '../store/appStore'
 import { LanguageSelector } from './LanguageSelector'
 import { LevelSelector } from './LevelSelector'
@@ -12,22 +13,11 @@ interface Props {
   onClose: () => void
 }
 
-/**
- * SettingsPage — lets users change their language/level and configure study
- * preferences after onboarding.
- *
- * Manages its own view state ('overview' | 'language' | 'level') so that
- * language/level changes are committed atomically — the store is only updated
- * once both selections are confirmed, preventing a half-set state from
- * triggering the App-level onboarding gates mid-flow.
- */
 export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Props) {
   const [view, setView] = useState<'overview' | 'language' | 'level'>('overview')
-  // pendingLangId tracks a language pick that hasn't been paired with a level yet
   const [pendingLangId, setPendingLangId] = useState<string | null>(null)
   const streakCount = useAppStore((s) => s.streakCount)
   const importStreak = useAppStore((s) => s.importStreak)
-  const streakInputRef = useRef<HTMLInputElement>(null)
 
   function handleLanguagePick(langId: string) {
     setPendingLangId(langId)
@@ -43,19 +33,14 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
 
   function handleBackFromLevel() {
     setPendingLangId(null)
-    // If we entered the level view from language selection, go back to language;
-    // if we entered directly (Change Level), go back to overview.
     setView(pendingLangId ? 'language' : 'overview')
   }
 
   if (view === 'language') {
     return (
-      <div className="settings-page">
-        <LanguageSelector
-          manifest={manifest}
-          onSelect={handleLanguagePick}
-          onBack={() => setView('overview')}
-        />
+      <div className="mt-2">
+        <Button clear onClick={() => setView('overview')} className="mb-2">Back</Button>
+        <LanguageSelector manifest={manifest} onSelect={handleLanguagePick} />
       </div>
     )
   }
@@ -65,91 +50,78 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
 
   if (view === 'level' && displayLang) {
     return (
-      <div className="settings-page">
-        <LevelSelector
-          language={displayLang}
-          onSelect={handleLevelPick}
-          onBack={handleBackFromLevel}
-        />
+      <div className="mt-2">
+        <Button clear onClick={handleBackFromLevel} className="mb-2">Back</Button>
+        <LevelSelector language={displayLang} onSelect={handleLevelPick} />
       </div>
     )
   }
 
-  // ── Overview ──────────────────────────────────────────────────────────────
   return (
-    <div className="settings-page">
-      <div className="settings-header">
-        <h2>Settings</h2>
-        <button className="nav-tab active" onClick={onClose}>
-          Done
-        </button>
+    <div className="mt-2">
+      <div className="flex items-center justify-between mb-2 px-1">
+        <h2 className="text-xl font-bold">Settings</h2>
+        <Button small rounded onClick={onClose}>Done</Button>
       </div>
 
-      <div className="settings-section">
-        <h3 className="settings-section-title">Study selection</h3>
+      <BlockTitle>Study selection</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Language"
+          after={
+            <Button small clear onClick={() => setView('language')}>
+              {activeLang?.name ?? '\u2014'} &rsaquo;
+            </Button>
+          }
+        />
+        <ListItem
+          title="Level"
+          after={
+            <Button small clear onClick={() => setView('level')} disabled={!activeLang}>
+              {activeLevel?.label ?? '\u2014'} &rsaquo;
+            </Button>
+          }
+        />
+      </List>
 
-        <div className="settings-row">
-          <div className="settings-info">
-            <span className="settings-label">Language</span>
-            <span className="settings-display-value">{activeLang?.name ?? '—'}</span>
-          </div>
-          <button className="settings-change-btn" onClick={() => setView('language')}>
-            Change
-          </button>
-        </div>
-
-        <div className="settings-row">
-          <div className="settings-info">
-            <span className="settings-label">Level</span>
-            <span className="settings-display-value">{activeLevel?.label ?? '—'}</span>
-          </div>
-          <button
-            className="settings-change-btn"
-            onClick={() => setView('level')}
-            disabled={!activeLang}
-          >
-            Change
-          </button>
-        </div>
-      </div>
-
-      <div className="settings-section">
-        <h3 className="settings-section-title">Streak</h3>
-        <div className="settings-row">
-          <div className="settings-info">
-            <span className="settings-label">Current streak</span>
-            <span className="settings-display-value">{streakCount} {streakCount === 1 ? 'day' : 'days'}</span>
-          </div>
-        </div>
-        <div className="settings-row">
-          <div className="settings-info">
-            <span className="settings-label">Import streak</span>
-            <span className="settings-hint">Set your streak to a custom value</span>
-          </div>
-          <div className="streak-import-row">
-            <input
-              ref={streakInputRef}
-              type="number"
-              min="0"
-              className="streak-input"
-              placeholder="0"
-              aria-label="Streak value"
-            />
-            <button
-              className="settings-change-btn"
-              onClick={() => {
-                const val = Number(streakInputRef.current?.value)
-                if (Number.isFinite(val) && val >= 0) {
-                  importStreak(val)
-                  if (streakInputRef.current) streakInputRef.current.value = ''
-                }
-              }}
-            >
-              Set
-            </button>
-          </div>
-        </div>
-      </div>
+      <BlockTitle>Streak</BlockTitle>
+      <List strong inset outline>
+        <ListItem
+          title="Current streak"
+          after={`${streakCount} ${streakCount === 1 ? 'day' : 'days'}`}
+        />
+        <ListItem
+          title="Import streak"
+          subtitle="Set your streak to a custom value"
+          after={
+            <div className="flex items-center gap-2">
+              <input
+                id="streak-input"
+                type="number"
+                min="0"
+                placeholder="0"
+                className="w-16 px-2 py-1 rounded-lg border border-gray-300 text-center text-sm"
+                aria-label="Streak value"
+              />
+              <Button
+                small
+                tonal
+                inline
+                onClick={() => {
+                  const input = document.getElementById('streak-input') as HTMLInputElement | null
+                  const val = Number(input?.value)
+                  if (Number.isFinite(val) && val >= 0) {
+                    importStreak(val)
+                    if (input) input.value = ''
+                  }
+                }}
+              >
+                Set
+              </Button>
+            </div>
+          }
+        />
+      </List>
 
       <SettingsPanel />
     </div>

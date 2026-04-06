@@ -1,3 +1,4 @@
+import { BlockTitle, List, ListItem } from 'konsta/react'
 import type { Manifest } from '../types'
 
 interface Props {
@@ -6,33 +7,22 @@ interface Props {
   onBack?: () => void
 }
 
-/**
- * LanguageSelector — shows available languages from the manifest.
- * Used both during onboarding and inside SettingsPage.
- */
-export function LanguageSelector({ manifest, onSelect, onBack }: Props) {
+export function LanguageSelector({ manifest, onSelect }: Props) {
   return (
-    <div className="selector-screen">
-      {onBack && (
-        <button className="back-btn" onClick={onBack}>
-          ← Back
-        </button>
-      )}
-      <h2 className="selector-heading">Choose a language to learn</h2>
-      <div className="selector-grid">
+    <>
+      <BlockTitle large>Choose a language to learn</BlockTitle>
+      <List strong inset outline>
         {manifest.languages.map((lang) => (
-          <button
+          <ListItem
             key={lang.id}
-            className="selector-card"
+            title={lang.name}
+            after={`${lang.levels.length} level${lang.levels.length !== 1 ? 's' : ''}`}
+            link
+            chevron
             onClick={() => onSelect(lang.id)}
-          >
-            <span className="selector-card-name">{lang.name}</span>
-            <span className="selector-card-meta">
-              {lang.levels.length} level{lang.levels.length !== 1 ? 's' : ''}
-            </span>
-          </button>
+          />
         ))}
-      </div>
-    </div>
+      </List>
+    </>
   )
 }

@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { Card, BlockTitle, Segmented, SegmentedButton, List, ListItem, Chip } from 'konsta/react'
 import { useAppStore } from '../store/appStore'
 import { formatDue } from '../srs/sm2'
 import type { Word, Language, Level } from '../types'
 import type { CardState } from '../types'
 
-const MASTERED_INTERVAL = 21 // days — considered mastered
+const MASTERED_INTERVAL = 21
 
 type CardStatus = 'new' | 'overdue' | 'learning' | 'mastered'
 
@@ -18,6 +19,13 @@ function classifyCard(state: CardState | null): CardStatus {
 const STATUS_ORDER: Record<CardStatus, number> = { overdue: 0, learning: 1, new: 2, mastered: 3 }
 const STATUS_LABEL: Record<CardStatus, string> = { overdue: 'Overdue', learning: 'Learning', new: 'New', mastered: 'Mastered' }
 
+const STATUS_CHIP_COLORS: Record<CardStatus, string> = {
+  new: '!bg-indigo-100 !text-indigo-800',
+  learning: '!bg-blue-100 !text-blue-800',
+  overdue: '!bg-red-100 !text-red-800',
+  mastered: '!bg-purple-100 !text-purple-800',
+}
+
 interface Props {
   words: Word[]
   activeLang?: Language
@@ -29,12 +37,6 @@ interface EnrichedWord extends Word {
   status: CardStatus
 }
 
-/**
- * Props:
- *   words       — fetched vocabulary array for the active level (passed from App)
- *   activeLang  — language entry from manifest (for display)
- *   activeLevel — level entry from manifest (for display)
- */
 export function ProfilePage({ words, activeLang: _activeLang, activeLevel }: Props) {
   const cardStates = useAppStore((s) => s.cards)
   const [filter, setFilter] = useState('all')
@@ -57,14 +59,6 @@ export function ProfilePage({ words, activeLang: _activeLang, activeLevel }: Pro
       return da - db
     })
 
-  const tabs = [
-    { key: 'all',      label: 'All',      count: words.length },
-    { key: 'overdue',  label: 'Overdue',  count: counts.overdue },
-    { key: 'learning', label: 'Learning', count: counts.learning },
-    { key: 'new',      label: 'New',      count: counts.new },
-    { key: 'mastered', label: 'Mastered', count: counts.mastered },
-  ]
-
   const reviewedTotal = enriched.filter((w) => w.state?.lastReview).length
   const avgEase = (() => {
     const seen = enriched.filter((w) => w.state)
@@ -73,46 +67,64 @@ export function ProfilePage({ words, activeLang: _activeLang, activeLevel }: Pro
   })()
 
   return (
-    <div className="profile-page">
+    <div className="mt-2">
       {/* Summary cards */}
-      <div className="summary-grid">
+      <div className="flex gap-2 flex-wrap mb-4">
         <SummaryCard value={words.length} label={activeLevel?.label ?? 'Total words'} />
-        <SummaryCard value={reviewedTotal} label="Ever reviewed" accent="learning" />
-        <SummaryCard value={counts.mastered} label="Mastered" accent="mastered" />
-        <SummaryCard value={counts.overdue} label="Due now" accent="overdue" />
+        <SummaryCard value={reviewedTotal} label="Reviewed" color="blue" />
+        <SummaryCard value={counts.mastered} label="Mastered" color="purple" />
+        <SummaryCard value={counts.overdue} label="Due now" color="red" />
         {avgEase && <SummaryCard value={avgEase} label="Avg ease" />}
       </div>
 
       {/* Filter tabs */}
-      <div className="profile-tabs">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            className={`profile-tab ${filter === t.key ? 'active' : ''} tab-${t.key}`}
-            onClick={() => setFilter(t.key)}
-          >
-            {t.label}
-            <span className="tab-count">{t.count}</span>
-          </button>
+      <BlockTitle>Filter</BlockTitle>
+      <Segmented strong rounded className="mx-0">
+        {([
+          { key: 'all', label: 'All', count: words.length },
+          { key: 'overdue', label: 'Due', count: counts.overdue },
+          { key: 'learning', label: 'Learn', count: counts.learning },
+          { key: 'new', label: 'New', count: counts.new },
+          { key: 'mastered', label: 'Done', count: counts.mastered },
+        ] as const).map((t) => (
+          <SegmentedButton key={t.key} active={filter === t.key} onClick={() => setFilter(t.key)}>
+            {t.label} ({t.count})
+          </SegmentedButton>
         ))}
-      </div>
+      </Segmented>
 
-      {/* Word table */}
-      <div className="word-table">
+      {/* Word list */}
+      <List strong inset outline className="mt-4">
         {filtered.map((w) => (
           <WordRow key={w.kana} word={w} />
         ))}
-      </div>
+      </List>
     </div>
   )
 }
 
-function SummaryCard({ value, label, accent }: { value: number | string; label: string; accent?: string }) {
+function SummaryCard({ value, label, color }: { value: number | string; label: string; color?: string }) {
+  const colorClasses = {
+    red: 'border-red-200 bg-red-50',
+    blue: 'border-blue-200 bg-blue-50',
+    purple: 'border-purple-200 bg-purple-50',
+  }
+  const valueColor = {
+    red: 'text-red-600',
+    blue: 'text-blue-600',
+    purple: 'text-purple-600',
+  }
   return (
-    <div className={`summary-card ${accent ? `summary-${accent}` : ''}`}>
-      <span className="summary-value">{value}</span>
-      <span className="summary-label">{label}</span>
-    </div>
+    <Card
+      outline
+      contentWrapPadding="p-3"
+      className={`flex-1 min-w-[72px] text-center ${color ? colorClasses[color as keyof typeof colorClasses] ?? '' : ''}`}
+    >
+      <div className={`text-2xl font-bold leading-none ${color ? valueColor[color as keyof typeof valueColor] ?? '' : ''}`}>
+        {value}
+      </div>
+      <div className="text-[10px] uppercase tracking-wide text-gray-500 mt-1">{label}</div>
+    </Card>
   )
 }
 
@@ -121,22 +133,24 @@ function WordRow({ word }: { word: EnrichedWord }) {
   const primary = Array.isArray(word.english) ? word.english[0] : word.english
 
   return (
-    <div className={`word-row status-${status}`}>
-      <div className="word-kana">{word.japanese}</div>
-      <div className="word-english">{primary}</div>
-      <div className="word-meta">
-        <span className={`status-badge badge-${status}`}>{STATUS_LABEL[status]}</span>
-        {state?.dueDate && (
-          <span className="word-due">
-            {state.dueDate <= Date.now() ? 'now' : formatDue(state.dueDate)}
-          </span>
-        )}
-        {state && (
-          <span className="word-interval" title="Current interval (days)">
-            {state.interval}d
-          </span>
-        )}
-      </div>
-    </div>
+    <ListItem
+      title={word.japanese}
+      subtitle={primary}
+      after={
+        <div className="flex items-center gap-2">
+          <Chip className={`text-[10px] font-bold ${STATUS_CHIP_COLORS[status]}`}>
+            {STATUS_LABEL[status]}
+          </Chip>
+          {state?.dueDate && (
+            <span className="text-[11px] text-gray-400">
+              {state.dueDate <= Date.now() ? 'now' : formatDue(state.dueDate)}
+            </span>
+          )}
+          {state && (
+            <span className="text-[11px] text-gray-400">{state.interval}d</span>
+          )}
+        </div>
+      }
+    />
   )
 }

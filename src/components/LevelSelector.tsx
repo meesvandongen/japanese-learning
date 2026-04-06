@@ -1,3 +1,4 @@
+import { BlockTitle, List, ListItem } from 'konsta/react'
 import type { Language } from '../types'
 
 interface Props {
@@ -6,34 +7,23 @@ interface Props {
   onBack?: () => void
 }
 
-/**
- * LevelSelector — shows available levels for a given language.
- * Used both during onboarding and inside SettingsPage.
- */
-export function LevelSelector({ language, onSelect, onBack }: Props) {
+export function LevelSelector({ language, onSelect }: Props) {
   return (
-    <div className="selector-screen">
-      {onBack && (
-        <button className="back-btn" onClick={onBack}>
-          ← Back
-        </button>
-      )}
-      <h2 className="selector-heading">Choose your starting level for {language.name}</h2>
-      <div className="selector-grid">
+    <>
+      <BlockTitle large>Choose your starting level</BlockTitle>
+      <List strong inset outline>
         {language.levels.map((level) => (
-          <button
+          <ListItem
             key={level.id}
-            className="selector-card"
+            title={level.label}
+            subtitle={level.description}
+            after={`${level.wordCount} words`}
+            link
+            chevron
             onClick={() => onSelect(level.id)}
-          >
-            <span className="selector-card-name">{level.label}</span>
-            {level.description && (
-              <span className="selector-card-desc">{level.description}</span>
-            )}
-            <span className="selector-card-meta">{level.wordCount} words</span>
-          </button>
+          />
         ))}
-      </div>
-    </div>
+      </List>
+    </>
   )
 }

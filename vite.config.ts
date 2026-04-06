@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
@@ -33,7 +34,7 @@ function dictBinaryPlugin() {
 }
 
 export default defineConfig({
-  plugins: [react(), cloudflare(), dictBinaryPlugin()],
+  plugins: [react(), tailwindcss(), cloudflare(), dictBinaryPlugin()],
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],

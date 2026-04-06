@@ -1,3 +1,5 @@
+import { Button } from 'konsta/react'
+
 interface Props {
   result: 'correct' | 'incorrect' | null
   heard: string
@@ -26,34 +28,34 @@ export function FlashcardFeedback({
   return (
     <>
       {result === 'correct' && showText && (
-        <div className="feedback correct">
-          ✓ <span className="answer-shown">{correctText}</span>
+        <div className="w-full rounded-xl bg-green-100 border border-green-300 p-4 text-center font-semibold text-green-900">
+          <span className="block text-xl mt-1">{correctText}</span>
         </div>
       )}
       {result === 'incorrect' && showText && (
-        <div className="feedback incorrect">
-          <span className="answer-shown">{incorrectText}</span>
+        <div className="w-full rounded-xl bg-red-100 border border-red-300 p-4 text-center font-semibold text-red-900">
+          <span className="block text-xl mt-1">{incorrectText}</span>
         </div>
       )}
       {!showText && (
-        <div className={`feedback-icon ${result}`}>
-          {result === 'correct' ? '✓' : '✗'}
+        <div className={`text-3xl font-bold ${result === 'correct' ? 'text-green-600' : 'text-red-500'}`}>
+          {result === 'correct' ? '\u2713' : '\u2717'}
         </div>
       )}
       {showTranscript && heard && (
-        <div className="transcript-heard">Heard: "{heard}"</div>
+        <p className="text-xs text-gray-400 italic text-center mt-2">Heard: &quot;{heard}&quot;</p>
       )}
       {manualGrading && (
-        <div className="manual-grading">
+        <div className="mt-2 flex justify-center">
           {result === 'incorrect' && (
-            <button className="override-btn override-correct" onClick={onOverrideCorrect}>
+            <Button small rounded outline className="!text-green-600 !border-green-600" onClick={onOverrideCorrect}>
               Mark as correct
-            </button>
+            </Button>
           )}
           {result === 'correct' && (
-            <button className="override-btn override-incorrect" onClick={onOverrideIncorrect}>
+            <Button small rounded outline className="!text-red-500 !border-red-500" onClick={onOverrideIncorrect}>
               Mark as incorrect
-            </button>
+            </Button>
           )}
         </div>
       )}

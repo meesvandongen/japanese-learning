@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Page, Navbar, Tabbar, TabbarLink, Segmented, SegmentedButton, Block, Preloader, Button, Dialog, DialogButton, Badge } from 'konsta/react'
 import { useKuromoji } from './hooks/useKuromoji'
 import { useVocabulary } from './hooks/useVocabulary'
 import { FlashcardMode1 } from './components/FlashcardMode1'
@@ -16,14 +17,6 @@ import { applyReview } from './srs/sm2'
 import { getNextCard, getSessionStats } from './srs/scheduler'
 import type { Word, Manifest, Language, Level } from './types'
 
-/**
- * App — onboarding gate and manifest loader.
- *
- * Renders loading/error states and the language/level selectors until the user
- * has made their selections, then hands off to StudyApp which owns all
- * study-specific state. Keeping the onboarding gates here (before StudyApp
- * mounts) means StudyApp's hooks are always called unconditionally.
- */
 export default function App() {
   const selectedLanguageId = useAppStore((s) => s.selectedLanguageId)
   const selectedLevelId = useAppStore((s) => s.selectedLevelId)
@@ -34,49 +27,42 @@ export default function App() {
 
   if (isManifestLoading) {
     return (
-      <div className="app">
-        <main className="app-main">
-          <div className="loading">
-            <div className="spinner" />
-          </div>
-        </main>
-      </div>
+      <Page>
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <Preloader />
+        </div>
+      </Page>
     )
   }
 
   if (isManifestError) {
     return (
-      <div className="app">
-        <main className="app-main">
-          <div className="error-msg">
-            Failed to load vocabulary catalog. Check your connection and refresh.
-          </div>
-        </main>
-      </div>
+      <Page>
+        <Block strong inset className="text-center">
+          <p className="text-red-500">Failed to load vocabulary catalog. Check your connection and refresh.</p>
+        </Block>
+      </Page>
     )
   }
 
   if (!selectedLanguageId) {
     return (
-      <div className="app">
-        <main className="app-main">
-          <LanguageSelector manifest={manifest!} onSelect={setLanguage} />
-        </main>
-      </div>
+      <Page>
+        <Navbar title="Japanese Flashcards" />
+        <LanguageSelector manifest={manifest!} onSelect={setLanguage} />
+      </Page>
     )
   }
 
   if (!selectedLevelId) {
     return (
-      <div className="app">
-        <main className="app-main">
-          <LevelSelector
-            language={activeLang!}
-            onSelect={setLevel}
-            onBack={() => useAppStore.setState({ selectedLanguageId: null })}
-          />
-        </main>
-      </div>
+      <Page>
+        <Navbar
+          title="Choose Level"
+          left={<Button clear onClick={() => useAppStore.setState({ selectedLanguageId: null })}>Back</Button>}
+        />
+        <LevelSelector language={activeLang!} onSelect={setLevel} />
+      </Page>
     )
   }
 
@@ -101,11 +87,6 @@ interface StudyAppProps {
   activeLevel: Level | undefined
 }
 
-/**
- * StudyApp — the full app shell, rendered only after onboarding is complete.
- *
- * All hooks here are unconditional — the component is either mounted or not.
- */
 function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, activeLevel }: StudyAppProps) {
   const [page, setPage] = useState<'study' | 'profile' | 'settings'>('study')
   const [mode, setMode] = useState<1 | 4>(1)
@@ -113,6 +94,7 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   const [lastShownId, setLastShownId] = useState<string | null>(null)
   const [cardKey, setCardKey] = useState(0)
   const [previousResult, setPreviousResult] = useState<PreviousResultData | null>(null)
+  const [resetDialogOpen, setResetDialogOpen] = useState(false)
 
   const cardStates = useAppStore((s) => s.cards)
   const streakCount = useAppStore((s) => s.streakCount)
@@ -176,61 +158,48 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
   }
 
   function handleReset() {
-    if (window.confirm('Reset all learning progress? This cannot be undone.')) {
-      reset()
-      setReviewedCount(0)
-      setLastShownId(null)
-      setCardKey((k) => k + 1)
-      setPage('study')
-    }
+    reset()
+    setReviewedCount(0)
+    setLastShownId(null)
+    setCardKey((k) => k + 1)
+    setPage('study')
+    setResetDialogOpen(false)
   }
 
+  const navbarTitle = (
+    <span className="flex items-center gap-2">
+      {activeLang?.name ?? 'Flashcards'}
+      {activeLevel && (
+        <Badge className="text-[10px]">{activeLevel.label}</Badge>
+      )}
+    </span>
+  )
+
   return (
-    <div className="app">
-      <header className="app-header">
-        <div className="header-top">
-          <h1>
-            {activeLang?.name ?? 'Flashcards'}
-            {activeLevel && <span className="header-level-badge">{activeLevel.label}</span>}
-          </h1>
-          <div className="header-actions">
-            <button
-              className={`nav-tab ${page === 'study' ? 'active' : ''}`}
-              onClick={() => setPage('study')}
-            >
-              Study
-            </button>
-            <button
-              className={`nav-tab ${page === 'profile' ? 'active' : ''}`}
-              onClick={() => setPage('profile')}
-            >
-              Profile
-            </button>
-            <button
-              className={`nav-tab ${page === 'settings' ? 'active' : ''}`}
-              onClick={() => setPage('settings')}
-            >
-              Settings
-            </button>
-            <button className="reset-btn" onClick={handleReset} title="Reset progress">
-              Reset
-            </button>
-          </div>
-        </div>
+    <Page>
+      <Navbar
+        title={navbarTitle}
+        right={
+          <Button clear small className="text-red-500" onClick={() => setResetDialogOpen(true)}>
+            Reset
+          </Button>
+        }
+      />
 
-        {page === 'study' && (
-          <nav className="mode-nav">
-            <button className={mode === 1 ? 'active' : ''} onClick={() => handleModeChange(1)}>
+      {page === 'study' && (
+        <Block className="!mt-2 !mb-0">
+          <Segmented strong rounded>
+            <SegmentedButton active={mode === 1} onClick={() => handleModeChange(1)}>
               Say in Japanese
-            </button>
-            <button className={mode === 4 ? 'active' : ''} onClick={() => handleModeChange(4)}>
+            </SegmentedButton>
+            <SegmentedButton active={mode === 4} onClick={() => handleModeChange(4)}>
               Translate to English
-            </button>
-          </nav>
-        )}
-      </header>
+            </SegmentedButton>
+          </Segmented>
+        </Block>
+      )}
 
-      <main className="app-main">
+      <div className="flex-1 overflow-auto px-4 pb-20">
         {page === 'settings' && (
           <SettingsPage
             manifest={manifest!}
@@ -247,17 +216,17 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
         {page === 'study' && (
           <>
             {(isVocabLoading || kuromojiLoading) && (
-              <div className="loading">
-                <div className="spinner" />
-                <p>Loading {activeLang?.name ?? ''} dictionary…</p>
-                <p className="loading-sub">First load ~20MB — subsequent loads are instant</p>
+              <div className="flex flex-col items-center gap-4 py-12 text-gray-500">
+                <Preloader />
+                <p>Loading {activeLang?.name ?? ''} dictionary...</p>
+                <p className="text-xs text-gray-400">First load ~20MB -- subsequent loads are instant</p>
               </div>
             )}
 
             {!isVocabLoading && (isVocabError || kuromojiError) && (
-              <div className="error-msg">
-                Failed to load dictionary. Check your connection and refresh.
-              </div>
+              <Block strong inset className="text-center">
+                <p className="text-red-500">Failed to load dictionary. Check your connection and refresh.</p>
+              </Block>
             )}
 
             {!isVocabLoading && !isVocabError && !kuromojiLoading && !kuromojiError && (
@@ -301,16 +270,38 @@ function StudyApp({ words, isVocabLoading, isVocabError, manifest, activeLang, a
             )}
           </>
         )}
-      </main>
+      </div>
 
-      <footer className="app-footer">
-        <p>Requires Chrome or Edge · Progress saved automatically</p>
-        <p>
-          <a href="https://github.com/meesvandongen/japanese-learning" target="_blank" rel="noopener noreferrer" className="github-link">
-            GitHub
-          </a>
-        </p>
-      </footer>
-    </div>
+      <Tabbar labels icons={false} className="fixed bottom-0 left-0 right-0">
+        <TabbarLink
+          active={page === 'study'}
+          label="Study"
+          onClick={() => setPage('study')}
+        />
+        <TabbarLink
+          active={page === 'profile'}
+          label="Profile"
+          onClick={() => setPage('profile')}
+        />
+        <TabbarLink
+          active={page === 'settings'}
+          label="Settings"
+          onClick={() => setPage('settings')}
+        />
+      </Tabbar>
+
+      <Dialog
+        opened={resetDialogOpen}
+        onBackdropClick={() => setResetDialogOpen(false)}
+        title="Reset Progress"
+        content="Reset all learning progress? This cannot be undone."
+        buttons={
+          <>
+            <DialogButton onClick={() => setResetDialogOpen(false)}>Cancel</DialogButton>
+            <DialogButton onClick={handleReset} className="text-red-500">Reset</DialogButton>
+          </>
+        }
+      />
+    </Page>
   )
 }

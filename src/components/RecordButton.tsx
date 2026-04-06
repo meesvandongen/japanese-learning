@@ -1,3 +1,5 @@
+import { Button } from 'konsta/react'
+
 interface Props {
   isListening: boolean
   onStart: () => void
@@ -8,7 +10,7 @@ interface Props {
 
 export function RecordButton({ isListening, onStart, onStop, disabled, listenMode = 'hold' }: Props) {
   function handleTouchStart(e: React.TouchEvent) {
-    e.preventDefault() // prevent text-selection vibration / long-press context menu
+    e.preventDefault()
     if (listenMode === 'hold') onStart()
   }
 
@@ -24,23 +26,25 @@ export function RecordButton({ isListening, onStart, onStop, disabled, listenMod
     : (listenMode === 'auto' ? 'Tap to speak' : 'Hold to speak')
 
   const micLabel = isListening
-    ? 'Listening…'
+    ? 'Listening...'
     : (listenMode === 'auto' ? 'Tap to speak' : 'Hold to speak')
 
   return (
-    <button
-      className={`record-btn ${isListening ? 'recording' : ''}`}
+    <Button
+      rounded
+      large
+      className={isListening ? '!bg-red-500 !border-red-500 animate-pulse-recording' : ''}
       onMouseDown={listenMode === 'hold' ? onStart : undefined}
       onMouseUp={listenMode === 'hold' ? onStop : undefined}
       onTouchStart={handleTouchStart}
       onTouchEnd={listenMode === 'hold' ? onStop : undefined}
       onClick={listenMode === 'auto' ? handleClick : undefined}
-      onContextMenu={(e) => e.preventDefault()}
+      onContextMenu={(e: React.MouseEvent) => e.preventDefault()}
       disabled={disabled}
       aria-label={label}
     >
-      <span className="mic-icon">{isListening ? '🔴' : '🎙️'}</span>
-      <span className="mic-label">{micLabel}</span>
-    </button>
+      <span className="mr-2 text-lg">{isListening ? '\uD83D\uDD34' : '\uD83C\uDF99\uFE0F'}</span>
+      {micLabel}
+    </Button>
   )
 }
