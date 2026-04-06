@@ -575,6 +575,7 @@ body {
 .pill-due    { background: #ffe5e5; color: #7f1d1d; }
 .pill-new    { background: #dbeafe; color: #1e3a5f; }
 .pill-session { background: #f0fdf4; color: #14532d; }
+.pill-streak { background: #fef3c7; color: #78350f; }
 .pill-zero   { background: var(--border); color: var(--muted); }
 
 .caught-up-badge {
@@ -933,6 +934,17 @@ body {
   border-top: 1px solid var(--border);
 }
 
+.github-link {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.github-link:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
 /* Transcript (what the microphone heard) */
 .transcript-heard {
   margin-top: 10px;
@@ -1090,5 +1102,27 @@ body {
 .correction-skip-btn:hover {
   background: var(--muted);
   color: white;
+}
+
+/* Streak import */
+.streak-import-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.streak-input {
+  width: 72px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  font-size: 0.9rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.streak-input:focus {
+  border-color: var(--primary);
 }
 

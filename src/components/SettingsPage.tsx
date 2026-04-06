@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useAppStore } from '../store/appStore'
 import { LanguageSelector } from './LanguageSelector'
 import { LevelSelector } from './LevelSelector'
@@ -25,6 +25,9 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
   const [view, setView] = useState<'overview' | 'language' | 'level'>('overview')
   // pendingLangId tracks a language pick that hasn't been paired with a level yet
   const [pendingLangId, setPendingLangId] = useState<string | null>(null)
+  const streakCount = useAppStore((s) => s.streakCount)
+  const importStreak = useAppStore((s) => s.importStreak)
+  const streakInputRef = useRef<HTMLInputElement>(null)
 
   function handleLanguagePick(langId: string) {
     setPendingLangId(langId)
@@ -107,6 +110,44 @@ export function SettingsPage({ manifest, activeLang, activeLevel, onClose }: Pro
           >
             Change
           </button>
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h3 className="settings-section-title">Streak</h3>
+        <div className="settings-row">
+          <div className="settings-info">
+            <span className="settings-label">Current streak</span>
+            <span className="settings-display-value">{streakCount} {streakCount === 1 ? 'day' : 'days'}</span>
+          </div>
+        </div>
+        <div className="settings-row">
+          <div className="settings-info">
+            <span className="settings-label">Import streak</span>
+            <span className="settings-hint">Set your streak to a custom value</span>
+          </div>
+          <div className="streak-import-row">
+            <input
+              ref={streakInputRef}
+              type="number"
+              min="0"
+              className="streak-input"
+              placeholder="0"
+              aria-label="Streak value"
+            />
+            <button
+              className="settings-change-btn"
+              onClick={() => {
+                const val = Number(streakInputRef.current?.value)
+                if (Number.isFinite(val) && val >= 0) {
+                  importStreak(val)
+                  if (streakInputRef.current) streakInputRef.current.value = ''
+                }
+              }}
+            >
+              Set
+            </button>
+          </div>
         </div>
       </div>
 

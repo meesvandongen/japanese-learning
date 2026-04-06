@@ -92,6 +92,11 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     onError: setErrorMsg,
   })
 
+  // Pause microphone when audio is playing to prevent recording playback
+  useEffect(() => {
+    if (isSpeaking && isListening) stop()
+  }, [isSpeaking, isListening, stop])
+
   // Enforce max listen duration in auto mode
   useEffect(() => {
     if (!isListening || !settings.maxListenDuration) return
@@ -115,6 +120,11 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     },
     onError: setErrorMsg,
   })
+
+  // Pause correction microphone when audio is playing
+  useEffect(() => {
+    if (isSpeaking && correction.isListening) correction.stop()
+  }, [isSpeaking, correction.isListening, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
 
   // Enter correction phase on incorrect result when speakToCorrect is on
   useEffect(() => {
