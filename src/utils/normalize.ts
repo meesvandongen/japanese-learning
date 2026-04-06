@@ -49,25 +49,29 @@ function levenshtein(a: string, b: string): number {
 /**
  * Compare Japanese: normalize both strings to hiragana and check fuzzy match.
  * Also handles transcripts with extra surrounding words (e.g. "あついです" for "あつい").
+ * Accepts multiple expected answers so that words sharing the same English
+ * translation (e.g. あお / あおい for "blue") are all considered correct.
  */
-export function compareJapanese(expected: string, candidates: string[], tokenizer: KuromojiTokenizer | null): boolean {
-  const normalizedExpected = toHiragana(expected, tokenizer)
-  for (const candidate of candidates) {
-    const normalizedCandidate = toHiragana(candidate, tokenizer)
+export function compareJapanese(expectedList: string[], candidates: string[], tokenizer: KuromojiTokenizer | null): boolean {
+  for (const expected of expectedList) {
+    const normalizedExpected = toHiragana(expected, tokenizer)
+    for (const candidate of candidates) {
+      const normalizedCandidate = toHiragana(candidate, tokenizer)
 
-    // Full-phrase exact or near match
-    if (normalizedExpected === normalizedCandidate) return true
-    if (levenshtein(normalizedExpected, normalizedCandidate) <= 1) return true
+      // Full-phrase exact or near match
+      if (normalizedExpected === normalizedCandidate) return true
+      if (levenshtein(normalizedExpected, normalizedCandidate) <= 1) return true
 
-    // Word-level: STT may output multiple space-separated segments
-    for (const word of normalizedCandidate.split(/\s+/).filter(Boolean)) {
-      if (word === normalizedExpected) return true
-      if (levenshtein(word, normalizedExpected) <= 1) return true
+      // Word-level: STT may output multiple space-separated segments
+      for (const word of normalizedCandidate.split(/\s+/).filter(Boolean)) {
+        if (word === normalizedExpected) return true
+        if (levenshtein(word, normalizedExpected) <= 1) return true
+      }
+
+      // Substring: expected hiragana contained within a longer transcript
+      // (e.g. politeness forms: "あついです" contains "あつい")
+      if (normalizedCandidate.includes(normalizedExpected)) return true
     }
-
-    // Substring: expected hiragana contained within a longer transcript
-    // (e.g. politeness forms: "あついです" contains "あつい")
-    if (normalizedCandidate.includes(normalizedExpected)) return true
   }
   return false
 }

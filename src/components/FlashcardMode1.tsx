@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
@@ -12,12 +12,13 @@ import type { KuromojiTokenizer } from '../types/kuromoji'
 
 interface Props {
   card: Word
+  words: Word[]
   tokenizer: KuromojiTokenizer | undefined
   cardType: 'due' | 'new' | 'extra'
   onAnswer: (quality: number, heard: string) => void
 }
 
-export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
+export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: Props) {
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null)
   const [heard, setHeard] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -25,6 +26,19 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
   const [correctionHeard, setCorrectionHeard] = useState('')
   const [correctionResult, setCorrectionResult] = useState<'correct' | 'incorrect' | null>(null)
   const settings = useSettingsStore()
+
+  // Build list of all kana that share an English translation with this card,
+  // so e.g. both あお and あおい are accepted for "blue"
+  const acceptedKana = useMemo(() => {
+    const englishSet = new Set(card.english.map((e) => e.toLowerCase()))
+    const kanaSet = new Set<string>([card.kana])
+    for (const w of words) {
+      if (w.english.some((e) => englishSet.has(e.toLowerCase()))) {
+        kanaSet.add(w.kana)
+      }
+    }
+    return [...kanaSet]
+  }, [card, words])
   const { isSpeaking, speak } = useSpeechSynthesis()
   const { playCorrect, playIncorrect } = useAudioFeedback()
   const autoStarted = useRef(false)
@@ -72,7 +86,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => applyResult(
-      compareJapanese(card.kana, transcripts, tokenizer ?? null),
+      compareJapanese(acceptedKana, transcripts, tokenizer ?? null),
       transcripts[0] ?? ''
     ),
     onError: setErrorMsg,
@@ -89,7 +103,7 @@ export function FlashcardMode1({ card, tokenizer, cardType, onAnswer }: Props) {
   const correction = useSpeechRecognition({
     lang: 'ja-JP',
     onResult: (transcripts) => {
-      const correct = compareJapanese(card.kana, transcripts, tokenizer ?? null)
+      const correct = compareJapanese(acceptedKana, transcripts, tokenizer ?? null)
       setCorrectionHeard(transcripts[0] ?? '')
       setCorrectionResult(correct ? 'correct' : 'incorrect')
       if (correct) {
