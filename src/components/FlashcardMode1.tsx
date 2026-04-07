@@ -198,7 +198,9 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
       ) : (
         <button
           className={`play-btn ${isSpeaking ? 'playing' : ''}`}
-          onClick={() => speak(primaryEnglish, 'en-US')}
+          onClick={() => speak(primaryEnglish, 'en-US', 0.9, () => {
+            if (settings.autoListen) setTimeout(() => start(), settings.autoStartDelay)
+          })}
         >
           {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
         </button>
