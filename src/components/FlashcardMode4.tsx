@@ -185,7 +185,9 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
       {settings.japaneseExerciseMode !== 'text' && (
         <button
           className={`play-btn ${isSpeaking ? 'playing' : ''}`}
-          onClick={() => speak(card.japanese, 'ja-JP')}
+          onClick={() => speak(card.japanese, 'ja-JP', 0.9, () => {
+            if (settings.autoListen) setTimeout(() => start(), settings.autoStartDelay)
+          })}
         >
           {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
         </button>
