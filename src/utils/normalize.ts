@@ -10,6 +10,12 @@ export function toHiragana(text: string | null | undefined, tokenizer: KuromojiT
   if (!text) return ''
   const cleaned = text.trim()
 
+  // If already kana, convert katakana→hiragana directly.
+  // Running kana through kuromoji can misparse it (e.g. は read as particle ワ).
+  if (wanakana.isKana(cleaned)) {
+    return wanakana.toHiragana(cleaned)
+  }
+
   if (tokenizer) {
     const tokens = tokenizer.tokenize(cleaned)
     const hiragana = tokens

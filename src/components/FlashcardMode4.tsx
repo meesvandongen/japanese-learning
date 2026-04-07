@@ -132,6 +132,22 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
     }
   }, [result, settings.speakToCorrect])
 
+  // Auto-start correction listening (same behavior as initial answer)
+  useEffect(() => {
+    if (!correctionPhase || correctionResult === 'correct') return
+    if (!settings.autoListen) return
+    if (isSpeaking) return
+    const timer = setTimeout(() => correction.start(), settings.autoStartDelay)
+    return () => clearTimeout(timer)
+  }, [correctionPhase, correctionResult, settings.autoListen, settings.autoStartDelay, isSpeaking]) // oxlint-disable-line react-hooks/exhaustive-deps
+
+  // Enforce max listen duration for correction phase
+  useEffect(() => {
+    if (!correction.isListening || !settings.maxListenDuration) return
+    const timer = setTimeout(() => correction.stop(), settings.maxListenDuration)
+    return () => clearTimeout(timer)
+  }, [correction.isListening, settings.maxListenDuration, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
+
   // Auto-advance after result (cancellable for manual grading override)
   // When speakToCorrect is on and result is incorrect, don't auto-advance — wait for correction
   useEffect(() => {
@@ -201,7 +217,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
             onStart={correction.start}
             onStop={correction.stop}
             disabled={isSpeaking}
-            listenMode="hold"
+            listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
           {correctionResult === 'incorrect' && (
             <div className="correction-retry">Try again</div>
