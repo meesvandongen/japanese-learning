@@ -217,6 +217,9 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
         showTranscript={settings.showTranscript}
         correctText={card.japanese}
         incorrectText={card.japanese}
+        kanaReading={card.kana}
+        onPlayAgain={() => speak(card.japanese, 'ja-JP')}
+        isPlaying={isSpeaking}
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}

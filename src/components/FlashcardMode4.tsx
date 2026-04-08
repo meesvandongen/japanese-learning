@@ -194,7 +194,12 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
       )}
 
       {showJapaneseText && (
-        <div className="card-prompt japanese-prompt">{card.japanese}</div>
+        <div className="card-prompt japanese-prompt">
+          {card.japanese}
+          {card.japanese !== card.kana && (
+            <span className="card-kana-reading">{card.kana}</span>
+          )}
+        </div>
       )}
 
       <div className="card-hint">Speak the English translation</div>

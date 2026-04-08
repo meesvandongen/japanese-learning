@@ -122,7 +122,12 @@ function WordRow({ word }: { word: EnrichedWord }) {
 
   return (
     <div className={`word-row status-${status}`}>
-      <div className="word-kana">{word.japanese}</div>
+      <div className="word-kana">
+        {word.japanese}
+        {word.japanese !== word.kana && (
+          <span className="word-reading">{word.kana}</span>
+        )}
+      </div>
       <div className="word-english">{primary}</div>
       <div className="word-meta">
         <span className={`status-badge badge-${status}`}>{STATUS_LABEL[status]}</span>
