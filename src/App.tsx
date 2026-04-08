@@ -95,6 +95,8 @@ function AppShell() {
           <a href="https://github.com/meesvandongen/japanese-learning" target="_blank" rel="noopener noreferrer" className="github-link">
             GitHub
           </a>
+          {' · '}
+          {__GIT_DATE__}
         </p>
       </footer>
     </div>
