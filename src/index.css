@@ -532,7 +532,15 @@ body {
   font-weight: 700;
 }
 .profile-tab.active .tab-count {
-  background: currentColor;
+  background: var(--primary);
+  color: white;
+}
+.profile-tab.tab-overdue.active .tab-count {
+  background: var(--danger);
+  color: white;
+}
+.profile-tab.tab-mastered.active .tab-count {
+  background: #7c3aed;
   color: white;
 }
 
