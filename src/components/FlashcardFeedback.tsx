@@ -5,6 +5,9 @@ interface Props {
   showTranscript: boolean
   correctText: string
   incorrectText: string
+  kanaReading?: string
+  onPlayAgain?: () => void
+  isPlaying?: boolean
   manualGrading?: boolean
   onOverrideCorrect?: () => void
   onOverrideIncorrect?: () => void
@@ -17,22 +20,34 @@ export function FlashcardFeedback({
   showTranscript,
   correctText,
   incorrectText,
+  kanaReading,
+  onPlayAgain,
+  isPlaying,
   manualGrading,
   onOverrideCorrect,
   onOverrideIncorrect,
 }: Props) {
   if (!result) return null
 
+  const answerText = result === 'correct' ? correctText : incorrectText
+
   return (
     <>
-      {result === 'correct' && showText && (
-        <div className="feedback correct">
-          ✓ <span className="answer-shown">{correctText}</span>
-        </div>
-      )}
-      {result === 'incorrect' && showText && (
-        <div className="feedback incorrect">
-          <span className="answer-shown">{incorrectText}</span>
+      {showText && (
+        <div className={`feedback ${result}`}>
+          {result === 'correct' && '✓ '}
+          <span className="answer-shown">{answerText}</span>
+          {kanaReading && kanaReading !== answerText && (
+            <span className="answer-kana">{kanaReading}</span>
+          )}
+          {onPlayAgain && (
+            <button
+              className={`play-btn feedback-play ${isPlaying ? 'playing' : ''}`}
+              onClick={onPlayAgain}
+            >
+              {isPlaying ? '🔊 Playing…' : '🔊 Play again'}
+            </button>
+          )}
         </div>
       )}
       {!showText && (
