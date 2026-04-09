@@ -41,7 +41,9 @@ function replaceArabicWithKanji(text: string): string {
  */
 export function toHiragana(text: string | null | undefined, tokenizer: KuromojiTokenizer | null): string {
   if (!text) return ''
-  const cleaned = text.trim()
+  // Convert Arabic digits to kanji so kuromoji can read them correctly.
+  // e.g. "1日" → "一日" → "いちにち". Works for both vocabulary entries and STT output.
+  const cleaned = replaceArabicWithKanji(text.trim())
 
   // If already kana, convert katakana→hiragana directly.
   // Running kana through kuromoji can misparse it (e.g. は read as particle ワ).
@@ -110,16 +112,6 @@ export function compareJapanese(expectedList: string[], candidates: string[], to
       // Substring: expected hiragana contained within a longer transcript
       // (e.g. politeness forms: "あついです" contains "あつい")
       if (normalizedCandidate.includes(normalizedExpected)) return true
-
-      // Numeric: Japanese STT often outputs Arabic digits (e.g. "1日" for "いちにち").
-      // Convert digits to kanji and retry the hiragana comparison.
-      if (/\d/.test(candidate)) {
-        const kanjiCandidate = replaceArabicWithKanji(candidate)
-        const normalizedKanjiCandidate = toHiragana(kanjiCandidate, tokenizer)
-        if (normalizedExpected === normalizedKanjiCandidate) return true
-        if (levenshtein(normalizedExpected, normalizedKanjiCandidate) <= 1) return true
-        if (normalizedKanjiCandidate.includes(normalizedExpected)) return true
-      }
     }
   }
   return false
