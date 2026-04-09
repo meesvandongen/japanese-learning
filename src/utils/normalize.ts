@@ -1,5 +1,6 @@
 import * as wanakana from 'wanakana'
 import { phoneticMatch } from './phonetic'
+import { JUKUJIKUN } from './jukujikun'
 import type { KuromojiTokenizer } from '../types/kuromoji'
 
 /**
@@ -53,30 +54,50 @@ function levenshtein(a: string, b: string): number {
 }
 
 /**
+ * Return all plausible hiragana readings for a text.
+ * Includes the primary kuromoji reading plus any jukujikun alternatives.
+ */
+function allReadings(text: string, tokenizer: KuromojiTokenizer | null): string[] {
+  const trimmed = text.trim()
+  const primary = toHiragana(trimmed, tokenizer)
+  const alt = JUKUJIKUN.get(trimmed)
+  if (!alt) return [primary]
+  const set = new Set([primary, ...alt])
+  return [...set]
+}
+
+/**
  * Compare Japanese: normalize both strings to hiragana and check fuzzy match.
  * Also handles transcripts with extra surrounding words (e.g. "あついです" for "あつい").
  * Accepts multiple expected answers so that words sharing the same English
  * translation (e.g. あお / あおい for "blue") are all considered correct.
+ *
+ * Jukujikun (熟字訓) — kanji compounds with irregular readings — are handled
+ * by expanding both sides to all known readings before comparison.
  */
 export function compareJapanese(expectedList: string[], candidates: string[], tokenizer: KuromojiTokenizer | null): boolean {
   for (const expected of expectedList) {
-    const normalizedExpected = toHiragana(expected, tokenizer)
+    const expectedReadings = allReadings(expected, tokenizer)
     for (const candidate of candidates) {
-      const normalizedCandidate = toHiragana(candidate, tokenizer)
+      const candidateReadings = allReadings(candidate, tokenizer)
 
-      // Full-phrase exact or near match
-      if (normalizedExpected === normalizedCandidate) return true
-      if (levenshtein(normalizedExpected, normalizedCandidate) <= 1) return true
+      for (const ne of expectedReadings) {
+        for (const nc of candidateReadings) {
+          // Full-phrase exact or near match
+          if (ne === nc) return true
+          if (levenshtein(ne, nc) <= 1) return true
 
-      // Word-level: STT may output multiple space-separated segments
-      for (const word of normalizedCandidate.split(/\s+/).filter(Boolean)) {
-        if (word === normalizedExpected) return true
-        if (levenshtein(word, normalizedExpected) <= 1) return true
+          // Word-level: STT may output multiple space-separated segments
+          for (const word of nc.split(/\s+/).filter(Boolean)) {
+            if (word === ne) return true
+            if (levenshtein(word, ne) <= 1) return true
+          }
+
+          // Substring: expected hiragana contained within a longer transcript
+          // (e.g. politeness forms: "あついです" contains "あつい")
+          if (nc.includes(ne)) return true
+        }
       }
-
-      // Substring: expected hiragana contained within a longer transcript
-      // (e.g. politeness forms: "あついです" contains "あつい")
-      if (normalizedCandidate.includes(normalizedExpected)) return true
     }
   }
   return false
