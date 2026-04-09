@@ -110,8 +110,8 @@ test.describe('App loads', () => {
 
   test('shows correct initial session stats with all cards new', async ({ page }) => {
     await setup(page)
-    // All 40 vocab items start as new
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('40')
+    // All 58 vocab items start as new
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('58')
     await expect(page.locator('[data-pill="due"] .pill-val')).toHaveText('0')
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('0')
   })
@@ -226,7 +226,7 @@ test.describe('Card progression', () => {
     await setup(page)
     await speak(page, ['たべる'])
     await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('57')
   })
 })
 
@@ -301,8 +301,8 @@ test.describe('SRS persistence', () => {
     await page.reload()
     await page.waitForSelector('.flashcard', { timeout: 35_000 })
 
-    // Due count should still be 0 (card is not due yet), new count = 39
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
+    // Due count should still be 0 (card is not due yet), new count = 57
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('57')
     await expect(page.locator('[data-pill="due"] .pill-val')).toHaveText('0')
   })
 
@@ -316,8 +316,8 @@ test.describe('SRS persistence', () => {
     page.once('dialog', (dialog) => dialog.accept())
     await page.locator('.reset-btn').click()
 
-    // All 40 cards should be new again
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('40')
+    // All 58 cards should be new again
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('58')
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('0')
   })
 })
@@ -340,6 +340,11 @@ test.describe('Extra practice', () => {
         'かう','うる','ねる','おきる','たつ','すわる','かえる','はいる','でる','わかる',
         'みず','たべもの','ひと','じかん','ひ','ほん','おかね','がっこう','くるま','いえ',
         'おおきい','ちいさい','あたらしい','ふるい','いい','わるい','はやい','おそい','あつい','さむい',
+        'おととい','きのう','きょう','あした','あさって',
+        'おととし','きょねん','ことし','らいねん','さらいねん',
+        'せんしゅう','こんしゅう','らいしゅう',
+        'せんげつ','こんげつ','らいげつ',
+        'けさ','ゆうべ',
       ]
       const cards = {}
       vocab.forEach((kana) => {
@@ -373,14 +378,14 @@ test.describe('Profile page', () => {
   test('shows correct total word count', async ({ page }) => {
     await setup(page)
     await page.getByRole('button', { name: 'Profile' }).click()
-    // 40 total words, first summary card
-    await expect(page.locator('.summary-card').first()).toContainText('40')
+    // 58 total words, first summary card
+    await expect(page.locator('.summary-card').first()).toContainText('58')
   })
 
-  test('all 40 words listed in All tab', async ({ page }) => {
+  test('all 58 words listed in All tab', async ({ page }) => {
     await setup(page)
     await page.getByRole('button', { name: 'Profile' }).click()
-    await expect(page.locator('.word-row')).toHaveCount(40)
+    await expect(page.locator('.word-row')).toHaveCount(58)
   })
 
   test('new words show New badge when nothing reviewed', async ({ page }) => {
@@ -401,7 +406,7 @@ test.describe('Profile page', () => {
     await page.getByRole('button', { name: 'Profile' }).click()
     // たべる should now be Learning
     await expect(page.locator('.badge-learning')).toHaveCount(1)
-    await expect(page.locator('.badge-new')).toHaveCount(39)
+    await expect(page.locator('.badge-new')).toHaveCount(57)
   })
 
   test('New filter shows only new cards', async ({ page }) => {
@@ -409,8 +414,8 @@ test.describe('Profile page', () => {
     await page.getByRole('button', { name: 'Profile' }).click()
     await page.locator('.profile-tab', { hasText: 'New' }).click()
     const rows = page.locator('.word-row')
-    await expect(rows).toHaveCount(40)
-    await expect(page.locator('.badge-new')).toHaveCount(40)
+    await expect(rows).toHaveCount(58)
+    await expect(page.locator('.badge-new')).toHaveCount(58)
   })
 
   test('Study tab returns to flashcard view', async ({ page }) => {

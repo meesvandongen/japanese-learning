@@ -40,6 +40,29 @@ const vocabulary = [
   { english: ["slow", "late"], japanese: "おそい", kana: "おそい" },
   { english: ["hot"], japanese: "あつい", kana: "あつい" },
   { english: ["cold"], japanese: "さむい", kana: "さむい" },
+  // Relative dates
+  { english: ["day before yesterday"], japanese: "一昨日", kana: "おととい" },
+  { english: ["yesterday"], japanese: "昨日", kana: "きのう" },
+  { english: ["today"], japanese: "今日", kana: "きょう" },
+  { english: ["tomorrow"], japanese: "明日", kana: "あした" },
+  { english: ["day after tomorrow"], japanese: "明後日", kana: "あさって" },
+  // Relative years
+  { english: ["year before last"], japanese: "一昨年", kana: "おととし" },
+  { english: ["last year"], japanese: "去年", kana: "きょねん" },
+  { english: ["this year"], japanese: "今年", kana: "ことし" },
+  { english: ["next year"], japanese: "来年", kana: "らいねん" },
+  { english: ["year after next"], japanese: "再来年", kana: "さらいねん" },
+  // Relative weeks
+  { english: ["last week"], japanese: "先週", kana: "せんしゅう" },
+  { english: ["this week"], japanese: "今週", kana: "こんしゅう" },
+  { english: ["next week"], japanese: "来週", kana: "らいしゅう" },
+  // Relative months
+  { english: ["last month"], japanese: "先月", kana: "せんげつ" },
+  { english: ["this month"], japanese: "今月", kana: "こんげつ" },
+  { english: ["next month"], japanese: "来月", kana: "らいげつ" },
+  // Other temporal
+  { english: ["this morning"], japanese: "今朝", kana: "けさ" },
+  { english: ["last night"], japanese: "昨夜", kana: "ゆうべ" },
 ]
 
 export default vocabulary

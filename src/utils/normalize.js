@@ -2,17 +2,61 @@ import * as wanakana from 'wanakana'
 import { phoneticMatch } from './phonetic'
 
 /**
+ * Kanji compounds whose standard colloquial reading differs from the
+ * character-by-character on'yomi that kuromoji's IPA dictionary returns.
+ * These are 熟字訓 (jukujikun) or words with strongly preferred kun'yomi
+ * readings in everyday speech.
+ */
+const READING_OVERRIDES = {
+  // Days
+  '一昨日': 'おととい',
+  '昨日': 'きのう',
+  '今日': 'きょう',
+  '明日': 'あした',
+  '明後日': 'あさって',
+  // Years
+  '一昨年': 'おととし',
+  '去年': 'きょねん',
+  '今年': 'ことし',
+  '来年': 'らいねん',
+  '再来年': 'さらいねん',
+  // Months
+  '先月': 'せんげつ',
+  '今月': 'こんげつ',
+  '来月': 'らいげつ',
+  // Weeks
+  '先週': 'せんしゅう',
+  '今週': 'こんしゅう',
+  '来週': 'らいしゅう',
+  // Other common temporal
+  '今朝': 'けさ',
+  '昨夜': 'ゆうべ',
+  // Common jukujikun (non-temporal)
+  '大人': 'おとな',
+  '一人': 'ひとり',
+  '二人': 'ふたり',
+}
+
+/**
  * Convert any Japanese text to hiragana using kuromoji readings.
  * Falls back to wanakana katakana→hiragana for strings already in kana.
+ *
+ * Applies READING_OVERRIDES for kanji whose colloquial spoken reading
+ * differs from the on'yomi that kuromoji returns.
  */
 export function toHiragana(text, tokenizer) {
   if (!text) return ''
   const cleaned = text.trim()
 
+  // Exact whole-string override (handles single-word STT output)
+  if (READING_OVERRIDES[cleaned]) return READING_OVERRIDES[cleaned]
+
   if (tokenizer) {
     const tokens = tokenizer.tokenize(cleaned)
     const hiragana = tokens
       .map((t) => {
+        // Per-token override for kanji with irregular readings
+        if (READING_OVERRIDES[t.surface_form]) return READING_OVERRIDES[t.surface_form]
         // reading is in katakana; fall back to surface form if missing
         const reading = t.reading || t.surface_form
         return wanakana.toHiragana(reading)
