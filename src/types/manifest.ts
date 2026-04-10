@@ -3,6 +3,7 @@ export interface Word {
   japanese: string
   english: string[]
   hint?: string
+  alt?: string[]
 }
 
 export interface Level {

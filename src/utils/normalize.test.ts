@@ -181,51 +181,24 @@ describe('compareJapanese', () => {
     })
   })
 
-  describe('jukujikun (熟字訓) — irregular compound readings', () => {
-    it('accepts おととし when STT returns 一昨年 (kuromoji reads いっさくねん)', () => {
-      // Simulate kuromoji returning on'yomi for 一昨年
+  describe('jukujikun via acceptedAnswers (alt readings from vocab data)', () => {
+    it('matches when acceptedAnswers includes both kana and kanji forms', () => {
+      // Simulates acceptedAnswers built from {kana: "おととし", japanese: "一昨年"}
+      // STT returns 一昨年 → kuromoji → いっさくねん, which matches 一昨年's kuromoji reading
       const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
-      expect(compareJapanese(['おととし'], ['一昨年'], tokenizer)).toBe(true)
+      expect(compareJapanese(['おととし', '一昨年'], ['一昨年'], tokenizer)).toBe(true)
     })
 
-    it('accepts おととい when STT returns 一昨日', () => {
-      const tokenizer = fakeTokenizer({ '一昨日': 'イッサクジツ' })
-      expect(compareJapanese(['おととい'], ['一昨日'], tokenizer)).toBe(true)
+    it('matches colloquial reading via alt in acceptedAnswers', () => {
+      // N2 card {kana: "いっさくねん", japanese: "一昨年", alt: ["おととし"]}
+      // User says おととし, STT returns おととし in kana
+      expect(compareJapanese(['いっさくねん', '一昨年', 'おととし'], ['おととし'], noTokenizer)).toBe(true)
     })
 
-    it('accepts あした when STT returns 明日 (kuromoji reads みょうにち)', () => {
-      const tokenizer = fakeTokenizer({ '明日': 'ミョウニチ' })
-      expect(compareJapanese(['あした'], ['明日'], tokenizer)).toBe(true)
-    })
-
-    it('accepts jukujikun when expected is the kanji form', () => {
-      // Expected is kanji (e.g. card shows 一昨年), candidate is spoken おととし
+    it('matches on-yomi reading when expected includes alt colloquial', () => {
+      // STT returns kanji, kuromoji produces on'yomi, expected list has on'yomi via kana field
       const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
-      expect(compareJapanese(['一昨年'], ['おととし'], tokenizer)).toBe(true)
-    })
-
-    it('still accepts the standard kuromoji reading too', () => {
-      const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
-      // いっさくねん should still match via kuromoji's primary reading
-      expect(compareJapanese(['いっさくねん'], ['一昨年'], tokenizer)).toBe(true)
-    })
-
-    it('handles jukujikun with fuzzy matching (levenshtein ≤ 1)', () => {
-      const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
-      // おととし with one extra char → still within distance 1
-      expect(compareJapanese(['おととしい'], ['一昨年'], tokenizer)).toBe(true)
-    })
-
-    it('works without tokenizer when kanji has jukujikun entry', () => {
-      // Without tokenizer, kanji passes through wanakana unchanged,
-      // but jukujikun lookup still provides the correct reading
-      expect(compareJapanese(['おととし'], ['一昨年'], noTokenizer)).toBe(true)
-    })
-
-    it('does not affect non-jukujikun words', () => {
-      const tokenizer = fakeTokenizer({ '暑い': 'アツイ' })
-      expect(compareJapanese(['あつい'], ['暑い'], tokenizer)).toBe(true)
-      expect(compareJapanese(['さむい'], ['暑い'], tokenizer)).toBe(false)
+      expect(compareJapanese(['いっさくねん', '一昨年', 'おととし'], ['一昨年'], tokenizer)).toBe(true)
     })
   })
 

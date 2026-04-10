@@ -33,11 +33,12 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
   // matches even when the tokenizer isn't loaded.
   const acceptedAnswers = useMemo(() => {
     const englishSet = new Set(card.english.map((e) => e.toLowerCase()))
-    const answerSet = new Set<string>([card.kana, card.japanese])
+    const answerSet = new Set<string>([card.kana, card.japanese, ...(card.alt ?? [])])
     for (const w of words) {
       if (w.english.some((e) => englishSet.has(e.toLowerCase()))) {
         answerSet.add(w.kana)
         answerSet.add(w.japanese)
+        w.alt?.forEach((a) => answerSet.add(a))
       }
     }
     return [...answerSet]
