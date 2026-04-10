@@ -181,6 +181,27 @@ describe('compareJapanese', () => {
     })
   })
 
+  describe('jukujikun via acceptedAnswers (alt readings from vocab data)', () => {
+    it('matches when acceptedAnswers includes both kana and kanji forms', () => {
+      // Simulates acceptedAnswers built from {kana: "おととし", japanese: "一昨年"}
+      // STT returns 一昨年 → kuromoji → いっさくねん, which matches 一昨年's kuromoji reading
+      const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
+      expect(compareJapanese(['おととし', '一昨年'], ['一昨年'], tokenizer)).toBe(true)
+    })
+
+    it('matches colloquial reading via alt in acceptedAnswers', () => {
+      // N2 card {kana: "いっさくねん", japanese: "一昨年", alt: ["おととし"]}
+      // User says おととし, STT returns おととし in kana
+      expect(compareJapanese(['いっさくねん', '一昨年', 'おととし'], ['おととし'], noTokenizer)).toBe(true)
+    })
+
+    it('matches on-yomi reading when expected includes alt colloquial', () => {
+      // STT returns kanji, kuromoji produces on'yomi, expected list has on'yomi via kana field
+      const tokenizer = fakeTokenizer({ '一昨年': 'イッサクネン' })
+      expect(compareJapanese(['いっさくねん', '一昨年', 'おととし'], ['一昨年'], tokenizer)).toBe(true)
+    })
+  })
+
   describe('edge cases', () => {
     it('returns false for empty candidates', () => {
       expect(compareJapanese(['あつい'], [], noTokenizer)).toBe(false)

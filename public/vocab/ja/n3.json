@@ -7698,6 +7698,7 @@
       "id": "こんにち",
       "kana": "こんにち",
       "japanese": "今日",
+      "alt": ["きょう"],
       "english": [
         "today",
         "this day"
@@ -13761,6 +13762,7 @@
       "id": "ばいう",
       "kana": "ばいう",
       "japanese": "梅雨",
+      "alt": ["つゆ"],
       "english": [
         "rainy season"
       ]
