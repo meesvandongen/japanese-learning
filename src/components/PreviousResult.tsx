@@ -7,6 +7,7 @@ export interface PreviousResultData {
   english: string[]
   result: 'correct' | 'incorrect'
   heard: string
+  skipped: boolean
   mode: 1 | 4
 }
 
@@ -30,9 +31,11 @@ export function PreviousResult({ data, manualGrading, onOverride }: Props) {
           {' → '}
           {data.mode === 1 ? data.japanese : primaryEnglish}
         </span>
-        {data.heard && (
+        {data.skipped ? (
+          <span className="prev-result-heard">Skipped (didn't know)</span>
+        ) : data.heard ? (
           <span className="prev-result-heard">Heard: "{data.heard}"</span>
-        )}
+        ) : null}
       </div>
 
       {manualGrading && !isCorrect && (

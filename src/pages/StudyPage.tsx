@@ -35,7 +35,7 @@ export function StudyPage() {
       : null
 
   const handleAnswer = useCallback(
-    (quality: number, heard: string) => {
+    (quality: number, heard: string, skipped: boolean) => {
       const existing = cardStates[card.kana]
       const updated = applyReview(existing, quality)
       applyCardReview(card.kana, updated)
@@ -46,6 +46,7 @@ export function StudyPage() {
         english: card.english,
         result: quality >= 3 ? 'correct' : 'incorrect',
         heard,
+        skipped,
         mode,
       })
       setLastShownId(card.kana)
