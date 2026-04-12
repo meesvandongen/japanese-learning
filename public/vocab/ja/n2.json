@@ -1399,7 +1399,6 @@
       "id": "いっさくじつ",
       "kana": "いっさくじつ",
       "japanese": "一昨日",
-      "alt": ["おととい", "おとつい"],
       "english": [
         "day before yesterday"
       ]
@@ -1408,7 +1407,6 @@
       "id": "いっさくねん",
       "kana": "いっさくねん",
       "japanese": "一昨年",
-      "alt": ["おととし"],
       "english": [
         "year before last"
       ]
@@ -5238,7 +5236,6 @@
       "id": "こうよう",
       "kana": "こうよう",
       "japanese": "紅葉",
-      "alt": ["もみじ"],
       "english": [
         "fall colors",
         "autumn leaves"
@@ -15032,7 +15029,6 @@
       "id": "もみじ",
       "kana": "もみじ",
       "japanese": "紅葉",
-      "alt": ["こうよう"],
       "english": [
         "Japanese maple",
         "maple"
