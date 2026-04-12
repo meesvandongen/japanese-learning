@@ -1123,6 +1123,28 @@ body {
   padding: 5px 12px;
 }
 
+/* ─── Report mistake link ─────────────────────────────────────────────── */
+
+.report-mistake-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.report-mistake-link:hover {
+  color: var(--danger);
+  text-decoration: underline;
+}
+
+.report-mistake-compact {
+  margin-top: 0;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+}
+
 /* Japanese prompt text in Mode 4 (text/audio+text modes) */
 .japanese-prompt {
   font-size: 2rem;

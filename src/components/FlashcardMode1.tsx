@@ -7,6 +7,7 @@ import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { useAudioFeedback } from '../hooks/useAudioFeedback'
 import { compareJapanese, toHiragana } from '../utils/normalize'
 import { useSettingsStore } from '../store/settingsStore'
+import { buildReportUrl } from '../utils/reportUrl'
 import type { Word } from '../types'
 import type { KuromojiTokenizer } from '../types/kuromoji'
 
@@ -224,6 +225,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
+        reportUrl={buildReportUrl(card)}
       />
 
       {correctionPhase && correctionResult !== 'correct' && (

@@ -7,6 +7,7 @@ import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { useAudioFeedback } from '../hooks/useAudioFeedback'
 import { compareEnglish } from '../utils/normalize'
 import { useSettingsStore } from '../store/settingsStore'
+import { buildReportUrl } from '../utils/reportUrl'
 import type { Word } from '../types'
 
 interface Props {
@@ -214,6 +215,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
+        reportUrl={buildReportUrl(card)}
       />
 
       {correctionPhase && correctionResult !== 'correct' && (
