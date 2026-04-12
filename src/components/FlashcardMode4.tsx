@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
+import { ReportButton } from './ReportButton'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useSpeechSynthesis } from '../hooks/useSpeechSynthesis'
 import { useAudioFeedback } from '../hooks/useAudioFeedback'
@@ -215,6 +216,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
       />
+      {result && <ReportButton card={card} mode={4} heard={heard} />}
 
       {correctionPhase && correctionResult !== 'correct' && (
         <div className="correction-phase">

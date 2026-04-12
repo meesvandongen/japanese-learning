@@ -1179,6 +1179,27 @@ body {
   color: white;
 }
 
+/* Report mistake button */
+.report-btn {
+  display: block;
+  margin: 8px auto 0;
+  padding: 4px 10px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  width: fit-content;
+}
+
+.report-btn:hover {
+  border-color: var(--danger-light);
+  color: var(--danger);
+}
+
 /* Streak import */
 .streak-import-row {
   display: flex;
