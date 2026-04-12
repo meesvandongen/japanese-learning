@@ -11,6 +11,7 @@ interface Props {
   manualGrading?: boolean
   onOverrideCorrect?: () => void
   onOverrideIncorrect?: () => void
+  reportUrl?: string
 }
 
 export function FlashcardFeedback({
@@ -26,6 +27,7 @@ export function FlashcardFeedback({
   manualGrading,
   onOverrideCorrect,
   onOverrideIncorrect,
+  reportUrl,
 }: Props) {
   if (!result) return null
 
@@ -71,6 +73,17 @@ export function FlashcardFeedback({
             </button>
           )}
         </div>
+      )}
+      {reportUrl && (
+        <a
+          className="report-mistake-link"
+          href={reportUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Report mistake
+        </a>
       )}
     </>
   )

@@ -1,3 +1,6 @@
+import type { Word } from '../types'
+import { buildReportUrl } from '../utils/reportUrl'
+
 export interface PreviousResultData {
   japanese: string
   kana: string
@@ -48,6 +51,16 @@ export function PreviousResult({ data, manualGrading, onOverride }: Props) {
           Mark as incorrect
         </button>
       )}
+      <a
+        className="report-mistake-link report-mistake-compact"
+        href={buildReportUrl({ japanese: data.japanese, kana: data.kana, english: data.english } as Word)}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        title="Report mistake"
+      >
+        Report
+      </a>
     </div>
   )
 }
