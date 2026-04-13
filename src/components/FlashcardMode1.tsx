@@ -16,12 +16,13 @@ interface Props {
   words: Word[]
   tokenizer: KuromojiTokenizer | undefined
   cardType: 'due' | 'new' | 'extra'
-  onAnswer: (quality: number, heard: string) => void
+  onAnswer: (quality: number, heard: string, skipped: boolean) => void
 }
 
 export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: Props) {
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null)
   const [heard, setHeard] = useState('')
+  const [skipped, setSkipped] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [correctionPhase, setCorrectionPhase] = useState(false)
   const [correctionHeard, setCorrectionHeard] = useState('')
@@ -164,24 +165,24 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
     if (!result) return
     if (result === 'incorrect' && settings.speakToCorrect) return
     const delay = result === 'correct' ? 1200 : 2500
-    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1, heard), delay)
+    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1, heard, skipped), delay)
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
-  }, [result, heard, onAnswer, settings.speakToCorrect])
+  }, [result, heard, skipped, onAnswer, settings.speakToCorrect])
 
   // Auto-advance after successful correction
   useEffect(() => {
     if (correctionResult !== 'correct') return
-    advanceTimerRef.current = setTimeout(() => onAnswer(1, heard), 1200)
+    advanceTimerRef.current = setTimeout(() => onAnswer(1, heard, skipped), 1200)
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
-  }, [correctionResult, heard, onAnswer])
+  }, [correctionResult, heard, skipped, onAnswer])
 
   function overrideGrade(quality: number) {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
-    onAnswer(quality, heard)
+    onAnswer(quality, heard, skipped)
   }
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
@@ -225,7 +226,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
-        reportUrl={buildReportUrl(card)}
+        reportUrl={buildReportUrl(card, { heard, skipped })}
       />
 
       {correctionPhase && correctionResult !== 'correct' && (
@@ -246,7 +247,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
           )}
           <button
             className="correction-skip-btn"
-            onClick={() => onAnswer(1, heard)}
+            onClick={() => onAnswer(1, heard, skipped)}
           >
             Skip
           </button>
@@ -262,7 +263,7 @@ export function FlashcardMode1({ card, words, tokenizer, cardType, onAnswer }: P
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          <button className="dont-know-btn" onClick={() => applyResult(false, '')} aria-label="Don't know">
+          <button className="dont-know-btn" onClick={() => { setSkipped(true); applyResult(false, '') }} aria-label="Don't know">
             ?
           </button>
         </div>
