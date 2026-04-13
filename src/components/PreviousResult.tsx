@@ -56,7 +56,10 @@ export function PreviousResult({ data, manualGrading, onOverride }: Props) {
       )}
       <a
         className="report-mistake-link report-mistake-compact"
-        href={buildReportUrl({ japanese: data.japanese, kana: data.kana, english: data.english } as Word)}
+        href={buildReportUrl(
+          { japanese: data.japanese, kana: data.kana, english: data.english } as Word,
+          { heard: data.heard, skipped: data.skipped }
+        )}
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}

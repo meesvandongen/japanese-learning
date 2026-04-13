@@ -216,7 +216,7 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
         manualGrading={settings.manualGrading}
         onOverrideCorrect={() => overrideGrade(4)}
         onOverrideIncorrect={() => overrideGrade(1)}
-        reportUrl={buildReportUrl(card)}
+        reportUrl={buildReportUrl(card, { heard, skipped })}
       />
 
       {correctionPhase && correctionResult !== 'correct' && (
