@@ -14,4 +14,6 @@ export interface Settings {
   englishExerciseMode: ExercisePromptMode
   manualGrading: boolean
   speakToCorrect: boolean
+  /** When set, forces the study page to show this specific card (by kana). */
+  debugCardKana: string | null
 }

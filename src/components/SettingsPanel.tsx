@@ -1,8 +1,12 @@
+import { useState, useMemo } from 'react'
 import { useSettingsStore } from '../store/settingsStore'
+import { useVocabContext } from '../context/VocabularyContext'
 import type { ExercisePromptMode, Settings } from '../types'
 
 export function SettingsPanel() {
   const settings = useSettingsStore()
+  const { words } = useVocabContext()
+  const [debugSearch, setDebugSearch] = useState('')
 
   function set<K extends keyof Settings>(key: K, value: Settings[K]) {
     useSettingsStore.setState({ [key]: value } as Partial<Settings>)
@@ -11,6 +15,23 @@ export function SettingsPanel() {
   function toggle(key: keyof Settings) {
     useSettingsStore.setState({ [key]: !settings[key] })
   }
+
+  const debugMatches = useMemo(() => {
+    if (!debugSearch.trim()) return []
+    const q = debugSearch.toLowerCase()
+    return words
+      .filter(
+        (w) =>
+          w.kana.includes(q) ||
+          w.japanese.includes(q) ||
+          w.english.some((e) => e.toLowerCase().includes(q))
+      )
+      .slice(0, 10)
+  }, [debugSearch, words])
+
+  const pinnedWord = settings.debugCardKana
+    ? words.find((w) => w.kana === settings.debugCardKana)
+    : null
 
   const promptModeOptions: { value: ExercisePromptMode; label: string; description: string }[] = [
     { value: 'audio', label: 'Audio only', description: 'Hear the prompt, no text shown' },
@@ -241,6 +262,64 @@ export function SettingsPanel() {
             </div>
           </label>
         </div>
+      </section>
+
+      <section className="settings-group">
+        <h3 className="settings-group-title">Debug — Pin exercise</h3>
+        <p className="settings-hint">Force a specific word to always appear as the current exercise</p>
+
+        {pinnedWord && (
+          <div className="debug-pinned">
+            <span className="debug-pinned-word">
+              {pinnedWord.japanese}
+              {pinnedWord.japanese !== pinnedWord.kana && (
+                <span className="debug-pinned-kana"> ({pinnedWord.kana})</span>
+              )}
+              {' — '}
+              {pinnedWord.english[0]}
+            </span>
+            <button
+              className="debug-clear-btn"
+              onClick={() => set('debugCardKana', null)}
+            >
+              Unpin
+            </button>
+          </div>
+        )}
+
+        <input
+          type="text"
+          className="debug-search-input"
+          placeholder="Search by kana, kanji, or English…"
+          value={debugSearch}
+          onChange={(e) => setDebugSearch(e.target.value)}
+        />
+
+        {debugSearch.trim() && (
+          <div className="debug-results">
+            {debugMatches.length === 0 && (
+              <div className="debug-no-results">No matches</div>
+            )}
+            {debugMatches.map((w) => (
+              <button
+                key={w.kana}
+                className={`debug-result-row ${settings.debugCardKana === w.kana ? 'active' : ''}`}
+                onClick={() => {
+                  set('debugCardKana', w.kana)
+                  setDebugSearch('')
+                }}
+              >
+                <span className="debug-result-jp">
+                  {w.japanese}
+                  {w.japanese !== w.kana && (
+                    <span className="debug-result-kana"> ({w.kana})</span>
+                  )}
+                </span>
+                <span className="debug-result-en">{w.english[0]}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </section>
     </>
   )
