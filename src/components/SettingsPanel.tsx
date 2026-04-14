@@ -89,6 +89,24 @@ export function SettingsPanel() {
 
       {settings.autoListen && (
         <section className="settings-group">
+          <div className="settings-options">
+            <label className={`settings-option ${settings.keepScreenAwake ? 'active' : ''}`}>
+              <input
+                type="checkbox"
+                checked={settings.keepScreenAwake}
+                onChange={() => toggle('keepScreenAwake')}
+              />
+              <div>
+                <strong>Keep screen awake</strong>
+                <span>Prevent the screen from turning off while studying</span>
+              </div>
+            </label>
+          </div>
+        </section>
+      )}
+
+      {settings.autoListen && (
+        <section className="settings-group">
           <h3 className="settings-group-title">Auto-start delay</h3>
           <div className="settings-slider-row">
             <input
