@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useWakeLock } from '../hooks/useWakeLock'
 import { useKuromoji } from '../hooks/useKuromoji'
 import { FlashcardMode1 } from '../components/FlashcardMode1'
 import { FlashcardMode4 } from '../components/FlashcardMode4'
@@ -24,6 +25,7 @@ export function StudyPage() {
   const streakCount = useAppStore((s) => s.streakCount)
   const { applyCardReview, recordStudyDay } = useAppStore()
   const settings = useSettingsStore()
+  useWakeLock(settings.autoListen && settings.keepScreenAwake)
   const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
 
   const { card, cardType } = getNextCard(words, cardStates, lastShownId)

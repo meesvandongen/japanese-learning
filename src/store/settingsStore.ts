@@ -8,6 +8,7 @@ export const useSettingsStore = create<Settings>()(
       autoListen: false,
       autoStartDelay: 500,
       maxListenDuration: 10000,
+      keepScreenAwake: false,
       feedbackText: true,
       feedbackVoice: true,
       feedbackSound: true,
