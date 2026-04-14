@@ -76,18 +76,30 @@ function speechMockScript() {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(window as any).speechSynthesis = {
-    speak(utterance: { onstart: (() => void) | null; onend: (() => void) | null }) {
-      setTimeout(() => {
-        utterance.onstart?.()
-        utterance.onend?.()
-      }, 10)
+  // Use Object.defineProperty to ensure the mock replaces the native API
+  // even when the browser defines speechSynthesis as non-writable.
+  Object.defineProperty(window, 'speechSynthesis', {
+    value: {
+      speak(utterance: { onstart: (() => void) | null; onend: (() => void) | null }) {
+        setTimeout(() => {
+          utterance.onstart?.()
+          utterance.onend?.()
+        }, 10)
+      },
+      cancel() {},
+      getVoices: () => [],
     },
-    cancel() {},
-    getVoices: () => [],
-  }
+    writable: true,
+    configurable: true,
+  })
 }
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+/** Number of words in the ja/n5 vocabulary set. Update if the vocab file changes. */
+const VOCAB_COUNT = 704
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -97,11 +109,15 @@ async function setup(page: import('@playwright/test').Page) {
   await page.addInitScript(speechMockScript)
   // Seed localStorage with a clean SRS slate and pre-selected language/level
   // so the onboarding screen is skipped and we land directly in the study view.
+  // Zustand persist middleware wraps state in { state: {...}, version: 0 }.
   await page.goto('/')
   await page.evaluate(() => {
     localStorage.setItem(
       'jp-flashcards-srs-v1',
-      JSON.stringify({ cards: {}, selectedLanguageId: 'ja', selectedLevelId: 'n5' })
+      JSON.stringify({
+        state: { cards: {}, selectedLanguageId: 'ja', selectedLevelId: 'n5', streakCount: 0, streakLastDate: null },
+        version: 0,
+      })
     )
   })
   await page.reload()
@@ -118,6 +134,28 @@ async function speak(page: import('@playwright/test').Page, transcripts: string[
   )
 }
 
+/** Assert that every visible element matching `selector` is fully inside the viewport. */
+async function assertInViewport(page: import('@playwright/test').Page, selector: string) {
+  const viewport = page.viewportSize()!
+  const boxes = await page.locator(selector).evaluateAll((els) =>
+    els
+      .filter((el) => {
+        const style = window.getComputedStyle(el)
+        return style.display !== 'none' && style.visibility !== 'hidden'
+      })
+      .map((el) => {
+        const r = el.getBoundingClientRect()
+        return { top: r.top, bottom: r.bottom, left: r.left, right: r.right }
+      })
+  )
+  for (const box of boxes) {
+    expect(box.top).toBeGreaterThanOrEqual(0)
+    expect(box.bottom).toBeLessThanOrEqual(viewport.height)
+    expect(box.left).toBeGreaterThanOrEqual(0)
+    expect(box.right).toBeLessThanOrEqual(viewport.width)
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Tests — App structure
 // ---------------------------------------------------------------------------
@@ -125,15 +163,14 @@ async function speak(page: import('@playwright/test').Page, transcripts: string[
 test.describe('App loads', () => {
   test('renders header and default mode 1 card', async ({ page }) => {
     await setup(page)
-    await expect(page.locator('h1')).toContainText('Japanese')
+    await expect(page.locator('.header-title-compact')).toContainText('Japanese')
     await expect(page.locator('.card-label')).toHaveText('Say this in Japanese:')
     await expect(page.locator('.record-btn')).toBeVisible()
   })
 
   test('shows correct initial session stats with all cards new', async ({ page }) => {
     await setup(page)
-    // All 40 vocab items start as new
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('40')
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText(String(VOCAB_COUNT))
     await expect(page.locator('[data-pill="due"] .pill-val')).toHaveText('0')
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('0')
   })
@@ -189,6 +226,9 @@ test.describe('Mode 1 — say in Japanese', () => {
     await speak(page, ['まったくちがう'])
     await expect(page.locator('.feedback.incorrect')).toBeVisible()
     await expect(page.locator('.answer-shown')).toBeVisible()
+    // All flashcard content must stay within the viewport
+    await assertInViewport(page, '.flashcard')
+    await assertInViewport(page, '.feedback')
   })
 
   test('dont-know button is visible before answering', async ({ page }) => {
@@ -201,12 +241,105 @@ test.describe('Mode 1 — say in Japanese', () => {
     await page.locator('.dont-know-btn').click()
     await expect(page.locator('.feedback.incorrect')).toBeVisible()
     await expect(page.locator('.answer-shown')).toBeVisible()
+    await assertInViewport(page, '.flashcard')
   })
 
   test('record button disappears after answer is submitted', async ({ page }) => {
     await setup(page)
     await speak(page, ['たべる'])
     await expect(page.locator('.record-btn')).not.toBeVisible()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// Tests — Viewport overflow (worst case)
+// ---------------------------------------------------------------------------
+
+test.describe('Viewport overflow', () => {
+  test('wrong answer with all feedback options fits in viewport (mode 1)', async ({ page }) => {
+    await setup(page)
+    // Enable every optional element that adds height: text prompt, transcript, manual grading
+    // Zustand persist wraps settings in { state: {...}, version: 0 }.
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'jp-flashcards-settings-v1',
+        JSON.stringify({
+          state: {
+            autoListen: false,
+            autoStartDelay: 500,
+            maxListenDuration: 10000,
+            keepScreenAwake: false,
+            feedbackText: true,
+            feedbackVoice: false,
+            feedbackSound: false,
+            phoneticSoundex: true,
+            phoneticMetaphone: false,
+            showTranscript: true,
+            japaneseExerciseMode: 'audio',
+            englishExerciseMode: 'text',
+            manualGrading: true,
+            speakToCorrect: false,
+          },
+          version: 0,
+        })
+      )
+    })
+    await page.reload()
+    await page.waitForSelector('.flashcard', { timeout: 35_000 })
+
+    // Trigger a wrong answer so feedback, transcript, and manual override all render
+    await speak(page, ['まったくちがう'])
+    await expect(page.locator('.feedback.incorrect')).toBeVisible()
+    await expect(page.locator('.transcript-heard')).toBeVisible()
+    await expect(page.locator('.manual-grading')).toBeVisible()
+
+    // The entire flashcard and all its children must be within the viewport
+    await assertInViewport(page, '.flashcard')
+    await assertInViewport(page, '.feedback')
+    await assertInViewport(page, '.transcript-heard')
+    await assertInViewport(page, '.manual-grading')
+    await assertInViewport(page, '.report-mistake-link')
+  })
+
+  test('wrong answer with all feedback options fits in viewport (mode 4)', async ({ page }) => {
+    await setup(page)
+    await page.evaluate(() => {
+      localStorage.setItem(
+        'jp-flashcards-settings-v1',
+        JSON.stringify({
+          state: {
+            autoListen: false,
+            autoStartDelay: 500,
+            maxListenDuration: 10000,
+            keepScreenAwake: false,
+            feedbackText: true,
+            feedbackVoice: false,
+            feedbackSound: false,
+            phoneticSoundex: true,
+            phoneticMetaphone: false,
+            showTranscript: true,
+            japaneseExerciseMode: 'both',
+            englishExerciseMode: 'text',
+            manualGrading: true,
+            speakToCorrect: false,
+          },
+          version: 0,
+        })
+      )
+    })
+    await page.reload()
+    await page.waitForSelector('.flashcard', { timeout: 35_000 })
+
+    await page.getByText('Translate to English').click()
+    await speak(page, ['completely wrong answer here'])
+    await expect(page.locator('.feedback.incorrect')).toBeVisible()
+    await expect(page.locator('.transcript-heard')).toBeVisible()
+    await expect(page.locator('.manual-grading')).toBeVisible()
+
+    await assertInViewport(page, '.flashcard')
+    await assertInViewport(page, '.feedback')
+    await assertInViewport(page, '.transcript-heard')
+    await assertInViewport(page, '.manual-grading')
   })
 })
 
@@ -248,7 +381,7 @@ test.describe('Card progression', () => {
     await setup(page)
     await speak(page, ['たべる'])
     await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText(String(VOCAB_COUNT - 1))
   })
 })
 
@@ -285,6 +418,8 @@ test.describe('Mode 4 — translate to English', () => {
     await page.getByText('Translate to English').click()
     await speak(page, ['completely wrong answer here'])
     await expect(page.locator('.feedback.incorrect')).toBeVisible()
+    await assertInViewport(page, '.flashcard')
+    await assertInViewport(page, '.feedback')
   })
 })
 
@@ -301,13 +436,13 @@ test.describe('SRS persistence', () => {
 
     const stored = await page.evaluate(() => {
       const raw = localStorage.getItem('jp-flashcards-srs-v1')
-      return raw ? JSON.parse(raw) as { cards: Record<string, { dueDate: number; repetitions: number }> } : null
+      return raw ? JSON.parse(raw) as { state: { cards: Record<string, { dueDate: number; repetitions: number }> } } : null
     })
 
     expect(stored).not.toBeNull()
-    expect(stored!.cards).toBeDefined()
+    expect(stored!.state.cards).toBeDefined()
     // たべる should now have a dueDate set
-    const card = stored!.cards['たべる']
+    const card = stored!.state.cards['たべる']
     expect(card).toBeDefined()
     expect(card.dueDate).toBeGreaterThan(Date.now())
     expect(card.repetitions).toBe(1)
@@ -324,7 +459,7 @@ test.describe('SRS persistence', () => {
     await page.waitForSelector('.flashcard', { timeout: 35_000 })
 
     // Due count should still be 0 (card is not due yet), new count = 39
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('39')
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText(String(VOCAB_COUNT - 1))
     await expect(page.locator('[data-pill="due"] .pill-val')).toHaveText('0')
   })
 
@@ -334,12 +469,23 @@ test.describe('SRS persistence', () => {
     await speak(page, ['たべる'])
     await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
 
-    // Reset
-    page.once('dialog', (dialog) => dialog.accept())
-    await page.locator('.reset-btn').click()
+    // Navigate to Settings page where the reset button lives
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Settings' }).click()
+    await expect(page.locator('.reset-btn-settings')).toBeVisible()
 
-    // All 40 cards should be new again
-    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText('40')
+    // Reset — this clears the store including language/level selection
+    page.once('dialog', (dialog) => dialog.accept())
+    await page.locator('.reset-btn-settings').click()
+
+    // After reset, the app navigates to / and shows language selector.
+    // Re-select language and level to get back to the study view.
+    await page.locator('.selector-card', { hasText: 'Japanese' }).click()
+    await page.locator('.selector-card').first().click()
+    await page.waitForSelector('.flashcard', { timeout: 35_000 })
+
+    // All cards should be new again
+    await expect(page.locator('[data-pill="new"] .pill-val')).toHaveText(String(VOCAB_COUNT))
     await expect(page.locator('[data-pill="session"] .pill-val')).toHaveText('0')
   })
 })
@@ -356,18 +502,18 @@ test.describe('Extra practice', () => {
     const now = Date.now()
     const futureDate = now + 24 * 60 * 60 * 1000 // tomorrow
 
-    await page.evaluate((due) => {
-      const vocab = [
-        'たべる','のむ','いく','くる','みる','する','はなす','きく','よむ','かく',
-        'かう','うる','ねる','おきる','たつ','すわる','かえる','はいる','でる','わかる',
-        'みず','たべもの','ひと','じかん','ひ','ほん','おかね','がっこう','くるま','いえ',
-        'おおきい','ちいさい','あたらしい','ふるい','いい','わるい','はやい','おそい','あつい','さむい',
-      ]
+    await page.evaluate(async (due) => {
+      // Fetch the actual vocab list so the test stays in sync with vocabulary changes
+      const resp = await fetch('/vocab/ja/n5.json')
+      const data = await resp.json() as { words: { kana: string }[] }
       const cards: Record<string, { repetitions: number; easeFactor: number; interval: number; dueDate: number; lastReview: number }> = {}
-      vocab.forEach((kana) => {
-        cards[kana] = { repetitions: 1, easeFactor: 2.5, interval: 1, dueDate: due, lastReview: Date.now() - 1000 }
+      data.words.forEach((w) => {
+        cards[w.kana] = { repetitions: 1, easeFactor: 2.5, interval: 1, dueDate: due, lastReview: Date.now() - 1000 }
       })
-      localStorage.setItem('jp-flashcards-srs-v1', JSON.stringify({ cards }))
+      localStorage.setItem('jp-flashcards-srs-v1', JSON.stringify({
+        state: { cards, selectedLanguageId: 'ja', selectedLevelId: 'n5', streakCount: 0, streakLastDate: null },
+        version: 0,
+      }))
     }, futureDate)
 
     await page.reload()
@@ -386,7 +532,8 @@ test.describe('Extra practice', () => {
 test.describe('Profile page', () => {
   test('Profile tab opens the profile page', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
     await expect(page.locator('.profile-page')).toBeVisible()
     await expect(page.locator('.summary-grid')).toBeVisible()
     await expect(page.locator('.word-table')).toBeVisible()
@@ -394,20 +541,22 @@ test.describe('Profile page', () => {
 
   test('shows correct total word count', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
-    // 40 total words, first summary card
-    await expect(page.locator('.summary-card').first()).toContainText('40')
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
+    await expect(page.locator('.summary-card').first()).toContainText(String(VOCAB_COUNT))
   })
 
-  test('all 40 words listed in All tab', async ({ page }) => {
+  test('all words listed in All tab', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
-    await expect(page.locator('.word-row')).toHaveCount(40)
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
+    await expect(page.locator('.word-row')).toHaveCount(VOCAB_COUNT)
   })
 
   test('new words show New badge when nothing reviewed', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
     await expect(page.locator('.badge-new').first()).toBeVisible()
     // No learning or mastered rows
     await expect(page.locator('.badge-learning')).toHaveCount(0)
@@ -420,25 +569,28 @@ test.describe('Profile page', () => {
     await speak(page, ['たべる'])
     await expect(page.locator('.record-btn')).toBeVisible({ timeout: 5000 })
 
-    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
     // たべる should now be Learning
     await expect(page.locator('.badge-learning')).toHaveCount(1)
-    await expect(page.locator('.badge-new')).toHaveCount(39)
+    await expect(page.locator('.badge-new')).toHaveCount(VOCAB_COUNT - 1)
   })
 
   test('New filter shows only new cards', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
     await page.locator('.profile-tab', { hasText: 'New' }).click()
     const rows = page.locator('.word-row')
-    await expect(rows).toHaveCount(40)
-    await expect(page.locator('.badge-new')).toHaveCount(40)
+    await expect(rows).toHaveCount(VOCAB_COUNT)
+    await expect(page.locator('.badge-new')).toHaveCount(VOCAB_COUNT)
   })
 
   test('Study tab returns to flashcard view', async ({ page }) => {
     await setup(page)
-    await page.getByRole('button', { name: 'Profile' }).click()
-    await page.getByRole('button', { name: 'Study' }).click()
+    await page.locator('.menu-btn').click()
+    await page.locator('.menu-item', { hasText: 'Profile' }).click()
+    await page.locator('.back-btn').click()
     await expect(page.locator('.flashcard')).toBeVisible()
     await expect(page.locator('.profile-page')).not.toBeVisible()
   })
