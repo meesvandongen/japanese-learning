@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "Japanese Learning",
+    "slug": "japanese-learning",
+    "scheme": "japanese-learning",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["assets/**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.meesvandongen.japaneselearning",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Japanese Learning needs microphone access so you can speak vocabulary words and get instant pronunciation feedback.",
+        "NSSpeechRecognitionUsageDescription": "Japanese Learning uses speech recognition to check whether you pronounced Japanese vocabulary correctly.",
+        "UIBackgroundModes": ["audio"]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.meesvandongen.japaneselearning",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MICROPHONE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-sqlite",
+        {
+          "useSQLCipher": false
+        }
+      ],
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Allow Japanese Learning to use the microphone for pronunciation practice.",
+          "speechRecognitionPermission": "Allow Japanese Learning to use speech recognition for pronunciation practice."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    }
+  }
+}

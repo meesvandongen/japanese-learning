@@ -1,7 +1,24 @@
 node_modules/
 dist/
-public/dict/
-public/kuromoji.js
+
+# Generated kuromoji assets (copied from node_modules at postinstall)
+apps/web/public/dict/
+apps/web/public/kuromoji.js
+apps/mobile/assets/dict/
+
+# Generated vocab database
+apps/web/public/vocab.db
+apps/mobile/assets/vocab.db
+
+# Expo / React Native
+.expo/
+apps/mobile/ios/
+apps/mobile/android/
+*.xcuserstate
+*.jks
+
+# Metro bundler cache
+.metro-health-check*
 
 # wrangler files
 .wrangler

@@ -1,0 +1,30 @@
+node_modules/
+.expo/
+dist/
+web-build/
+
+# Native generated from `expo prebuild`
+ios/
+android/
+
+# OSX
+.DS_Store
+
+# Xcode / IntelliJ
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+
+# Gradle
+*.jks
+local.properties
+
+# Expo build output
+expo-env.d.ts
+
+# Metro
+.metro-health-check*
