@@ -1,6 +1,9 @@
 node_modules/
 dist/
 
+# TS incremental build output
+*.tsbuildinfo
+
 # Generated kuromoji assets (copied from node_modules at postinstall)
 apps/mobile/public/dict/
 apps/mobile/assets/dict/

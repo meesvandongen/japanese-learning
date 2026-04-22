@@ -5,6 +5,7 @@ import { FlashcardMode4 } from './FlashcardMode4'
 import { PreviousResult } from './PreviousResult'
 import type { PreviousResultData } from './PreviousResult'
 import { SessionStats } from './SessionStats'
+import { WalkModeButton } from './WalkModeButton'
 import { useKuromoji, useWakeLock } from '../hooks'
 import { useAppStore, useSettingsStore } from '../store'
 import { applyReview, getNextCard, getSessionStats } from '../srs'
@@ -135,6 +136,12 @@ export function StudyPage({ words, isVocabLoading, isVocabError, activeLang }: P
             nextDueDate={nextDueDate}
             cardType={cardType}
             streakCount={streakCount}
+          />
+
+          <WalkModeButton
+            promptLang={mode === 1 ? 'en-US' : 'ja-JP'}
+            answerLang={mode === 1 ? 'ja-JP' : 'en-US'}
+            cards={words}
           />
 
           {previousResult && settings.manualGrading && (
