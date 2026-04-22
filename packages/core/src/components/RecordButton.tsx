@@ -39,8 +39,8 @@ export function RecordButton({ isListening, onStart, onStop, disabled, listenMod
       {...pressHandlers}
     >
       <YStack alignItems="center" gap="$1">
-        <Text fontSize={28} col="white">{isListening ? '\u{1F534}' : '\u{1F399}️'}</Text>
-        <Text fontSize="$2" col="white">{label}</Text>
+        <Text style={{ color: 'white' }} fontSize={28}>{isListening ? '\u{1F534}' : '\u{1F399}️'}</Text>
+        <Text style={{ color: 'white' }} fontSize="$2">{label}</Text>
       </YStack>
     </Button>
   )

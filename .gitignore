@@ -2,12 +2,11 @@ node_modules/
 dist/
 
 # Generated kuromoji assets (copied from node_modules at postinstall)
-apps/web/public/dict/
-apps/web/public/kuromoji.js
+apps/mobile/public/dict/
 apps/mobile/assets/dict/
 
 # Generated vocab database
-apps/web/public/vocab.db
+apps/mobile/public/vocab.db
 apps/mobile/assets/vocab.db
 
 # Expo / React Native
@@ -19,6 +18,10 @@ apps/mobile/android/
 
 # Metro bundler cache
 .metro-health-check*
+
+# Playwright output
+test-results/
+playwright-report/
 
 # wrangler files
 .wrangler

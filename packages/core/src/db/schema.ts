@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS words (
   freq INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_words_lang_level ON words(language_id, level_id);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_words_kana ON words(language_id, kana);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_words_lang_level_kana ON words(language_id, level_id, kana);
 
 CREATE VIRTUAL TABLE IF NOT EXISTS words_fts USING fts5(
   english, kana, japanese,

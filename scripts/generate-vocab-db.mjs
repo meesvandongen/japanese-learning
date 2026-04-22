@@ -23,7 +23,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const sourcesDir = join(__dirname, 'sources')
 
-const WEB_OUTPUT = join(root, 'apps', 'web', 'public', 'vocab.db')
+// Single Expo app serves both web and native. Web output goes under
+// apps/mobile/public (copied verbatim into the static export's root), and
+// the native bundle pulls vocab.db from apps/mobile/assets/.
+const WEB_OUTPUT = join(root, 'apps', 'mobile', 'public', 'vocab.db')
 const NATIVE_OUTPUT = join(root, 'apps', 'mobile', 'assets', 'vocab.db')
 
 const MANIFEST_VERSION = 2 // bump when the schema or data format changes
@@ -64,7 +67,9 @@ function buildDatabase(outputPath) {
       freq INTEGER
     );
     CREATE INDEX idx_words_lang_level ON words(language_id, level_id);
-    CREATE UNIQUE INDEX idx_words_kana ON words(language_id, kana);
+    -- Kana alone isn't unique across levels: some words are re-used between
+    -- JLPT levels. Uniqueness is scoped to (language, level, kana).
+    CREATE UNIQUE INDEX idx_words_lang_level_kana ON words(language_id, level_id, kana);
 
     CREATE VIRTUAL TABLE words_fts USING fts5(
       english, kana, japanese,

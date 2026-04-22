@@ -1,55 +1,69 @@
-# Japanese Learning — Mobile (Expo)
+# Japanese Learning — Expo
 
-Expo app built from the shared `@japanese-learning/core` package.
+Single Expo codebase targeting iOS, Android, **and** the web (via
+`expo export --platform web`, which runs Metro in web-bundler mode and
+emits a static site to `./dist`).
 
-## First-time setup
+All UI is shared via `@japanese-learning/core` (Tamagui primitives). Only
+the app shell (routes, providers) lives here.
+
+## Install
 
 ```bash
-# From the repo root
+# From the repo root — npm workspaces resolve everything in one pass.
 npm install
-
-# Generate the SQLite vocab DB (emits apps/web/public/vocab.db AND
-# apps/mobile/assets/vocab.db so both platforms see the same data)
-node scripts/generate-vocab-db.mjs
-
-# Kuromoji dict files need to land under apps/mobile/assets/dict/ so Metro
-# can bundle them. The web postinstall copies them to apps/web/public/dict;
-# duplicate that step for mobile:
-mkdir -p apps/mobile/assets/dict
-cp node_modules/kuromoji/dict/*.dat.gz apps/mobile/assets/dict/
 ```
 
-Also drop an Inter font file at `apps/mobile/assets/fonts/Inter.ttf` — the
-Tamagui default theme references it from `app/_layout.tsx`.
+The postinstall script copies kuromoji dict files into `./public/dict/`
+(for web) and `./assets/dict/` (for the native bundle). The SQLite vocab
+DB is built by `node scripts/generate-vocab-db.mjs` at the repo root and
+lands in both `./public/vocab.db` and `./assets/vocab.db`.
 
 ## Run
 
 ```bash
-cd apps/mobile
-npx expo prebuild --clean   # one-time, generates native projects
-npx expo run:ios            # or run:android
+# Dev
+npx expo start             # QR code + dev menu (all platforms)
+npx expo start --web       # web only, http://localhost:8081
+
+# Build
+npx expo run:ios           # compile + install a dev build on a simulator / device
+npx expo run:android       # same for Android
+
+# One-time native project generation (after app.json changes)
+npx expo prebuild --clean
+```
+
+## Deploy (web, Cloudflare)
+
+```bash
+npm run build:web          # → dist/
+npm run deploy             # wrangler deploy uses wrangler.jsonc → dist/
 ```
 
 ## Structure
 
-- `app/`      — Expo Router routes (`_layout.tsx`, `index.tsx`, `onboarding.tsx`, `settings.tsx`, `profile.tsx`)
-- `src/screens/` — React screens consumed by routes (StudyScreen, FlashcardSpeak, FlashcardTranslate)
-- `tamagui.config.ts` — design tokens (extracted from `apps/web/src/index.css`)
-- `metro.config.js` — monorepo-aware Metro config; adds root `node_modules` and `packages/core`
-- `babel.config.js` — `expo`, `@tamagui/babel-plugin`, `react-native-reanimated/plugin`
-- `app.json` — mic/speech permissions, `UIBackgroundModes: ['audio']`, foreground-service declarations
+- `app/` — Expo Router routes. File-based routing; each `.tsx` file is a
+  route. `_layout.tsx` mounts `TamaguiProvider`, `QueryClientProvider`,
+  `GestureHandlerRootView`, `SafeAreaProvider`, and registers the web SW.
+- `assets/` — native bundled assets (font, SQLite DB, kuromoji dict).
+- `public/` — web-only static files (copied into `dist/` by Expo's web
+  exporter). `sw.js`, `_headers`, `/dict/*`, `/vocab.db`.
+- `tamagui.config.ts` — design tokens. Also re-exported by the (removed)
+  web app's config for backwards compat.
+- `metro.config.js` — monorepo-aware Metro. Watches root `node_modules`
+  + `packages/core`. Dev server serves `/dict/*.dat.gz` as raw binary so
+  kuromoji can decompress them.
+- `babel.config.js` — `babel-preset-expo` + `@tamagui/babel-plugin` +
+  `react-native-reanimated/plugin`.
+- `app.json` — iOS mic + speech permissions, `UIBackgroundModes: [audio]`,
+  Android foreground-service permissions.
+- `tests/` — Playwright smoke tests for the web build (run via
+  `npm run test:e2e`; boots via `wrangler dev` against `dist/`).
 
-## Shared code
+## Walk mode
 
-All non-platform logic (SRS, utils, store, hooks with `.native.ts` forks,
-`db/`, `tokenizer/`) lives in `packages/core/src`. Metro's platform-extension
-resolver picks `.native.ts` on device builds; Vite picks `.web.ts` for the
-web app.
-
-## Walk mode (Phase 6)
-
-Not wired up yet. iOS needs `AVAudioSession` configured as `.playAndRecord`
-with `.spokenAudio` mode and `react-native-track-player` running a silent
-queue to keep the audio session active from the lock screen. Android needs
-a foreground service with `foregroundServiceType="microphone|mediaPlayback"`.
-See `docs/react-native-migration-plan.md` §Background / Lock-Screen Study.
+Foreground-only currently. Walk mode (iOS AVAudioSession `.playAndRecord`
++ RNTP lock-screen queue, Android foreground service with
+`foregroundServiceType="microphone|mediaPlayback"`) is scoped as a
+follow-up — see the matching phase in `docs/react-native-migration-plan.md`.

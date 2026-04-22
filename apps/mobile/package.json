@@ -4,17 +4,23 @@
   "main": "expo-router/entry",
   "private": true,
   "scripts": {
+    "postinstall": "mkdir -p public/dict assets/dict && cp ../../node_modules/kuromoji/dict/*.dat.gz public/dict/ && cp ../../node_modules/kuromoji/dict/*.dat.gz assets/dict/",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "prebuild": "expo prebuild",
+    "build:web": "node ../../scripts/generate-vocab-db.mjs && expo export --platform web --output-dir dist",
+    "preview:web": "npm run build:web && wrangler dev",
+    "deploy": "npm run build:web && wrangler deploy",
+    "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "generate-vocab": "node ../../scripts/generate-vocab-db.mjs"
   },
   "dependencies": {
     "@japanese-learning/core": "*",
     "@patdx/kuromoji": "^1.0.4",
+    "@sqlite.org/sqlite-wasm": "^3.53.0-build1",
     "@tamagui/config": "^2.0.0-rc.41",
     "@tamagui/lucide-icons": "^2.0.0-rc.26",
     "@tanstack/react-query": "^5.95.2",
@@ -33,6 +39,7 @@
     "expo-sqlite": "~55.0.15",
     "expo-status-bar": "~55.0.5",
     "react": "19.2.4",
+    "react-dom": "19.2.4",
     "react-native": "0.85.2",
     "react-native-gesture-handler": "~2.31.1",
     "react-native-mmkv": "^4.3.1",
@@ -46,9 +53,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",
+    "@playwright/test": "^1.50.1",
     "@tamagui/babel-plugin": "^2.0.0-rc.41",
     "@types/react": "~19.2.14",
     "babel-preset-expo": "~55.0.18",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "wrangler": "^4.78.0"
   }
 }

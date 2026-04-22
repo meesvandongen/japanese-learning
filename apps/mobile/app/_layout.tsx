@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Platform } from 'react-native'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -11,6 +12,15 @@ import config from '../tamagui.config'
 
 SplashScreen.preventAutoHideAsync().catch(() => { /* ignore */ })
 
+// Service worker registration for the Metro web build. On native this is
+// a no-op (no SW, no window). The SW handles stale-while-revalidate caching
+// for /dict/* and /vocab.db so repeat visits require no network.
+if (Platform.OS === 'web' && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => { /* non-fatal */ })
+  })
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -21,11 +31,14 @@ const queryClient = new QueryClient({
 })
 
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    // Tamagui's default theme expects Inter for body text. We ship it as an
-    // asset — add the file under assets/fonts/Inter.ttf before shipping.
-    Inter: require('../assets/fonts/Inter.ttf'),
-  })
+  // expo-font isn't used on web (fonts come in via @expo/html-elements' meta
+  // tag injection or the default browser stack). Skip the font load there to
+  // avoid a flash of empty content when the file isn't committed yet.
+  const [loaded] = useFonts(
+    Platform.OS === 'web'
+      ? {}
+      : { Inter: require('../assets/fonts/Inter.ttf') }
+  )
 
   useEffect(() => {
     if (loaded) SplashScreen.hideAsync().catch(() => { /* ignore */ })
