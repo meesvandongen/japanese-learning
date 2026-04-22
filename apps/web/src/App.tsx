@@ -1,165 +1,74 @@
-import { useState, useRef, useEffect } from 'react'
 import { Outlet, Link, useLocation } from '@tanstack/react-router'
-import { useVocabulary, useAppStore } from '@japanese-learning/core'
-import { LanguageSelector } from './components/LanguageSelector'
-import { LevelSelector } from './components/LevelSelector'
+import { AppShell } from '@japanese-learning/core'
 import { VocabularyProvider, useVocabContext } from './context/VocabularyContext'
+import { YStack, XStack, Text, Anchor } from 'tamagui'
 
 /**
- * RootLayout — onboarding gate, compact header with hamburger menu, and route outlet.
- *
- * Renders loading/error states and the language/level selectors until the user
- * has made their selections, then renders the router outlet for child routes.
+ * RootLayout — AppShell handles the manifest/loading/onboarding gate; this
+ * file just wires the Tamagui-free chrome (footer, router outlet) and the
+ * VocabularyContext that subroutes read from.
  */
 export default function RootLayout() {
-  const selectedLanguageId = useAppStore((s) => s.selectedLanguageId)
-  const selectedLevelId = useAppStore((s) => s.selectedLevelId)
-  const { setLanguage, setLevel } = useAppStore()
-
-  const { words, isManifestLoading, isManifestError, isVocabLoading, isVocabError, manifest, activeLang, activeLevel } =
-    useVocabulary(selectedLanguageId, selectedLevelId)
-
-  if (isManifestLoading) {
-    return (
-      <div className="app">
-        <main className="app-main">
-          <div className="loading">
-            <div className="spinner" />
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  if (isManifestError) {
-    return (
-      <div className="app">
-        <main className="app-main">
-          <div className="error-msg">
-            Failed to load vocabulary catalog. Check your connection and refresh.
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  if (!selectedLanguageId) {
-    return (
-      <div className="app">
-        <main className="app-main">
-          <LanguageSelector manifest={manifest!} onSelect={setLanguage} />
-        </main>
-      </div>
-    )
-  }
-
-  if (!selectedLevelId) {
-    return (
-      <div className="app">
-        <main className="app-main">
-          <LevelSelector
-            language={activeLang!}
-            onSelect={setLevel}
-            onBack={() => useAppStore.setState({ selectedLanguageId: null })}
-          />
-        </main>
-      </div>
-    )
-  }
-
   return (
-    <VocabularyProvider value={{ words, isVocabLoading, isVocabError, manifest: manifest!, activeLang: activeLang!, activeLevel: activeLevel! }}>
-      <AppShell />
-    </VocabularyProvider>
+    <AppShell>
+      {(data) => (
+        <VocabularyProvider value={data}>
+          <AppShellFrame />
+        </VocabularyProvider>
+      )}
+    </AppShell>
   )
 }
 
-function AppShell() {
+function AppShellFrame() {
   const location = useLocation()
-  const isHome = location.pathname === '/'
+  const { activeLang, activeLevel } = useVocabContext()
 
   return (
-    <div className="app">
-      <header className="app-header">
-        {isHome ? <HomeHeader /> : <SubpageHeader />}
-      </header>
+    <YStack flex={1} minHeight="100vh" backgroundColor="$background">
+      <XStack
+        alignItems="center"
+        justifyContent="space-between"
+        padding="$3"
+        borderBottomWidth={1}
+        borderColor="$border"
+      >
+        {location.pathname === '/' ? (
+          <Text fontSize="$5" fontWeight="700">
+            {activeLang.name} {activeLevel && <Text color="$textMuted">· {activeLevel.label}</Text>}
+          </Text>
+        ) : (
+          <Link to="/">
+            <Text fontSize="$4" color="$primary">← Back</Text>
+          </Link>
+        )}
+        {location.pathname === '/' && (
+          <XStack gap="$3">
+            <Link to="/profile"><Text color="$primary">Profile</Text></Link>
+            <Link to="/settings"><Text color="$primary">Settings</Text></Link>
+          </XStack>
+        )}
+      </XStack>
 
-      <main className="app-main">
+      <YStack flex={1}>
         <Outlet />
-      </main>
+      </YStack>
 
-      <footer className="app-footer">
-        <p>Requires Chrome or Edge · Progress saved automatically</p>
-        <p>
-          <a href="https://github.com/meesvandongen/japanese-learning" target="_blank" rel="noopener noreferrer" className="github-link">
+      <YStack padding="$3" alignItems="center" gap="$1" borderTopWidth={1} borderColor="$border">
+        <Text fontSize="$2" color="$textMuted">Progress saved automatically</Text>
+        <Text fontSize="$2" color="$textMuted">
+          <Anchor
+            href="https://github.com/meesvandongen/japanese-learning"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="$primary"
+          >
             GitHub
-          </a>
+          </Anchor>
           {' · '}
           {__GIT_DATE__}
-        </p>
-      </footer>
-    </div>
-  )
-}
-
-function HomeHeader() {
-  const { activeLang, activeLevel } = useVocabContext()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!menuOpen) return
-    function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
-  }, [menuOpen])
-
-  return (
-    <div className="header-compact">
-      <span className="header-title-compact">
-        {activeLang.name}
-        {activeLevel && <span className="header-level-badge">{activeLevel.label}</span>}
-      </span>
-      <div className="menu-wrapper" ref={menuRef}>
-        <button
-          className="menu-btn"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label="Menu"
-          aria-expanded={menuOpen}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-        {menuOpen && (
-          <nav className="menu-dropdown">
-            <Link to="/profile" className="menu-item" onClick={() => setMenuOpen(false)}>
-              Profile
-            </Link>
-            <Link to="/settings" className="menu-item" onClick={() => setMenuOpen(false)}>
-              Settings
-            </Link>
-          </nav>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function SubpageHeader() {
-  const location = useLocation()
-  const title = location.pathname === '/settings' ? 'Settings' : location.pathname === '/profile' ? 'Profile' : ''
-
-  return (
-    <div className="header-compact">
-      <Link to="/" className="back-btn">← Back</Link>
-      <span className="header-page-title">{title}</span>
-    </div>
+        </Text>
+      </YStack>
+    </YStack>
   )
 }

@@ -1,16 +1,12 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
+import { YStack, XStack, Text, Button, Card } from 'tamagui'
 import { RecordButton } from './RecordButton'
 import { CardTypeBadge } from './CardTypeBadge'
 import { FlashcardFeedback } from './FlashcardFeedback'
-import {
-  useSpeechRecognition,
-  useSpeechSynthesis,
-  useAudioFeedback,
-  useSettingsStore,
-  compareEnglish,
-  buildReportUrl,
-} from '@japanese-learning/core'
-import type { Word } from '@japanese-learning/core'
+import { useSpeechRecognition, useSpeechSynthesis, useAudioFeedback } from '../hooks'
+import { useSettingsStore } from '../store'
+import { compareEnglish, buildReportUrl } from '../utils'
+import type { Word } from '../types'
 
 interface Props {
   card: Word
@@ -18,6 +14,10 @@ interface Props {
   onAnswer: (quality: number, heard: string, skipped: boolean) => void
 }
 
+/**
+ * Translate-to-English mode. Japanese prompt → user speaks English →
+ * compare with phonetic tolerance.
+ */
 export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null)
   const [heard, setHeard] = useState('')
@@ -32,29 +32,11 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
   const autoStarted = useRef(false)
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Speak the Japanese word on card load (unless exercise mode is text-only)
-  useEffect(() => {
-    if (settings.japaneseExerciseMode === 'text') {
-      // Text-only mode: auto-start listening directly (no audio to chain from)
-      if (settings.autoListen && !autoStarted.current) {
-        autoStarted.current = true
-        const timer = setTimeout(() => start(), settings.autoStartDelay)
-        return () => clearTimeout(timer)
-      }
-      return
-    }
-
-    const timer = setTimeout(() => {
-      speak(card.japanese, 'ja-JP', 0.9, () => {
-        if (settings.autoListen && !autoStarted.current) {
-          autoStarted.current = true
-          setTimeout(() => start(), settings.autoStartDelay)
-        }
-      })
-    }, 300)
-    return () => clearTimeout(timer)
-  // oxlint-disable-next-line react-hooks/exhaustive-deps -- intentionally fires only on card change
-  }, [card, speak])
+  const phoneticAlgorithm: 'off' | 'soundex' | 'metaphone' | 'both' =
+    settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
+      : settings.phoneticSoundex ? 'soundex'
+      : settings.phoneticMetaphone ? 'metaphone'
+      : 'off'
 
   const applyResult = useCallback(
     (correct: boolean, transcript: string) => {
@@ -74,40 +56,51 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
   const { isListening, start, stop } = useSpeechRecognition({
     lang: 'en-US',
     onResult: (transcripts) => {
-      const phoneticAlgorithm: 'off' | 'soundex' | 'metaphone' | 'both' =
-        settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
-        : settings.phoneticSoundex ? 'soundex'
-        : settings.phoneticMetaphone ? 'metaphone'
-        : 'off'
       applyResult(
         compareEnglish(card.english, transcripts, { phoneticAlgorithm }),
         transcripts[0] ?? ''
       )
     },
     onError: setErrorMsg,
+    contextualStrings: card.english,
   })
 
-  // Pause microphone when audio is playing to prevent recording playback
+  // Speak the Japanese word on card load
+  useEffect(() => {
+    if (settings.japaneseExerciseMode === 'text') {
+      if (settings.autoListen && !autoStarted.current) {
+        autoStarted.current = true
+        const timer = setTimeout(() => start(), settings.autoStartDelay)
+        return () => clearTimeout(timer)
+      }
+      return
+    }
+
+    const timer = setTimeout(() => {
+      speak(card.japanese, 'ja-JP', 0.9, () => {
+        if (settings.autoListen && !autoStarted.current) {
+          autoStarted.current = true
+          setTimeout(() => start(), settings.autoStartDelay)
+        }
+      })
+    }, 300)
+    return () => clearTimeout(timer)
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- fires only on card change
+  }, [card, speak])
+
   useEffect(() => {
     if (isSpeaking && isListening) stop()
   }, [isSpeaking, isListening, stop])
 
-  // Enforce max listen duration in auto mode
   useEffect(() => {
     if (!isListening || !settings.maxListenDuration) return
     const timer = setTimeout(() => stop(), settings.maxListenDuration)
     return () => clearTimeout(timer)
   }, [isListening, settings.maxListenDuration, stop])
 
-  // Speech recognition for correction phase (speak the correct answer after getting it wrong)
   const correction = useSpeechRecognition({
     lang: 'en-US',
     onResult: (transcripts) => {
-      const phoneticAlgorithm: 'off' | 'soundex' | 'metaphone' | 'both' =
-        settings.phoneticSoundex && settings.phoneticMetaphone ? 'both'
-        : settings.phoneticSoundex ? 'soundex'
-        : settings.phoneticMetaphone ? 'metaphone'
-        : 'off'
       const correct = compareEnglish(card.english, transcripts, { phoneticAlgorithm })
       setCorrectionHeard(transcripts[0] ?? '')
       setCorrectionResult(correct ? 'correct' : 'incorrect')
@@ -122,21 +115,17 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
       }
     },
     onError: setErrorMsg,
+    contextualStrings: card.english,
   })
 
-  // Pause correction microphone when audio is playing
   useEffect(() => {
     if (isSpeaking && correction.isListening) correction.stop()
   }, [isSpeaking, correction.isListening, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
 
-  // Enter correction phase on incorrect result when speakToCorrect is on
   useEffect(() => {
-    if (result === 'incorrect' && settings.speakToCorrect) {
-      setCorrectionPhase(true)
-    }
+    if (result === 'incorrect' && settings.speakToCorrect) setCorrectionPhase(true)
   }, [result, settings.speakToCorrect])
 
-  // Auto-start correction listening (same behavior as initial answer)
   useEffect(() => {
     if (!correctionPhase || correctionResult === 'correct') return
     if (!settings.autoListen) return
@@ -145,26 +134,25 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
     return () => clearTimeout(timer)
   }, [correctionPhase, correctionResult, settings.autoListen, settings.autoStartDelay, isSpeaking]) // oxlint-disable-line react-hooks/exhaustive-deps
 
-  // Enforce max listen duration for correction phase
   useEffect(() => {
     if (!correction.isListening || !settings.maxListenDuration) return
     const timer = setTimeout(() => correction.stop(), settings.maxListenDuration)
     return () => clearTimeout(timer)
   }, [correction.isListening, settings.maxListenDuration, correction.stop]) // oxlint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-advance after result (cancellable for manual grading override)
-  // When speakToCorrect is on and result is incorrect, don't auto-advance — wait for correction
   useEffect(() => {
     if (!result) return
     if (result === 'incorrect' && settings.speakToCorrect) return
     const delay = result === 'correct' ? 1200 : 2500
-    advanceTimerRef.current = setTimeout(() => onAnswer(result === 'correct' ? 4 : 1, heard, skipped), delay)
+    advanceTimerRef.current = setTimeout(
+      () => onAnswer(result === 'correct' ? 4 : 1, heard, skipped),
+      delay
+    )
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
   }, [result, heard, skipped, onAnswer, settings.speakToCorrect])
 
-  // Auto-advance after successful correction
   useEffect(() => {
     if (correctionResult !== 'correct') return
     advanceTimerRef.current = setTimeout(() => onAnswer(1, heard, skipped), 1200)
@@ -180,33 +168,31 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
 
   const primaryEnglish = Array.isArray(card.english) ? card.english[0] : card.english
   const showJapaneseText = settings.japaneseExerciseMode !== 'audio'
+  const borderColor = result === 'correct' ? '$correct' : result === 'incorrect' ? '$incorrect' : '$border'
 
   return (
-    <div className={`flashcard ${result ? `flash-${result}` : ''}`}>
+    <Card padding="$4" gap="$3" borderRadius="$4" backgroundColor="$cardBackground" borderColor={borderColor} borderWidth={2}>
       <CardTypeBadge type={cardType} />
-      <div className="card-label">What does this mean in English?</div>
+      <Text fontSize="$2" color="$textMuted">What does this mean in English?</Text>
 
       {settings.japaneseExerciseMode !== 'text' && (
-        <button
-          className={`play-btn ${isSpeaking ? 'playing' : ''}`}
-          onClick={() => speak(card.japanese, 'ja-JP', 0.9, () => {
+        <Button
+          onPress={() => speak(card.japanese, 'ja-JP', 0.9, () => {
             if (settings.autoListen) setTimeout(() => start(), settings.autoStartDelay)
           })}
         >
-          {isSpeaking ? '🔊 Playing…' : '🔊 Play again'}
-        </button>
+          {isSpeaking ? '\u{1F50A} Playing…' : '\u{1F50A} Play again'}
+        </Button>
       )}
 
       {showJapaneseText && (
-        <div className="card-prompt japanese-prompt">
-          {card.japanese}
-          {card.japanese !== card.kana && (
-            <span className="card-kana-reading">{card.kana}</span>
-          )}
-        </div>
+        <YStack alignItems="center" gap="$1">
+          <Text fontSize="$10" fontWeight="700">{card.japanese}</Text>
+          {card.japanese !== card.kana && <Text color="$textMuted" fontSize="$5">{card.kana}</Text>}
+        </YStack>
       )}
 
-      <div className="card-hint">Speak the English translation</div>
+      <Text color="$textMuted" textAlign="center">Speak the English translation</Text>
 
       <FlashcardFeedback
         result={result}
@@ -222,8 +208,8 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
       />
 
       {correctionPhase && correctionResult !== 'correct' && (
-        <div className="correction-phase">
-          <div className="correction-prompt">Now say the correct answer:</div>
+        <YStack gap="$2" alignItems="center">
+          <Text>Now say the correct answer:</Text>
           <RecordButton
             isListening={correction.isListening}
             onStart={correction.start}
@@ -231,23 +217,16 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          {correctionResult === 'incorrect' && (
-            <div className="correction-retry">Try again</div>
-          )}
+          {correctionResult === 'incorrect' && <Text color="$incorrect">Try again</Text>}
           {settings.showTranscript && correctionHeard && (
-            <div className="transcript-heard">Heard: "{correctionHeard}"</div>
+            <Text color="$textMuted" fontSize="$2">Heard: "{correctionHeard}"</Text>
           )}
-          <button
-            className="correction-skip-btn"
-            onClick={() => onAnswer(1, heard, skipped)}
-          >
-            Skip
-          </button>
-        </div>
+          <Button size="$2" chromeless onPress={() => onAnswer(1, heard, skipped)}>Skip</Button>
+        </YStack>
       )}
 
       {result === null && (
-        <div className="answer-actions">
+        <XStack gap="$3" alignItems="center" justifyContent="center">
           <RecordButton
             isListening={isListening}
             onStart={start}
@@ -255,13 +234,18 @@ export function FlashcardMode4({ card, cardType, onAnswer }: Props) {
             disabled={isSpeaking}
             listenMode={settings.autoListen ? 'auto' : 'hold'}
           />
-          <button className="dont-know-btn" onClick={() => { setSkipped(true); applyResult(false, '') }} aria-label="Don't know">
+          <Button
+            size="$4"
+            circular
+            onPress={() => { setSkipped(true); applyResult(false, '') }}
+            accessibilityLabel="Don't know"
+          >
             ?
-          </button>
-        </div>
+          </Button>
+        </XStack>
       )}
 
-      {errorMsg && <div className="error-msg">{errorMsg}</div>}
-    </div>
+      {errorMsg && <Text color="$incorrect">{errorMsg}</Text>}
+    </Card>
   )
 }

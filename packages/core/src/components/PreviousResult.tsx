@@ -1,5 +1,6 @@
-import type { Word } from '@japanese-learning/core'
-import { buildReportUrl } from '@japanese-learning/core'
+import { XStack, YStack, Text, Button, Anchor } from 'tamagui'
+import { buildReportUrl } from '../utils'
+import type { Word } from '../types'
 
 export interface PreviousResultData {
   japanese: string
@@ -22,51 +23,53 @@ export function PreviousResult({ data, manualGrading, onOverride }: Props) {
   const primaryEnglish = data.english[0]
 
   return (
-    <div className={`prev-result ${isCorrect ? 'prev-correct' : 'prev-incorrect'}`}>
-      <span className="prev-result-icon">{isCorrect ? '✓' : '✗'}</span>
+    <XStack
+      gap="$2"
+      alignItems="center"
+      padding="$2"
+      borderRadius="$3"
+      backgroundColor={isCorrect ? '#e8f5e9' : '#ffebee'}
+    >
+      <Text fontSize="$6" fontWeight="700" color={isCorrect ? '$correct' : '$incorrect'}>
+        {isCorrect ? '✓' : '✗'}
+      </Text>
 
-      <div className="prev-result-body">
-        <span className="prev-result-word">
+      <YStack flex={1}>
+        <Text fontWeight="600">
           {data.mode === 1 ? primaryEnglish : data.japanese}
           {' → '}
           {data.mode === 1 ? data.japanese : primaryEnglish}
-        </span>
+        </Text>
         {data.skipped ? (
-          <span className="prev-result-heard">Skipped (didn't know)</span>
+          <Text fontSize="$2" color="$textMuted">Skipped (didn't know)</Text>
         ) : data.heard ? (
-          <span className="prev-result-heard">Heard: "{data.heard}"</span>
+          <Text fontSize="$2" color="$textMuted">Heard: "{data.heard}"</Text>
         ) : null}
-      </div>
+      </YStack>
 
       {manualGrading && !isCorrect && (
-        <button
-          className="override-btn override-correct"
-          onClick={() => onOverride(4)}
-        >
+        <Button size="$2" theme="green" onPress={() => onOverride(4)}>
           Mark as correct
-        </button>
+        </Button>
       )}
       {manualGrading && isCorrect && (
-        <button
-          className="override-btn override-incorrect"
-          onClick={() => onOverride(1)}
-        >
+        <Button size="$2" theme="red" onPress={() => onOverride(1)}>
           Mark as incorrect
-        </button>
+        </Button>
       )}
-      <a
-        className="report-mistake-link report-mistake-compact"
+      <Anchor
         href={buildReportUrl(
           { japanese: data.japanese, kana: data.kana, english: data.english } as Word,
           { heard: data.heard, skipped: data.skipped }
         )}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        title="Report mistake"
+        fontSize="$2"
+        color="$textMuted"
+        textDecorationLine="underline"
       >
         Report
-      </a>
-    </div>
+      </Anchor>
+    </XStack>
   )
 }

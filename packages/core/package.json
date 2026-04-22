@@ -35,7 +35,8 @@
     "expo-speech": "*",
     "expo-speech-recognition": "*",
     "expo-sqlite": "*",
-    "react-native-mmkv": "*"
+    "react-native-mmkv": "*",
+    "tamagui": "^2.0.0-rc.41"
   },
   "peerDependenciesMeta": {
     "@sqlite.org/sqlite-wasm": { "optional": true },

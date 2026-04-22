@@ -45,11 +45,21 @@ function getGitDate(): string {
 export default defineConfig({
   define: {
     __GIT_DATE__: JSON.stringify(getGitDate()),
+    // Tamagui reads these at runtime; without them the optimizing compiler
+    // keeps unused theme branches and bundle size balloons.
+    'process.env.TAMAGUI_TARGET': JSON.stringify('web'),
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV ?? 'development'),
   },
   // Match Metro's extension ordering so `.web.ts` wins for web builds and
   // falls back to `.ts` otherwise. Metro on native uses `.native.ts` itself.
   resolve: {
     extensions: ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js', '.json'],
+    // Tamagui's primitives import from 'react-native'; on web that has to be
+    // aliased to react-native-web. Same trick Expo's Metro config uses when
+    // emitting web output — but Vite needs an explicit alias entry.
+    alias: {
+      'react-native': 'react-native-web',
+    },
   },
   optimizeDeps: {
     // sqlite-wasm ships its own ESM + worker; don't prebundle it, the worker

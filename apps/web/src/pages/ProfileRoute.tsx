@@ -1,4 +1,4 @@
-import { ProfilePage } from '../components/ProfilePage'
+import { ProfilePage } from '@japanese-learning/core'
 import { useVocabContext } from '../context/VocabularyContext'
 
 export function ProfileRoute() {
