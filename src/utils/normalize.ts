@@ -3,12 +3,47 @@ import { phoneticMatch } from './phonetic'
 import type { KuromojiTokenizer } from '../types/kuromoji'
 
 /**
+ * Convert an Arabic integer to its kanji representation.
+ * Handles 1–9999 (covers all common counter/date contexts).
+ */
+function arabicToKanjiNumber(n: number): string {
+  if (n === 0) return '〇'
+  const units = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+  const places = ['', '十', '百', '千']
+  const digits = String(n).split('').map(Number)
+  const len = digits.length
+  let result = ''
+  for (let i = 0; i < len; i++) {
+    const digit = digits[i]
+    const place = len - 1 - i
+    if (digit === 0) continue
+    // Omit leading 一 for 十/百/千 (e.g. 10 → 十, not 一十)
+    if (digit === 1 && place > 0) {
+      result += places[place]
+    } else {
+      result += units[digit] + places[place]
+    }
+  }
+  return result
+}
+
+/**
+ * Replace every run of ASCII digits in a string with its kanji equivalent.
+ * e.g. "1日" → "一日", "12月" → "十二月"
+ */
+function replaceArabicWithKanji(text: string): string {
+  return text.replace(/\d+/g, (m) => arabicToKanjiNumber(parseInt(m, 10)))
+}
+
+/**
  * Convert any Japanese text to hiragana using kuromoji readings.
  * Falls back to wanakana katakana→hiragana for strings already in kana.
  */
 export function toHiragana(text: string | null | undefined, tokenizer: KuromojiTokenizer | null): string {
   if (!text) return ''
-  const cleaned = text.trim()
+  // Convert Arabic digits to kanji so kuromoji can read them correctly.
+  // e.g. "1日" → "一日" → "いちにち". Works for both vocabulary entries and STT output.
+  const cleaned = replaceArabicWithKanji(text.trim())
 
   // If already kana, convert katakana→hiragana directly.
   // Running kana through kuromoji can misparse it (e.g. は read as particle ワ).
