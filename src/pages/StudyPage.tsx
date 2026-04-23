@@ -28,7 +28,11 @@ export function StudyPage() {
   useWakeLock(settings.autoListen && settings.keepScreenAwake)
   const { tokenizer, isLoading: kuromojiLoading, isError: kuromojiError } = useKuromoji()
 
-  const { card, cardType } = getNextCard(words, cardStates, lastShownId)
+  const debugCardKana = settings.debugCardKana
+  const scheduled = getNextCard(words, cardStates, lastShownId)
+  const debugWord = debugCardKana ? words.find((w) => w.kana === debugCardKana) : null
+  const card = debugWord ?? scheduled.card
+  const cardType = debugWord ? 'due' as const : scheduled.cardType
   const { dueCount, newCount } = getSessionStats(words, cardStates)
 
   const nextDueDate =
