@@ -1,55 +1,68 @@
 # CI workflows
 
-## `pr-preview.yml` — Expo preview on every PR
+## `pr-apk.yml` — Android release APK on every PR
 
-Triggered on `pull_request` open / synchronize / reopen. Publishes an
-`eas update` to a per-PR branch (`pr-<NUMBER>`) and posts a PR comment
-with a QR code. Scan it with Expo Go (SDK 55+) or any installed dev
-client built from `eas build --profile development`.
+Triggered on `pull_request` open / synchronize / reopen. Builds a release
+APK with Gradle directly (no EAS, no Expo servers) and attaches it to the
+workflow run as a GitHub Actions artifact. A sticky comment on the PR
+links to the download.
 
-### Required GitHub repository secret
+### What it does
 
-| Secret        | How to obtain                                                                 |
-|---------------|-------------------------------------------------------------------------------|
-| `EXPO_TOKEN`  | expo.dev → Account settings → Access Tokens → "Create token". Grant it the `Publish updates` permission on the `japanese-learning` project. Paste it into GitHub → Settings → Secrets and variables → Actions. |
+1. Sets up Node 20, JDK 17, Android SDK (platforms:android-35, build-tools:35.0.0).
+2. Runs `npm ci --legacy-peer-deps` at the workspace root.
+3. Regenerates `vocab.db` from sources so the APK matches the PR's head.
+4. `npx expo prebuild --platform android --clean --no-install` — generates
+   `apps/mobile/android/` from the managed `app.json` config. Autolinks
+   every native module (expo-sqlite, react-native-mmkv,
+   react-native-track-player, expo-speech-recognition…).
+5. `./gradlew :app:assembleRelease` in `apps/mobile/android/`.
+6. Uploads the resulting APK as `japanese-learning-pr<N>-<sha>` with
+   14-day retention.
+7. Sticky-comments on the PR (`marocchino/sticky-pull-request-comment`)
+   with a link to the artifact download.
 
-### One-time project setup
+### Signing
 
-The first time you run this, `eas update` needs an EAS project registered:
+`expo prebuild` wires the `release` variant to use the debug keystore by
+default. That's fine for PR previews — every reviewer's device already
+trusts the debug keystore so the APK installs without fuss. The tradeoff
+is that PR builds can't coexist with a production install (different
+signature, Android refuses to overlay).
+
+For production APKs (or if two PR builds need to install side-by-side
+with production), add a real signing config under
+`apps/mobile/android/app/build.gradle` and pass the keystore bits as
+GitHub secrets.
+
+### Caching
+
+Gradle caches (`~/.gradle/caches`, `~/.gradle/wrapper`, and the project's
+`.gradle/`) are keyed on all `*.gradle*` files + `gradle-wrapper.properties`
++ `apps/mobile/package.json`. First build is ~12 min; subsequent runs on
+the same key finish in ~4-5 min.
+
+### Forked PRs
+
+The workflow `if:` skips forked PRs. Running `expo prebuild` from an
+untrusted fork would execute arbitrary native code from the PR's
+`node_modules`, which is too risky to auto-execute. Fork PRs still open
+and review normally — they just don't get an automatic APK. Manual
+trigger via `workflow_dispatch` can be added later if this becomes a
+pain point.
+
+### Installing the APK
 
 ```bash
-cd apps/mobile
-npx eas login
-npx eas init          # creates the project, writes extra.eas.projectId
+# Locally, from the downloaded zip:
+unzip japanese-learning-prNN-abcdef.zip
+adb install japanese-learning-prNN-abcdef1.apk
+
+# Or drop the .apk into any file manager on the device and tap it
+# (needs "Install from unknown sources" enabled for that file source).
 ```
 
-That command also fills in the `updates.url` in `app.json` (the
-`u.expo.dev/<PROJECT_ID>` URL) — commit the resulting diff. Until this
-is done, the workflow will fail with "No EAS project configured".
+### One-time setup
 
-### When `eas update` is NOT enough
-
-`eas update` only rebundles JS + assets. If a PR changes any of the
-following, a full `eas build` is required (the preview comment won't
-reflect the change):
-
-- `app.json` `plugins`, `ios.*`, `android.*`, `permissions`, or
-  `infoPlist` keys
-- Adding / removing an `expo-*` or other native module
-- Bumping the Expo SDK (`expo` major version)
-- Changing `runtimeVersion`
-
-For those, run a full build locally or via a manual trigger:
-
-```bash
-cd apps/mobile
-npx eas build --profile preview --platform all
-```
-
-The `preview` profile in `eas.json` produces:
-
-- iOS — simulator `.app` (drag-drop into an open simulator)
-- Android — `.apk` (sideload onto any device)
-
-Both are distributed internally via the "Internal distribution" link in
-the EAS build output, no App Store / Play review needed.
+None. The workflow has no required secrets — it runs entirely on the
+runner.
