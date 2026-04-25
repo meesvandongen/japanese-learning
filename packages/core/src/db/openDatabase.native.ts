@@ -1,15 +1,14 @@
 import * as SQLite from 'expo-sqlite'
 import { Asset } from 'expo-asset'
-import { File, Directory } from 'expo-file-system'
+import { File, Directory, Paths } from 'expo-file-system'
 import type { DB, DBOpenOptions, Row, SQLParam } from './types'
 import { WRITE_TABLES_SQL } from './schema'
 
 const DB_NAME = 'vocab.db'
 
-// require() is hoisted by Metro at bundle time; the asset metadata is
-// resolved here so the file is included in the APK / IPA. The literal
-// path resolves to packages/core/assets/vocab.db (populated by
-// scripts/generate-vocab-db.mjs at build time).
+// require() is hoisted by Metro at bundle time so the .db is included as
+// a resource in the APK / IPA. The path resolves to
+// packages/core/assets/vocab.db (populated by scripts/generate-vocab-db.mjs).
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const VOCAB_DB_ASSET = require('../../assets/vocab.db')
 
@@ -17,16 +16,16 @@ let dbHandle: SQLite.SQLiteDatabase | null = null
 let openPromise: Promise<SQLite.SQLiteDatabase> | null = null
 
 async function ensureBundledDB(): Promise<void> {
-  // expo-sqlite resolves DB_NAME against `defaultDatabaseDirectory`
-  // (`${documentDirectory}/SQLite/` on iOS/Android). On first launch the
-  // file doesn't exist there yet — we materialise it from the bundled
-  // asset, which Metro has stashed somewhere under the app's bundle
-  // resources, and copy it into the SQLite directory.
-  const sqliteDir = new Directory(SQLite.defaultDatabaseDirectory)
+  // expo-sqlite's `defaultDatabaseDirectory` is a raw POSIX path
+  // (e.g. /data/user/0/com.app/files/SQLite). The new expo-file-system
+  // class API expects file:// URIs, so we build the directory off
+  // Paths.document (which is already a file:// URI Directory). The SQLite
+  // module on both Android and iOS resolves to the same physical location.
+  const sqliteDir = new Directory(Paths.document, 'SQLite')
   if (!sqliteDir.exists) sqliteDir.create({ intermediates: true })
 
   const target = new File(sqliteDir, DB_NAME)
-  if (target.exists) return  // Already populated by a prior launch.
+  if (target.exists) return  // populated by a prior launch
 
   const asset = Asset.fromModule(VOCAB_DB_ASSET)
   await asset.downloadAsync()
@@ -34,6 +33,7 @@ async function ensureBundledDB(): Promise<void> {
     throw new Error('expo-asset failed to materialise vocab.db')
   }
 
+  // Asset.localUri is always a file:// URI; `new File(uri)` accepts it.
   const source = new File(asset.localUri)
   source.copy(target)
 }
@@ -46,9 +46,8 @@ async function openHandle(opts: DBOpenOptions): Promise<SQLite.SQLiteDatabase> {
     await ensureBundledDB()
     const handle = await SQLite.openDatabaseAsync(DB_NAME)
 
-    // Make sure the write tables exist — the shipped asset already has them
-    // (the generator emits the full schema), but `IF NOT EXISTS` keeps this
-    // a no-op if anyone ever ships a slimmer DB.
+    // The shipped DB already has the write tables (the generator emits
+    // the full schema); IF NOT EXISTS keeps this a no-op when present.
     await handle.execAsync(WRITE_TABLES_SQL)
 
     if (opts.manifestVersion != null) {
