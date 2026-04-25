@@ -1,7 +1,13 @@
 {
   "env": {
     "browser": true,
-    "es2022": true
+    "es2022": true,
+    "node": true
+  },
+  "globals": {
+    "__GIT_DATE__": "readonly",
+    "require": "readonly",
+    "SpeechRecognition": "readonly"
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
@@ -9,5 +15,13 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": "error",
     "no-undef": "error"
-  }
+  },
+  "ignorePatterns": [
+    "apps/*/dist",
+    "apps/*/node_modules",
+    "apps/mobile/ios",
+    "apps/mobile/android",
+    "apps/mobile/.expo",
+    "node_modules"
+  ]
 }
