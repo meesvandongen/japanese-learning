@@ -3,13 +3,13 @@
  * source of truth for vocabulary data.
  *
  * Output locations:
- *   apps/web/public/vocab.db       — web fetches and caches into OPFS
- *   apps/mobile/assets/vocab.db    — bundled into the Expo app
- *
- * The older JSON generator (`generate-vocab.mjs`) continues to exist for the
- * transition period — apps that haven't switched to SQLite yet still consume
- * its output. Once all call sites use the DB, delete that script and its
- * outputs.
+ *   apps/mobile/public/vocab.db    — Metro web copies this into dist/, where
+ *                                    OPFS fetches it on first launch.
+ *   apps/mobile/assets/vocab.db    — bundled into the Expo native APK.
+ *   packages/core/assets/vocab.db  — required by openDatabase.native.ts so
+ *                                    Metro bundles it as an asset and
+ *                                    Asset.fromModule() can materialise it
+ *                                    onto the device's filesystem.
  *
  * Run:  node scripts/generate-vocab-db.mjs
  */
@@ -23,11 +23,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const sourcesDir = join(__dirname, 'sources')
 
-// Single Expo app serves both web and native. Web output goes under
-// apps/mobile/public (copied verbatim into the static export's root), and
-// the native bundle pulls vocab.db from apps/mobile/assets/.
-const WEB_OUTPUT = join(root, 'apps', 'mobile', 'public', 'vocab.db')
-const NATIVE_OUTPUT = join(root, 'apps', 'mobile', 'assets', 'vocab.db')
+// Single Expo app serves both web and native. Three outputs:
+//   public/    — copied into Metro's web export root, fetched as /vocab.db
+//   assets/    — bundled into the APK's assets/ folder
+//   core/      — Metro asset import resolution requires the file to live
+//                next to the importing source (packages/core/src/db/).
+const OUTPUT_PATHS = [
+  join(root, 'apps', 'mobile', 'public', 'vocab.db'),
+  join(root, 'apps', 'mobile', 'assets', 'vocab.db'),
+  join(root, 'packages', 'core', 'assets', 'vocab.db'),
+]
 
 const MANIFEST_VERSION = 2 // bump when the schema or data format changes
 
@@ -148,19 +153,15 @@ function buildDatabase(outputPath) {
   console.log(`✓ ${outputPath} (${size} KB)`)
 }
 
-buildDatabase(WEB_OUTPUT)
+// Build once, then duplicate to every target path.
+const [primary, ...mirrors] = OUTPUT_PATHS
+buildDatabase(primary)
 
-// Copy to the native asset dir if it exists (apps/mobile may not be
-// scaffolded yet; skip silently in that case).
-const mobileDir = dirname(NATIVE_OUTPUT)
-if (existsSync(mobileDir)) {
-  writeFileSync(NATIVE_OUTPUT, readFileSync(WEB_OUTPUT))
-  const size = (readFileSync(NATIVE_OUTPUT).byteLength / 1024).toFixed(1)
-  console.log(`✓ ${NATIVE_OUTPUT} (${size} KB)`)
-} else {
-  mkdirSync(mobileDir, { recursive: true })
-  writeFileSync(NATIVE_OUTPUT, readFileSync(WEB_OUTPUT))
-  console.log(`✓ ${NATIVE_OUTPUT} (created)`)
+for (const target of mirrors) {
+  mkdirSync(dirname(target), { recursive: true })
+  writeFileSync(target, readFileSync(primary))
+  const size = (readFileSync(target).byteLength / 1024).toFixed(1)
+  console.log(`✓ ${target} (${size} KB)`)
 }
 
 console.log(`\nManifest version: ${MANIFEST_VERSION}`)

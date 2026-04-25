@@ -1,20 +1,23 @@
 name: PR Android APK
 
-# Builds a release APK for every pull request with Gradle directly (no EAS).
-# The APK is attached as a GitHub Actions artifact — download from the
-# "Actions" tab of the PR.
+# Builds a release APK for every pull request with Gradle directly (no
+# EAS) and publishes it to a per-PR GitHub Pre-release. The PR comment
+# links straight to the .apk file — one click to download, no zip step.
 #
-# Signing: `expo prebuild` generates an android/ directory where the release
-# variant inherits the debug keystore unless a production signing config is
-# wired up. That's fine for PR previews — every reviewer's device trusts
-# the standard Android debug keystore so the APK installs like any other.
-# Production builds should switch to a proper upload keystore.
+# A pre-release is created (or updated) per PR with tag `pr-<NUMBER>`.
+# When the PR is closed/merged, the release stays around as a build
+# archive; clean it up manually if it gets noisy.
+#
+# Signing: `expo prebuild` generates an android/ where the release
+# variant inherits the debug keystore. That's fine for PR previews —
+# every device trusts the debug keystore so the APK installs cleanly.
+# Production should switch to a real upload keystore.
 #
 # Runtime: ~8-15 minutes depending on cache hit rate.
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
 
 concurrency:
   group: pr-apk-${{ github.event.pull_request.number }}
@@ -24,12 +27,13 @@ jobs:
   build:
     name: Build release APK
     runs-on: ubuntu-latest
-    # Skip on forked PRs — node_modules from a fork with native deps is a
-    # supply-chain risk we don't want to auto-execute.
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    # Skip on close events (the cleanup job handles those) and on forked
+    # PRs (running native install scripts from a fork is a supply-chain
+    # risk we don't want to auto-execute).
+    if: ${{ github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository }}
     permissions:
-      contents: read
-      pull-requests: write
+      contents: write       # required to create / update releases
+      pull-requests: write  # required to comment on the PR
 
     steps:
       - name: Check out repository
@@ -64,72 +68,91 @@ jobs:
             gradle-${{ runner.os }}-
 
       - name: Install dependencies
-        # The root postinstall (scripts/copy-dict.mjs) populates dict files
+        # Root postinstall (scripts/copy-dict.mjs) populates dict files
         # into apps/mobile/{public,assets}/dict and packages/core/assets/dict
-        # so the Metro bundler can resolve the kuromoji require()s.
+        # so Metro can resolve the kuromoji require()s.
         run: npm ci --legacy-peer-deps
 
       - name: Generate audio assets
         # correct.wav / incorrect.wav are referenced via require() from
-        # useAudioFeedback.native.ts. We synthesise them deterministically
-        # at build time rather than committing binary blobs.
+        # useAudioFeedback.native.ts. Synthesised deterministically.
         run: node scripts/generate-feedback-wavs.mjs
 
       - name: Build SQLite vocab database
-        # vocab.db is a runtime asset the app bundles; regenerate so every
-        # APK matches the JLPT source files on this PR's HEAD.
+        # vocab.db lands in apps/mobile/{public,assets}/ AND packages/core/
+        # assets/ — the last is what the native loader's require() points at.
         run: node scripts/generate-vocab-db.mjs
 
       - name: Prebuild Android project
-        # Generates android/ from the managed config. --clean discards any
-        # cached generator output that might predate this PR.
         working-directory: apps/mobile
         run: npx expo prebuild --platform android --clean --no-install
 
       - name: Assemble release APK
         working-directory: apps/mobile/android
-        # ORG_GRADLE_PROJECT_javaToolchainAutoDetect: false stops Gradle
-        # from auto-downloading a JDK at build time (the runner is offline
-        # for non-Maven traffic). The JDK 17 from setup-java is detected
-        # automatically via JAVA_HOME.
         env:
           ORG_GRADLE_PROJECT_javaToolchainAutoDetect: 'false'
         run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
 
-      - name: Locate APK
+      - name: Rename APK
         id: locate
         working-directory: apps/mobile
         run: |
-          apk=$(find android/app/build/outputs/apk/release -name '*.apk' | head -n 1)
-          if [ -z "$apk" ]; then
-            echo "No APK produced" >&2
-            exit 1
-          fi
-          echo "apk-path=apps/mobile/$apk" >> "$GITHUB_OUTPUT"
-          # Rename with the PR number so contributors can tell builds apart.
-          dest="japanese-learning-pr${{ github.event.pull_request.number }}-${GITHUB_SHA::7}.apk"
-          cp "$apk" "$dest"
-          echo "apk-named=apps/mobile/$dest" >> "$GITHUB_OUTPUT"
+          src=$(find android/app/build/outputs/apk/release -name '*.apk' | head -n 1)
+          if [ -z "$src" ]; then echo "No APK produced" >&2; exit 1; fi
+          name="japanese-learning-pr${{ github.event.pull_request.number }}-${GITHUB_SHA::7}.apk"
+          cp "$src" "$name"
+          echo "apk-name=$name" >> "$GITHUB_OUTPUT"
+          echo "apk-path=apps/mobile/$name" >> "$GITHUB_OUTPUT"
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload to PR pre-release
+        id: release
+        uses: softprops/action-gh-release@v2
         with:
-          name: japanese-learning-pr${{ github.event.pull_request.number }}-${{ github.sha }}
-          path: ${{ steps.locate.outputs.apk-named }}
-          retention-days: 14
-          if-no-files-found: error
+          # Per-PR release. tag_name is stable across re-runs so updates
+          # replace the previous APK rather than spawning new releases.
+          tag_name: pr-${{ github.event.pull_request.number }}
+          name: 'PR #${{ github.event.pull_request.number }} preview build'
+          body: |
+            Automated preview build of PR
+            [#${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }}).
 
-      - name: Comment on PR with artifact link
+            Latest commit: `${{ github.event.pull_request.head.sha }}`
+            Built: `${{ github.run_id }}`
+
+            APK signed with the Android debug keystore. Install via
+            `adb install` or by tapping the file on the device.
+          prerelease: true
+          # Make_latest=false keeps this release out of /releases/latest.
+          make_latest: 'false'
+          # Replace any prior asset with the same name on a re-run.
+          fail_on_unmatched_files: true
+          files: ${{ steps.locate.outputs.apk-path }}
+
+      - name: Comment on PR with download link
         if: success()
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: android-apk
           message: |
-            ### Android preview APK ready
+            ### Android preview APK
 
-            Download from the [workflow run artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts) (signed with the Android debug keystore, installs on any device via `adb install` or a file manager).
+            **[Download .apk (one click)](${{ github.server_url }}/${{ github.repository }}/releases/download/pr-${{ github.event.pull_request.number }}/${{ steps.locate.outputs.apk-name }})**
 
             Commit: `${{ github.event.pull_request.head.sha }}`
-            Artifact: `japanese-learning-pr${{ github.event.pull_request.number }}-${{ github.sha }}`
+            Release: [pr-${{ github.event.pull_request.number }}](${{ github.server_url }}/${{ github.repository }}/releases/tag/pr-${{ github.event.pull_request.number }})
 
-            > GitHub only exposes artifact downloads to signed-in users with read access to the repo, so the link won't work for external reviewers. For public previews, wire the APK into a `release` + `softprops/action-gh-release` upload instead.
+            Signed with the Android debug keystore — install via `adb install` or tap the file on the device.
+
+  cleanup:
+    name: Delete pre-release on PR close
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository }}
+    permissions:
+      contents: write
+    steps:
+      - name: Delete release + tag
+        run: |
+          tag="pr-${{ github.event.pull_request.number }}"
+          gh release delete "$tag" --repo "${{ github.repository }}" --yes --cleanup-tag || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

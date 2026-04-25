@@ -1,3 +1,10 @@
+# Cross-Origin headers required by OPFS / SharedArrayBuffer — sqlite-wasm's
+# OPFS VFS won't activate without these. Without OPFS we can't persist the
+# vocab database in the browser, so the app degrades to "fetch every time".
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+
 # Serve kuromoji dict files as raw binary — do NOT let Cloudflare decompress
 # them. kuromoji's BrowserDictionaryLoader decompresses the gzip bytes itself.
 /dict/*.dat.gz
@@ -5,14 +12,8 @@
   Content-Encoding: identity
   Cache-Control: public, max-age=31536000, immutable
 
-# Vocabulary manifest — short TTL so new languages/levels propagate quickly.
-# The file is tiny (~1KB) so re-fetching is cheap.
-/vocab/manifest.json
-  Content-Type: application/json
-  Cache-Control: public, max-age=300
-
-# Vocabulary level files — long TTL; cache-busted via ?v=N query param from
-# the manifest version field whenever content changes.
-/vocab/*/*.json
-  Content-Type: application/json
+# Vocabulary database — long TTL; cache-busted via the manifest_version
+# stored inside the .db file (bumped in scripts/generate-vocab-db.mjs).
+/vocab.db
+  Content-Type: application/vnd.sqlite3
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800

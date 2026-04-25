@@ -17,6 +17,7 @@ packages/core/assets/silence.wav
 # Generated vocab database
 apps/mobile/public/vocab.db
 apps/mobile/assets/vocab.db
+packages/core/assets/vocab.db
 
 # Tamagui compile cache
 **/.tamagui/
