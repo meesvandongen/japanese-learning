@@ -5,13 +5,7 @@
     "scheme": "japanese-learning",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": ["assets/**/*"],
     "ios": {
       "supportsTablet": true,
@@ -23,10 +17,6 @@
       }
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
       "package": "com.meesvandongen.japaneselearning",
       "permissions": [
         "android.permission.RECORD_AUDIO",
@@ -36,8 +26,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/icon.png"
+      "output": "static"
     },
     "plugins": [
       "expo-router",

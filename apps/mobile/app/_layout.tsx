@@ -7,7 +7,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { TamaguiProvider, Theme } from 'tamagui'
 import * as SplashScreen from 'expo-splash-screen'
-import { useFonts } from 'expo-font'
 import config from '../tamagui.config'
 
 SplashScreen.preventAutoHideAsync().catch(() => { /* ignore */ })
@@ -31,20 +30,9 @@ const queryClient = new QueryClient({
 })
 
 export default function RootLayout() {
-  // expo-font isn't used on web (fonts come in via @expo/html-elements' meta
-  // tag injection or the default browser stack). Skip the font load there to
-  // avoid a flash of empty content when the file isn't committed yet.
-  const [loaded] = useFonts(
-    Platform.OS === 'web'
-      ? {}
-      : { Inter: require('../assets/fonts/Inter.ttf') }
-  )
-
   useEffect(() => {
-    if (loaded) SplashScreen.hideAsync().catch(() => { /* ignore */ })
-  }, [loaded])
-
-  if (!loaded) return null
+    SplashScreen.hideAsync().catch(() => { /* ignore */ })
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>

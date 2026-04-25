@@ -64,21 +64,36 @@ jobs:
             gradle-${{ runner.os }}-
 
       - name: Install dependencies
+        # The root postinstall (scripts/copy-dict.mjs) populates dict files
+        # into apps/mobile/{public,assets}/dict and packages/core/assets/dict
+        # so the Metro bundler can resolve the kuromoji require()s.
         run: npm ci --legacy-peer-deps
 
+      - name: Generate audio assets
+        # correct.wav / incorrect.wav are referenced via require() from
+        # useAudioFeedback.native.ts. We synthesise them deterministically
+        # at build time rather than committing binary blobs.
+        run: node scripts/generate-feedback-wavs.mjs
+
       - name: Build SQLite vocab database
-        # The vocab.db is a runtime asset the app bundles; regenerate it so
-        # every APK matches the sources on this PR's HEAD.
+        # vocab.db is a runtime asset the app bundles; regenerate so every
+        # APK matches the JLPT source files on this PR's HEAD.
         run: node scripts/generate-vocab-db.mjs
 
       - name: Prebuild Android project
-        # Generates android/ from the managed config. --clean ensures we
-        # discard any cached generator output that might predate this PR.
+        # Generates android/ from the managed config. --clean discards any
+        # cached generator output that might predate this PR.
         working-directory: apps/mobile
         run: npx expo prebuild --platform android --clean --no-install
 
       - name: Assemble release APK
         working-directory: apps/mobile/android
+        # ORG_GRADLE_PROJECT_javaToolchainAutoDetect: false stops Gradle
+        # from auto-downloading a JDK at build time (the runner is offline
+        # for non-Maven traffic). The JDK 17 from setup-java is detected
+        # automatically via JAVA_HOME.
+        env:
+          ORG_GRADLE_PROJECT_javaToolchainAutoDetect: 'false'
         run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
 
       - name: Locate APK

@@ -14,10 +14,21 @@ the app shell (routes, providers) lives here.
 npm install
 ```
 
-The postinstall script copies kuromoji dict files into `./public/dict/`
-(for web) and `./assets/dict/` (for the native bundle). The SQLite vocab
-DB is built by `node scripts/generate-vocab-db.mjs` at the repo root and
-lands in both `./public/vocab.db` and `./assets/vocab.db`.
+The root postinstall (`scripts/copy-dict.mjs`) copies the 12 kuromoji
+dict files into the three places that need them:
+
+- `apps/mobile/public/dict/`         — served by Metro for web
+- `apps/mobile/assets/dict/`         — bundled into the native APK
+- `packages/core/assets/dict/`       — required by `loadDict.native.ts`
+
+After install you also need:
+
+```bash
+node scripts/generate-vocab-db.mjs        # → vocab.db (both web + native)
+node scripts/generate-feedback-wavs.mjs   # → correct.wav / incorrect.wav
+```
+
+These are deterministic; run them whenever the source files change.
 
 ## Run
 
@@ -63,7 +74,11 @@ npm run deploy             # wrangler deploy uses wrangler.jsonc → dist/
 
 ## Walk mode
 
-Foreground-only currently. Walk mode (iOS AVAudioSession `.playAndRecord`
-+ RNTP lock-screen queue, Android foreground service with
-`foregroundServiceType="microphone|mediaPlayback"`) is scoped as a
-follow-up — see the matching phase in `docs/react-native-migration-plan.md`.
+Foreground-only. Walk mode configures `AVAudioSession` via
+`expo-audio`'s `setAudioModeAsync` and uses `expo-speech-recognition`
+with on-device recognition. Lock-screen transport controls + a
+persistent foreground-service notification are deferred — they need
+`react-native-track-player` 5.x to land (4.1.x has a Kotlin null-safety
+bug against current React Native), or a custom native module.
+
+See `docs/react-native-migration-plan.md` for the original spec.
