@@ -1,10 +1,19 @@
 /**
  * Shared tokenizer dictionary types.
  *
- * The kuromoji IPA dictionary ships as 12 gzipped .dat files. We load them
- * into ArrayBuffers and hand them to @patdx/kuromoji, which builds the
- * trie/matrix in-memory.
+ * Kuromoji's `loadDictionary` requests files by name (`base.dat.gz`,
+ * `cc.dat.gz`, ...) via the loader callback and expects the *gzipped*
+ * bytes back. `buildTokenizer` decompresses them with pako before
+ * handing the buffers to kuromoji.
+ *
+ * The platform loaders (`loadDict.{web,native}.ts`) produce the same
+ * `DictFileMap` shape — bytes-as-ArrayBuffer keyed by kuromoji name.
+ *
+ *   - web: fetches `/dict/<name>` from Metro's static export
+ *   - native: decodes base64-encoded gzip bytes inlined in the JS bundle
+ *     (see scripts/copy-dict.mjs and ./dict-data/)
  */
+
 export type DictFileMap = Map<string, ArrayBuffer>
 
 export const KUROMOJI_DICT_FILES = [

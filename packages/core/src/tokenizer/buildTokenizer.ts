@@ -6,31 +6,28 @@ import type { DictFileMap } from './loadDict.types'
  * Build a kuromoji tokenizer from an in-memory dictionary map.
  *
  * @patdx/kuromoji's `loadDictionary` expects each `loadArrayBuffer(name)`
- * call to return the *decompressed* dictionary bytes — the file naming
- * (".dat.gz") is historical. The package's built-in NodeDictionaryLoader
- * decompresses with `zlib.gunzip`; the BrowserDictionaryLoader relies on
- * the browser's `Content-Encoding: gzip` auto-decompression in `fetch`.
+ * call to return the *decompressed* dictionary bytes. The platform
+ * loaders (`loadDict.{web,native}.ts`) ship raw gzipped bytes — web
+ * fetches them with `Content-Encoding: identity`, native pulls them
+ * out of base64-encoded JS strings — and we gunzip here, in pure JS
+ * via pako. Pako runs everywhere (web, RN, Node) and adds ~45 KB to
+ * the bundle; decompressing the full IPA dict is ~150 ms one-shot.
  *
- * Our `loadDict.{web,native}.ts` loaders ship the raw gzipped bytes
- * straight from `<bundled .gz file>` because either the platform doesn't
- * support gzip-encoded fetch (RN) or we deliberately disable it on the
- * web (Cloudflare _headers serves /dict/* with `Content-Encoding:
- * identity` so our service-worker cache caches the raw bytes once).
- *
- * Therefore we gunzip here, in pure JS via pako. Pako runs everywhere
- * (web, RN, Node) and adds ~45 KB to the bundle. Decompression for the
- * full IPA dict is one-shot, ~150 ms on device.
+ * Why not gunzip in the loader? Doing it here keeps the loader thin,
+ * keeps the dictionary bytes contract explicit (raw .gz in, raw .gz
+ * out), and avoids running pako twice during the test round-trip.
  */
 export async function buildTokenizer(dict: DictFileMap): Promise<KuromojiTokenizer> {
   const kuromoji = await import('@patdx/kuromoji')
 
   const decompressed = new Map<string, ArrayBuffer>()
   for (const [name, gz] of dict) {
-    // pako accepts a Uint8Array view; the result is a fresh Uint8Array
-    // whose `.buffer` is a standalone ArrayBuffer (no offset). Kuromoji
-    // wraps it directly in Int32Array / Uint16Array / Uint8Array views.
     const out = inflate(new Uint8Array(gz))
-    decompressed.set(name, out.buffer)
+    // Copy into a fresh, offset-0 ArrayBuffer so kuromoji's typed-array
+    // views (Int32Array, Uint16Array, Uint8Array) line up correctly.
+    const buf = new Uint8Array(out.byteLength)
+    buf.set(out)
+    decompressed.set(name, buf.buffer)
   }
 
   const loader = {

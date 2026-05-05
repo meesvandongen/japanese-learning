@@ -6,7 +6,9 @@
   Cross-Origin-Embedder-Policy: require-corp
 
 # Serve kuromoji dict files as raw binary — do NOT let Cloudflare decompress
-# them. kuromoji's BrowserDictionaryLoader decompresses the gzip bytes itself.
+# them. The buildTokenizer step gunzips with pako; if the CDN auto-decodes
+# the Content-Encoding: gzip header, the bytes pako receives are already
+# raw and the magic-number check in inflate() throws.
 /dict/*.dat.gz
   Content-Type: application/octet-stream
   Content-Encoding: identity
