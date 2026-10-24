@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vite-plus/test'
 import { getNextCard, getSessionStats } from './scheduler'
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000

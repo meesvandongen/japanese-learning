@@ -11,7 +11,7 @@
  *   ...
  *
  * Run:  node scripts/generate-vocab.mjs
- * Also runs automatically as `prebuild` before `vite build`.
+ * Also runs automatically as part of `pnpm run build`, before `vp build`.
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs'

@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vite-plus/test'
 import { applyReview, formatDue, INITIAL_CARD_STATE } from './sm2'
 
 describe('applyReview', () => {

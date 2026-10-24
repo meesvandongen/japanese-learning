@@ -9,3 +9,4 @@ public/kuromoji.js
 !.dev.vars.example
 .env*
 !.env.example
+.vitest/
