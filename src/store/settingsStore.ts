@@ -19,6 +19,7 @@ export const useSettingsStore = create<Settings>()(
       englishExerciseMode: 'audio',
       manualGrading: false,
       speakToCorrect: false,
+      debugCardKana: null,
     }),
     { name: 'jp-flashcards-settings-v1' }
   )
