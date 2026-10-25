@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite-plus'
 import react from '@vitejs/plugin-react'
 import { cloudflare } from '@cloudflare/vite-plugin'
 import { readFileSync } from 'node:fs'
@@ -9,7 +9,7 @@ import { execSync } from 'node:child_process'
 // Content-Encoding. Vite/sirv automatically sets Content-Encoding: gzip for
 // .gz files, which causes the browser to decompress them before kuromoji sees
 // them — breaking kuromoji's own decompression step.
-function dictBinaryPlugin() {
+function dictBinaryPlugin(): Plugin {
   return {
     name: 'dict-binary',
     configureServer(server) {
@@ -43,6 +43,23 @@ function getGitDate(): string {
 }
 
 export default defineConfig({
+  fmt: { singleQuote: true, semi: false, printWidth: 120 },
+  // Ported from oxlint.json.
+  lint: {
+    env: { browser: true, es2022: true },
+    plugins: ['react'],
+    jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
+    globals: { __GIT_DATE__: 'readonly' },
+    ignorePatterns: ['public/kuromoji.js', 'dist/**', 'test-results/**'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'no-unused-vars': 'error',
+      'no-undef': 'error',
+      'vite-plus/prefer-vite-plus-imports': 'error',
+    },
+    options: { typeAware: true, typeCheck: true },
+  },
   define: {
     __GIT_DATE__: JSON.stringify(getGitDate()),
   },

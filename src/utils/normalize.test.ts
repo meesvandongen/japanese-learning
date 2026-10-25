@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vite-plus/test'
 import { compareJapanese, compareEnglish, toHiragana } from './normalize'
 import type { KuromojiTokenizer } from '../types/kuromoji'
 
