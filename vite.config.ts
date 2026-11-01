@@ -4,6 +4,7 @@ import { cloudflare } from '@cloudflare/vite-plugin'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { execSync } from 'node:child_process'
+import process from 'node:process'
 
 // Serve kuromoji dict files as raw binary (application/octet-stream) with no
 // Content-Encoding. Vite/sirv automatically sets Content-Encoding: gzip for
@@ -63,7 +64,10 @@ export default defineConfig({
   define: {
     __GIT_DATE__: JSON.stringify(getGitDate()),
   },
-  plugins: [react(), cloudflare(), dictBinaryPlugin()],
+  // Newer @cloudflare/vite-plugin versions break Vitest startup ("There is
+  // already a server associated with the config"). Unit tests run in plain
+  // Node and don't need the Workers runtime, so skip the plugin under Vitest.
+  plugins: [react(), process.env.VITEST ? null : cloudflare(), dictBinaryPlugin()],
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
